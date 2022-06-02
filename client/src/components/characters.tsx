@@ -23,7 +23,7 @@ export default function Characters() {
     dispatch(addCharacter({
       name: inpuValue.name,
       level: inpuValue.level,
-    }))
+    }));
     setIsAddCharacterModalOpen(false);
   }
 
@@ -52,7 +52,7 @@ export default function Characters() {
                         <label>{raidInfo[0]}</label>
                         <input type="checkbox" checked={raidInfo[1]} onChange={e=>changeInputChecked(e, charater.name, raidInfo[0])}></input>
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               </div>

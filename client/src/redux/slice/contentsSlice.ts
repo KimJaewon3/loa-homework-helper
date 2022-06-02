@@ -12,7 +12,15 @@ interface ContentsState {
 }
 
 const initialState: ContentsState = {
-  contents: []
+  contents: [{
+    name: '공통',
+    content: {
+      '도비스': false,
+      '도가토': false,
+      '유령선': false,
+      '로웬주간퀘': false,
+    }
+  }]
 };
 
 type UpdatePayloadType = {
