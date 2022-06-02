@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useAppSelector } from '../redux/store';
 import Status from './status';
 
 const Monitor = styled.div`
@@ -15,41 +16,17 @@ const Monitor = styled.div`
 `;
 
 export default function Monitoring() {
-  const dummy = [
-    {
-      name: 'a',
-      content: {
-        '발': true,
-        '비': true,
-      }
-    },
-    {
-      name: 'b',
-      content: {
-        '발': true,
-        '비': false,
-      }
-    },
-    {
-      name: 'b',
-      content: {
-        '발': true,
-        '비': false,
-        '노': true,
-      }
-    }
-  ];
-
   const [ percentArr, setPersentArr ] = useState<number[]>([]);
+  const contents = useAppSelector((state => state.contentsReducer.contents));
 
   useEffect(() => {
-    setPersentArr(dummy.map(character => {
+    setPersentArr(contents.map(character => {
       const contents = Object.entries(character.content);
       const done = contents.filter(content => content[1]).length;
       const percent = done / contents.length * 100;
       return percent;
     }))
-  }, []);
+  }, [contents]);
 
   return (
     <Monitor>
@@ -65,7 +42,7 @@ export default function Monitoring() {
           return (
             <div key={idx}>
               <Status percent={percent}></Status>
-              <span>{dummy[idx].name}</span>
+              <span>{contents[idx].name}</span>
             </div>
           )
         })}
