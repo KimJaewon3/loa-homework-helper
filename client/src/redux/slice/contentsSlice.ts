@@ -7,62 +7,62 @@ interface ContentsState {
     name: string;
     content: {
       [key: string]: boolean;
-    }
+    }[];
   }[];
 }
 
 const initialState: ContentsState = {
-  contents: [{
-    name: '공통',
-    content: {
-      '도비스': false,
-      '도가토': false,
-      '유령선': false,
-      '로웬주간퀘': false,
-    }
-  }]
+  contents: [
+    {
+      name: '공통',
+      content: [
+        { '도비스': false },
+        { '도가토': false },
+        { '유령선': false },
+        { '로웬주간퀘': false },
+      ]
+    },
+  ]
 };
 
-type UpdatePayloadType = {
-  name: string;
-  target: string;
+type UpdateContents = {
+  characterIdx: number;
+  raidIdx: number;
   check: boolean;
 };
 
-type AddPayloadType = {
+type AddCharacter = {
   name: string;
   level: number;
 }
 
-type DeletePayloadType = {
+type DeleteCharacter = {
   idx: number;
+}
+
+type DeleteList = {
+  characterIdx: number;
+  raidIdx: number;
 }
 
 export const contentsSlice = createSlice({
   name: 'contents',
   initialState,
   reducers: {
-    updateContent: (state, action: PayloadAction<UpdatePayloadType>) => {
-      state.contents = state.contents.map(el => {
-        if (el.name === action.payload.name) {
-          return {
-            name: el.name,
-            content: Object.assign({}, el.content, {[action.payload.target]: action.payload.check})
-          }
-        }
-        return el;
-      })
-    },
-    addCharacter: (state, action: PayloadAction<AddPayloadType>) => {
+    updateContent: (state, action: PayloadAction<UpdateContents>) => {
       const sliced = state.contents.slice();
-      let abledRaid = {};
+      const target = sliced[action.payload.characterIdx].content[action.payload.raidIdx];
+      const key = Object.keys(target)[0];
+      target[key] = action.payload.check;
+      state.contents = sliced;
+    },
+    addCharacter: (state, action: PayloadAction<AddCharacter>) => {
+      const sliced = state.contents.slice();
+      const abledRaid: {[key: string]: boolean}[] = [];
       raidLevel.map(el => {
         const [key, val] = Object.entries(el)[0];
         if (val <= action.payload.level) {
-          abledRaid = {
-            ...abledRaid,
-            [key]: false,
-          }
+          abledRaid.push({ [key]: false });
         }
       });
       sliced.push({
@@ -71,12 +71,20 @@ export const contentsSlice = createSlice({
       });
       state.contents = sliced;
     },
-    deleteCharacter: (state, action: PayloadAction<DeletePayloadType>) => {
+    deleteCharacter: (state, action: PayloadAction<DeleteCharacter>) => {
       state.contents = state.contents.filter((el, idx) => idx !== action.payload.idx);
+    },
+    deleteList: (state, action: PayloadAction<DeleteList>) => {
+      const sliced = state.contents.slice();
+      const deleted = sliced[action.payload.characterIdx].content.filter((_, idx) => {
+        return idx !== action.payload.raidIdx;
+      });
+      sliced[action.payload.characterIdx].content = deleted;
+      state.contents = sliced;
     }
   }
 });
 
-export const { updateContent, addCharacter, deleteCharacter } = contentsSlice.actions;
+export const { updateContent, addCharacter, deleteCharacter, deleteList } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;

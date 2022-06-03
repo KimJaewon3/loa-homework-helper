@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addCharacter, deleteCharacter, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
 
@@ -27,11 +27,11 @@ export default function Characters() {
     setIsAddCharacterModalOpen(false);
   }
 
-  function changeInputChecked(e: React.ChangeEvent<HTMLInputElement>, characterName: string, raidName: string) {
+  function changeInputChecked(e: React.ChangeEvent<HTMLInputElement>, characterIdx: number, raidIdx: number) {
     dispatch(updateContent({
-      name: characterName,
-      target: raidName,
-      check: e.target.checked
+        characterIdx,
+        raidIdx,
+        check: e.target.checked,
     }));
   }
 
@@ -39,25 +39,34 @@ export default function Characters() {
     dispatch(deleteCharacter({ idx }));
   }
 
+  function handleDeleteList(characterIdx: number, raidIdx: number) {
+    dispatch(deleteList({ characterIdx, raidIdx }));
+  }
+
   return (
     <div>
       <span>상세 현황</span>
 
       <div>
-        {contetnts.map((charater, idx) => {
+        {contetnts.map((charater, characterIdx) => {
           return (
             <div key={charater.name} >
               <div>
                 <span>{charater.name}</span>
-                <div onClick={()=>handleDeleteCharacter(idx)}>x</div>
+                <div onClick={()=>handleDeleteCharacter(characterIdx)}>x</div>
               </div>
               <div>
                 <ul>
-                  {Object.entries(charater.content).map((raidInfo, idx) => {
+                  {charater.content.map((raidInfo, raidIdx) => {
+                    const key = Object.keys(raidInfo)[0];
                     return (
-                      <li key={idx}>
-                        <label>{raidInfo[0]}</label>
-                        <input type="checkbox" checked={raidInfo[1]} onChange={e=>changeInputChecked(e, charater.name, raidInfo[0])}></input>
+                      <li key={raidIdx}>
+                        <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>x</div>
+                        <label>{key}</label>
+                        <input 
+                          type="checkbox" checked={raidInfo[key]}
+                          onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
+                        </input>
                       </li>
                     );
                   })}
