@@ -34,6 +34,10 @@ type AddPayloadType = {
   level: number;
 }
 
+type DeletePayloadType = {
+  idx: number;
+}
+
 export const contentsSlice = createSlice({
   name: 'contents',
   initialState,
@@ -66,10 +70,13 @@ export const contentsSlice = createSlice({
         content: abledRaid
       });
       state.contents = sliced;
+    },
+    deleteCharacter: (state, action: PayloadAction<DeletePayloadType>) => {
+      state.contents = state.contents.filter((el, idx) => idx !== action.payload.idx);
     }
   }
 });
 
-export const { updateContent, addCharacter } = contentsSlice.actions;
+export const { updateContent, addCharacter, deleteCharacter } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addCharacter, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, deleteCharacter, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
 
@@ -35,15 +35,22 @@ export default function Characters() {
     }));
   }
 
+  function handleDeleteCharacter(idx: number) {
+    dispatch(deleteCharacter({ idx }));
+  }
+
   return (
     <div>
       <span>상세 현황</span>
 
       <div>
-        {contetnts.map(charater => {
+        {contetnts.map((charater, idx) => {
           return (
             <div key={charater.name} >
-              <span>{charater.name}</span>
+              <div>
+                <span>{charater.name}</span>
+                <div onClick={()=>handleDeleteCharacter(idx)}>x</div>
+              </div>
               <div>
                 <ul>
                   {Object.entries(charater.content).map((raidInfo, idx) => {

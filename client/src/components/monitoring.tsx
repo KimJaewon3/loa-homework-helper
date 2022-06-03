@@ -20,12 +20,15 @@ export default function Monitoring() {
   const contents = useAppSelector((state => state.contentsReducer.contents));
 
   useEffect(() => {
-    setPersentArr(contents.map(character => {
-      const contents = Object.entries(character.content);
-      const done = contents.filter(content => content[1]).length;
-      const percent = done / contents.length * 100;
-      return percent;
-    }))
+    console.log(contents)
+    setPersentArr(() => {
+      return contents.map(character => {
+        const contents = Object.entries(character.content);
+        const done = contents.filter(content => content[1]).length;
+        const percent = done / contents.length * 100;
+        return percent;
+      });
+    })
   }, [contents]);
 
   return (
