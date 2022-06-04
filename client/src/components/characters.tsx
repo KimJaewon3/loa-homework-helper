@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addCharacter, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
 
@@ -8,6 +8,7 @@ export default function Characters() {
   const [inpuValue, setInputValue] = useState({
     name: '',
     level: 0,
+    addList: '',
   })
   const dispatch = useAppDispatch();
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
@@ -43,6 +44,10 @@ export default function Characters() {
     dispatch(deleteList({ characterIdx, raidIdx }));
   }
 
+  function handleAddList(characterIdx: number) {
+    dispatch(addList({ characterIdx, raidName: inpuValue.addList }));
+  }
+
   return (
     <div>
       <span>상세 현황</span>
@@ -61,7 +66,7 @@ export default function Characters() {
                     const key = Object.keys(raidInfo)[0];
                     return (
                       <li key={raidIdx}>
-                        <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>x</div>
+                        <span onClick={()=>handleDeleteList(characterIdx, raidIdx)}>x</span>
                         <label>{key}</label>
                         <input 
                           type="checkbox" checked={raidInfo[key]}
@@ -71,6 +76,10 @@ export default function Characters() {
                     );
                   })}
                 </ul>
+              </div>
+              <div>
+                <input name='addList' placeholder='+ 리스트 추가하기' onChange={e=>handleInputValue(e)}></input>
+                <button onClick={()=>handleAddList(characterIdx)}>확인</button>
               </div>
             </div>
           )

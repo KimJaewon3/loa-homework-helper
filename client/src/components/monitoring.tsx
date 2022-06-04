@@ -39,7 +39,15 @@ export default function Monitoring() {
 
       <div className='monitor-progress'>
         <div>
-          <Status percent={(percentArr.reduce((acc, el) => acc += el.percent, 0)) / percentArr.length}></Status>
+          <Status 
+            percent={
+              percentArr.length === 0 ? (
+                0
+              ) : (
+                (percentArr.reduce((acc, el) => acc += el.percent, 0)) / percentArr.length
+              )
+            }
+          ></Status>
           <span>전체</span>
         </div>
 
