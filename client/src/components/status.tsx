@@ -5,6 +5,7 @@ interface CircleProgressProps {
   size: number;
   progress: number;
   circumference: number;
+  overall: boolean;
 }
 
 const CircleProgress = styled.div<CircleProgressProps>`
@@ -29,7 +30,7 @@ const CircleProgress = styled.div<CircleProgressProps>`
       transform: rotate(-90deg);
       transform-origin: center;
       fill: none;
-      stroke: #3aa639;
+      stroke: ${props => props.overall ? `#d75959` : `#3aa639`};
       stroke-width: 15;
       stroke-linecap: round;
       stroke-dasharray: ${props => props.circumference}px;
@@ -58,15 +59,16 @@ const movePercent = (circumference: number, progress: number) => keyframes`
 
 interface Props {
   percent: number;
+  overall: boolean;
 }
 
-export default function Status({ percent }: Props) {
+export default function Status({ percent, overall }: Props) {
   const RADIUS = 80; // 원크기 조절
   const circumference = 2 * Math.PI * RADIUS;
   const progress = circumference * (1 - percent / 100);
 
   return (
-    <CircleProgress size={RADIUS * 2 + 20} progress={progress} circumference={circumference}>
+    <CircleProgress size={RADIUS * 2 + 20} progress={progress} circumference={circumference} overall={overall}>
       <svg className='circle-progress-sketch'>
         <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS}/>
       </svg>

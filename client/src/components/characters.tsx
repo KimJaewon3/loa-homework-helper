@@ -16,6 +16,9 @@ const CharactersDiv = styled.div`
       border: none;
       padding: 5px;
     }
+    .characters-add-box-alert {
+      color: white;
+    }
     .add-box-input-info {
       display: flex;
       align-items: center;
@@ -83,11 +86,12 @@ const CharactersDiv = styled.div`
 `;
 
 export default function Characters() {
+  const [isAbledInputValue, setIsAbledInputValue] = useState(true);
   const [isAddCharacterModalOpen, setIsAddCharacterModalOpen] = useState(false);
   const [inpuValue, setInputValue] = useState({
     name: '',
     level: 0,
-    addList: '',
+    listName: '',
   })
   const dispatch = useAppDispatch();
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
@@ -100,11 +104,15 @@ export default function Characters() {
   }
 
   function submitAddCharacter() {
+    if (inpuValue.name === '' || inpuValue.level === 0) {
+      return setIsAbledInputValue(false);
+    }
     dispatch(addCharacter({
       name: inpuValue.name,
       level: inpuValue.level,
     }));
     setIsAddCharacterModalOpen(false);
+    setIsAbledInputValue(true);
   }
 
   function changeInputChecked(e: React.ChangeEvent<HTMLInputElement>, characterIdx: number, raidIdx: number) {
@@ -115,6 +123,16 @@ export default function Characters() {
     }));
   }
 
+  function handleAddCharacter() {
+    setIsAddCharacterModalOpen(!isAddCharacterModalOpen);
+    setIsAbledInputValue(true);
+  }
+
+  function handleAddList(characterIdx: number) {
+    if (inpuValue.listName === '') return;
+    dispatch(addList({ characterIdx, raidName: inpuValue.listName }));
+  }
+
   function handleDeleteCharacter(idx: number) {
     dispatch(deleteCharacter({ idx }));
   }
@@ -123,16 +141,15 @@ export default function Characters() {
     dispatch(deleteList({ characterIdx, raidIdx }));
   }
 
-  function handleAddList(characterIdx: number) {
-    dispatch(addList({ characterIdx, raidName: inpuValue.addList }));
-  }
-
   return (
     <CharactersDiv>
       <span>상세 현황</span>
 
       <div className='characters-add-box'>
-        <button onClick={()=>setIsAddCharacterModalOpen(!isAddCharacterModalOpen)}>+ 캐릭터 추가하기</button>
+        <button onClick={handleAddCharacter}>+ 캐릭터 추가하기</button>
+        {!isAbledInputValue && (
+          <span className='characters-add-box-alert'> * 값을 입력해주세요 * </span>
+        )}  
         {isAddCharacterModalOpen && (
           <div className='add-box-input-info'>
             <input name='name' placeholder='캐릭터명' onChange={e=>handleInputValue(e)}></input>
@@ -172,7 +189,7 @@ export default function Characters() {
                 </ul>
               </div>
               <div className='character-box-add-list'>
-                <input name='addList' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)}></input>
+                <input name='listName' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)}></input>
                 <button onClick={()=>handleAddList(characterIdx)}>+</button>
               </div>
             </div>

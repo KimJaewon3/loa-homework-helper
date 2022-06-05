@@ -63,6 +63,7 @@ export default function Monitoring() {
                 (percentArr.reduce((acc, el) => acc += el.percent, 0)) / percentArr.length
               )
             }
+            overall={true}
           ></Status>
           <span>전체</span>
         </div>
@@ -70,7 +71,7 @@ export default function Monitoring() {
         {percentArr.map((el, idx) => {
           return (
             <div key={idx}>
-              <Status percent={el.percent}></Status>
+              <Status percent={el.percent} overall={false}></Status>
               <span>{el.name}</span>
             </div>
           )
