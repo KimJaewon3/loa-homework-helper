@@ -8,10 +8,26 @@ const Monitor = styled.div`
     margin: 30px;
   }
   > span {
+    margin-left: 0;
     font-size: 30px;
+    color: white;
   }
   .monitor-progress {
     display: flex;
+    border: 2px solid #b5b2b2;
+    border-radius: 10px;
+    padding: 2em;
+    flex-wrap: wrap;
+    background-color: rgb(240, 248, 255, 0.8);
+    > div {
+      margin: 10px 20px 10px 20px;
+      display: flex;
+      flex-direction: column;
+      > span {
+      font-size: 20px;
+      text-align: center;
+      }
+    }
   }
 `;
 

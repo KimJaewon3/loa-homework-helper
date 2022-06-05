@@ -1,7 +1,86 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { addCharacter, addList, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
+import { BsX } from "react-icons/bs";
 
+const CharactersDiv = styled.div`
+  > span {
+    font-size: 30px;
+    color: white;
+  }
+  .characters-add-box {
+    margin: 10px 0 0 30px;
+    > button {
+      border-radius: 5px;
+      border: none;
+      padding: 5px;
+    }
+    .add-box-input-info {
+      display: flex;
+      align-items: center;
+      > * {
+        margin: 10px 10px 0 0;
+      }
+      input {
+        height: 20px;
+      }
+      button {
+        height: 26px;
+      }
+    }
+  }
+  .character-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+    align-items: flex-start;
+    .character-box {
+      border: 2px solid #ffffff;
+      border-radius: 10px;
+      background-color: rgb(240, 248, 255, 0.8);
+      margin: 2em 2em 0 0;
+      > * {
+        padding: 20px;
+      }
+    }
+    .character-box-title {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px 10px 20px;
+      justify-content: space-between;
+      border-bottom: 2px solid #ffffff;
+      background-color: rgb(172, 172, 172);
+      border-radius: 10px 10px 0 0;
+      span {
+        font-size: larger;
+      }
+    }
+    .character-box-list {
+      ul {
+        padding: 0;
+      }
+      li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin: 5px 0 5px 0;
+        >:first-child {
+          margin: 5px 1em 0 0;
+        }
+      }
+    }
+    .character-box-add-list {
+      > * {
+
+        padding: 5px;
+      }
+      > button {
+        width: 2.5em;
+      }
+    }
+  }
+`;
 
 export default function Characters() {
   const [isAddCharacterModalOpen, setIsAddCharacterModalOpen] = useState(false);
@@ -49,25 +128,40 @@ export default function Characters() {
   }
 
   return (
-    <div>
+    <CharactersDiv>
       <span>상세 현황</span>
 
-      <div>
+      <div className='characters-add-box'>
+        <button onClick={()=>setIsAddCharacterModalOpen(!isAddCharacterModalOpen)}>+ 캐릭터 추가하기</button>
+        {isAddCharacterModalOpen && (
+          <div className='add-box-input-info'>
+            <input name='name' placeholder='캐릭터명' onChange={e=>handleInputValue(e)}></input>
+            <input name='level' placeholder='레벨' onChange={e=>handleInputValue(e)}></input>
+            <button onClick={submitAddCharacter}>확인</button>
+          </div>
+        )}
+      </div>
+
+      <div className='character-container'>
         {contetnts.map((charater, characterIdx) => {
           return (
-            <div key={charater.name} >
-              <div>
+            <div className='character-box' key={charater.name} >
+              <div className='character-box-title'>
                 <span>{charater.name}</span>
-                <div onClick={()=>handleDeleteCharacter(characterIdx)}>x</div>
+                <div onClick={()=>handleDeleteCharacter(characterIdx)}>
+                  <BsX size={30}/>
+                </div>
               </div>
-              <div>
+              <div className='character-box-list'>
                 <ul>
                   {charater.content.map((raidInfo, raidIdx) => {
                     const key = Object.keys(raidInfo)[0];
                     return (
                       <li key={raidIdx}>
-                        <span onClick={()=>handleDeleteList(characterIdx, raidIdx)}>x</span>
-                        <label>{key}</label>
+                        <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
+                          <BsX />
+                        </div>
+                        <div>{key}</div>
                         <input 
                           type="checkbox" checked={raidInfo[key]}
                           onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
@@ -77,25 +171,14 @@ export default function Characters() {
                   })}
                 </ul>
               </div>
-              <div>
-                <input name='addList' placeholder='+ 리스트 추가하기' onChange={e=>handleInputValue(e)}></input>
-                <button onClick={()=>handleAddList(characterIdx)}>확인</button>
+              <div className='character-box-add-list'>
+                <input name='addList' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)}></input>
+                <button onClick={()=>handleAddList(characterIdx)}>+</button>
               </div>
             </div>
           )
         })}
       </div>
-
-      <div>
-        <button onClick={()=>setIsAddCharacterModalOpen(!isAddCharacterModalOpen)}>+</button>
-        {isAddCharacterModalOpen && (
-          <div>
-            <input name='name' placeholder='캐릭터명' onChange={e=>handleInputValue(e)}></input>
-            <input name='level' placeholder='레벨' onChange={e=>handleInputValue(e)}></input>
-            <button onClick={submitAddCharacter}>확인</button>
-          </div>
-        )}
-      </div>
-    </div>
+    </CharactersDiv>
   )
 }

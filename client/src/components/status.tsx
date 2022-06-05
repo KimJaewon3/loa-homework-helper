@@ -11,7 +11,17 @@ const CircleProgress = styled.div<CircleProgressProps>`
   position: relative;
   width: ${props => props.size}px;
   height: ${props => props.size}px;
-  svg {
+  .circle-progress-sketch {
+    position: absolute;
+    width: ${props => props.size}px;
+    height: ${props => props.size}px;
+    circle {
+      fill: none;
+      stroke: #b5b9b5;
+      stroke-width: 15;
+    }
+  }
+  .circle-progress {
     position: absolute;
     width: ${props => props.size}px;
     height: ${props => props.size}px;
@@ -57,9 +67,14 @@ export default function Status({ percent }: Props) {
 
   return (
     <CircleProgress size={RADIUS * 2 + 20} progress={progress} circumference={circumference}>
-      <svg>
+      <svg className='circle-progress-sketch'>
         <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS}/>
       </svg>
+      
+      <svg className='circle-progress'>
+        <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS}/>
+      </svg>
+      
       <span>{Math.floor(percent)}%</span>
     </CircleProgress>
   )
