@@ -39,12 +39,18 @@ export default function Monitoring() {
   useEffect(() => {
     setPersentArr(() => {
       return contents.map(character => {
-        const done = character.content.filter(el => {
-          const key = Object.keys(el)[0];
-          return el[key];
-        });
-        const percent = done.length / character.content.length * 100;
-        return { name: character.name, percent };
+        let percent = 100;
+        if (character.content.length > 0) {
+          const done = character.content.filter(el => {
+            const key = Object.keys(el)[0];
+            return el[key];
+          }).length;
+          percent = done / character.content.length * 100;
+        }
+        return { 
+          name: character.name,
+          percent,
+        };
       });
     })
   }, [contents]);
@@ -58,7 +64,7 @@ export default function Monitoring() {
           <Status 
             percent={
               percentArr.length === 0 ? (
-                0
+                100
               ) : (
                 (percentArr.reduce((acc, el) => acc += el.percent, 0)) / percentArr.length
               )

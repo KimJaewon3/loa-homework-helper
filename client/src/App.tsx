@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import './App.css';
 import Characters from './components/characters';
+import Menu from './components/menu';
 import Monitoring from './components/monitoring';
 
 const Wrap = styled.div`
@@ -11,16 +12,12 @@ const Wrap = styled.div`
       margin: 5em;
     }
   }
-  h1 {
-    margin: 1em;
-    color: white;
-  }
 `;
 
 function App() {
   return (
     <Wrap>
-      <h1>로아 숙제 현황판</h1>
+      <Menu />
       <section>
         <Monitoring />
         <Characters />

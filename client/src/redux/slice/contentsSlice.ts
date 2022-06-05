@@ -119,7 +119,20 @@ export const contentsSlice = createSlice({
       });
       sliced[action.payload.characterIdx].content = deleted;
       state.contents = sliced;
-    }
+    },
+    initList: (state) => {
+      const sliced = state.contents.slice();
+      state.contents = sliced.map(character => {
+        const InitialContent = character.content.map(el => {
+          const key = Object.keys(el)[0];
+          return { [key]: false };
+        });
+        return { 
+          name: character.name,
+          content: InitialContent,
+        }
+      });
+    },
   }
 });
 
@@ -128,7 +141,8 @@ export const {
   addCharacter, 
   deleteCharacter, 
   deleteList,
-  addList, 
+  addList,
+  initList,
 } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;
