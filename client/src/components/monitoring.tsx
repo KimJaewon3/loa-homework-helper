@@ -31,7 +31,6 @@ const Monitor = styled.div`
   }
 `;
 
-
 export default function Monitoring() {
   const [ percentArr, setPersentArr ] = useState<{ name: string, percent: number }[]>([]);
   const contents = useAppSelector((state => state.contentsReducer.contents));
@@ -43,7 +42,7 @@ export default function Monitoring() {
         if (character.content.length > 0) {
           const done = character.content.filter(el => {
             const key = Object.keys(el)[0];
-            return el[key];
+            return el[key].isDone;
           }).length;
           percent = done / character.content.length * 100;
         }

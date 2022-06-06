@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addCharacter, addList, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
+import Gold from './gold';
+import SumGold from './sumGold';
 
 const CharactersDiv = styled.div`
   > span {
@@ -164,6 +166,8 @@ export default function Characters() {
     dispatch(deleteList({ characterIdx, raidIdx }));
   }
 
+
+
   return (
     <CharactersDiv>
       <span>상세 현황</span>
@@ -183,33 +187,41 @@ export default function Characters() {
       </div>
 
       <div className='character-container'>
-        {contetnts.map((charater, characterIdx) => {
+        {contetnts.map((character, characterIdx) => {
           return (
-            <div className='character-box' key={charater.name} >
+            <div className='character-box' key={character.name} >
               <div className='character-box-title'>
-                <span>{charater.name}</span>
+                <input type='checkbox' checked={character.abledReward} />
+                <span>{character.name}</span>
                 <div onClick={()=>handleDeleteCharacter(characterIdx)}>
                   <BsX size={30}/>
                 </div>
               </div>
               <div className='character-box-list'>
                 <ul>
-                  {charater.content.map((raidInfo, raidIdx) => {
+                  {character.content.map((raidInfo, raidIdx) => {
                     const key = Object.keys(raidInfo)[0];
                     return (
                       <li key={raidIdx}>
-                        <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
-                          <BsX />
+                        <div>
+                          <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
+                            <BsX />
+                          </div>
+                          <div>{key}</div>
+                          <input 
+                            type="checkbox" checked={raidInfo[key].isDone}
+                            onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
+                          </input>
                         </div>
-                        <div>{key}</div>
-                        <input 
-                          type="checkbox" checked={raidInfo[key]}
-                          onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
-                        </input>
+
+                        <Gold goldReward={raidInfo[key].rewardGold} characterIdx={characterIdx} raidIdx={raidIdx} />                       
                       </li>
                     );
                   })}
                 </ul>
+              </div>
+              <div className='character-box-sum-gold'>
+                <SumGold contents={character.content}></SumGold>
               </div>
               <div className='character-box-add-list'>
                 <input name='listName' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)} />
