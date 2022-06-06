@@ -1,28 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { raidLevel } from '../../data/raidLevel';
+import { RaidInfo, raidLevel } from '../../data/raidLevel';
 import { RootState } from '../store';
+
+type RaidList = {
+  [key: string]: {
+    isDone: boolean;
+    rewardGold: number;
+  }
+}[];
 
 interface ContentsState {
   contents: {
     name: string;
-    content: {
-      [key: string]: boolean;
-    }[];
+    abledReward: boolean;
+    content: RaidList;
   }[];
 }
 
 const initialState: ContentsState = {
-  contents: [
-    {
-      name: '공통',
-      content: [
-        { '도비스': false },
-        { '도가토': false },
-        { '유령선': false },
-        { '로웬주간퀘': false },
-      ]
-    },
-  ]
+  contents: [],
 };
 
 type UpdateContents = {
@@ -50,6 +46,12 @@ type DeleteList = {
   raidIdx: number;
 }
 
+type UpdateRewardGold = {
+  characterIdx: number;
+  raidIdx: number;
+  gold: number;
+}
+
 export const contentsSlice = createSlice({
   name: 'contents',
   initialState,
@@ -58,41 +60,61 @@ export const contentsSlice = createSlice({
       const sliced = state.contents.slice();
       const target = sliced[action.payload.characterIdx].content[action.payload.raidIdx];
       const key = Object.keys(target)[0];
-      target[key] = action.payload.check;
+      target[key].isDone = action.payload.check;
       state.contents = sliced;
     },
     addCharacter: (state, action: PayloadAction<AddCharacter>) => {
       const sliced = state.contents.slice();
-      const abledRaid: {[key: string]: boolean}[] = [];
+      const abledRaid: RaidList = [];
+      const abledRewardCnt = state.contents.filter(el => {
+        return el.abledReward;
+      }).length;
 
       raidLevel.map(el => {
-        const [raidName, levelLimit] = Object.entries(el)[0];
-        if (typeof levelLimit === 'number') {
-          if (levelLimit <= action.payload.level) {
-            abledRaid.push({ [raidName]: false });
+        const [raidName, raidInfo] = Object.entries(el)[0];
+
+        if (!Array.isArray(raidInfo)) {
+          if (raidInfo.leastLevel <= action.payload.level) {
+            let goldReward = raidInfo.reward;
+            if (raidInfo.maximumLevel) {
+              goldReward = raidInfo.maximumLevel <= action.payload.level ? 0 : raidInfo.reward;
+            }
+
+            abledRaid.push({
+              [raidName]: {
+                isDone: false,
+                rewardGold: goldReward,
+              }
+            });
           }
-        }
-        if (typeof levelLimit === 'object') {
-          const limitArr = Object.entries(levelLimit);
-          let result = {
+        } else {
+          const result: {
+            difficulty: string;
+            leastLevel: number;
+            rewardGold: number;
+          } = {
             difficulty: '',
-            level: 0,
+            leastLevel: 0,
+            rewardGold: 0,
           };
-          limitArr.map(el => {
-            const [difficulty, level] = el;
-            if (level <= action.payload.level) {
-              if (result.level < level) {
-                result = {
-                  ...result,
-                  difficulty,
-                  level,
-                }
+
+          raidInfo.map(el => {
+            const [difficulty, info] = Object.entries(el)[0];
+            if (action.payload.level >= info.leastLevel) {
+              if (info.leastLevel > result.leastLevel) {
+                result.leastLevel = info.leastLevel;
+                result.difficulty = difficulty;
+                result.rewardGold = info.reward;
               }
             }
           });
-          if (result.difficulty !== '' && result.level !== 0) { 
+
+          if (result.difficulty !== '') {
             abledRaid.push({
-              [`[${result.difficulty}]${raidName}`]: false
+              [`[${result.difficulty}]${raidName}`]: {
+                isDone: false,
+                rewardGold: result.rewardGold,
+              }
             });
           }
         }
@@ -100,17 +122,23 @@ export const contentsSlice = createSlice({
 
       sliced.push({
         name: action.payload.name,
-        content: abledRaid
+        abledReward: abledRewardCnt < 6 ? true : false,
+        content: abledRaid,
       });
       state.contents = sliced;
     },
     addList: (state, action: PayloadAction<AddList>) => {
       const sliced = state.contents.slice();
-      sliced[action.payload.characterIdx].content.push({ [action.payload.raidName]: false });
+      sliced[action.payload.characterIdx].content.push({ 
+        [action.payload.raidName]: {
+          isDone: false,
+          rewardGold: 0,
+        }
+      });
       state.contents = sliced;
     },
     deleteCharacter: (state, action: PayloadAction<DeleteCharacter>) => {
-      state.contents = state.contents.filter((el, idx) => idx !== action.payload.idx);
+      state.contents = state.contents.filter((_, idx) => idx !== action.payload.idx);
     },
     deleteList: (state, action: PayloadAction<DeleteList>) => {
       const sliced = state.contents.slice();
@@ -123,15 +151,28 @@ export const contentsSlice = createSlice({
     initList: (state) => {
       const sliced = state.contents.slice();
       state.contents = sliced.map(character => {
-        const InitialContent = character.content.map(el => {
+        const InitialContent: RaidList = character.content.map(el => {
           const key = Object.keys(el)[0];
-          return { [key]: false };
+          return { 
+            [key]: {
+              isDone: false,
+              rewardGold: el[key].rewardGold,
+            }
+          };
         });
-        return { 
-          name: character.name,
+
+        return {
+          ...character,
           content: InitialContent,
         }
       });
+    },
+    updateGoldReward: (state, action: PayloadAction<UpdateRewardGold>) => {
+      const sliced = state.contents.slice();
+      const target = sliced[action.payload.characterIdx].content[action.payload.raidIdx];
+      const key = Object.keys(target)[0];
+      target[key].rewardGold = action.payload.gold;
+      state.contents = sliced;
     },
   }
 });
@@ -143,6 +184,7 @@ export const {
   deleteList,
   addList,
   initList,
+  updateGoldReward,
 } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;

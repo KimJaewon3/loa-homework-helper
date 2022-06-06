@@ -183,29 +183,36 @@ export default function Characters() {
       </div>
 
       <div className='character-container'>
-        {contetnts.map((charater, characterIdx) => {
+        {contetnts.map((character, characterIdx) => {
           return (
-            <div className='character-box' key={charater.name} >
+            <div className='character-box' key={character.name} >
               <div className='character-box-title'>
-                <span>{charater.name}</span>
+                <input type='checkbox' checked={character.abledReward} />
+                <span>{character.name}</span>
                 <div onClick={()=>handleDeleteCharacter(characterIdx)}>
                   <BsX size={30}/>
                 </div>
               </div>
               <div className='character-box-list'>
                 <ul>
-                  {charater.content.map((raidInfo, raidIdx) => {
+                  {character.content.map((raidInfo, raidIdx) => {
                     const key = Object.keys(raidInfo)[0];
                     return (
                       <li key={raidIdx}>
-                        <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
-                          <BsX />
+                        <div>
+                          <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
+                            <BsX />
+                          </div>
+                          <div>{key}</div>
+                          <input 
+                            type="checkbox" checked={raidInfo[key].isDone}
+                            onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
+                          </input>
                         </div>
-                        <div>{key}</div>
-                        <input 
-                          type="checkbox" checked={raidInfo[key]}
-                          onChange={e=>changeInputChecked(e, characterIdx, raidIdx)}>
-                        </input>
+
+                        <div>
+                          {raidInfo[key].rewardGold}
+                        </div>                       
                       </li>
                     );
                   })}
