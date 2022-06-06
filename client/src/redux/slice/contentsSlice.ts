@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RaidInfo, raidLevel } from '../../data/raidLevel';
 import { RootState } from '../store';
 
-type RaidList = {
+export type RaidList = {
   [key: string]: {
     isDone: boolean;
     rewardGold: number;

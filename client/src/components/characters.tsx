@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addCharacter, addList, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
 import Gold from './gold';
+import SumGold from './sumGold';
 
 const CharactersDiv = styled.div`
   > span {
@@ -165,6 +166,8 @@ export default function Characters() {
     dispatch(deleteList({ characterIdx, raidIdx }));
   }
 
+
+
   return (
     <CharactersDiv>
       <span>상세 현황</span>
@@ -216,6 +219,9 @@ export default function Characters() {
                     );
                   })}
                 </ul>
+              </div>
+              <div className='character-box-sum-gold'>
+                <SumGold contents={character.content}></SumGold>
               </div>
               <div className='character-box-add-list'>
                 <input name='listName' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)} />

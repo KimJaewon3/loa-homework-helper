@@ -25,7 +25,7 @@ export default function Gold({ goldReward, characterIdx, raidIdx }: GoldProps) {
   const dispatch = useAppDispatch();
   const [isEdited, setIsEdited] = useState(false);
   const [inputValue, setInputValue] = useState({
-    gold: '',
+    gold: '0',
   });
 
   function handleEditGold() {
@@ -33,8 +33,8 @@ export default function Gold({ goldReward, characterIdx, raidIdx }: GoldProps) {
   }
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
-    if (inputValue.gold.length > 7) return;
-
+    const value = Number(e.target.value);
+    if (value < 0 || value > 999999) return;
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
@@ -64,7 +64,7 @@ export default function Gold({ goldReward, characterIdx, raidIdx }: GoldProps) {
     <GoldDiv>
       {isEdited ? (
         <div className='edit-gold-box'>
-          <input type='number' name='gold' onChange={e=>handleInputValue(e)} value={inputValue.gold} />
+          <input type='number' name='gold' onChange={e=>handleInputValue(e)} value={inputValue.gold}/>
           <div onClick={handleSubmitGold}>v</div>
           <div onClick={handleCancleSubmit}>x</div>
         </div>
