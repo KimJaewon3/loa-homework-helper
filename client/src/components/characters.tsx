@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { addCharacter, addList, deleteCharacter, deleteList, updateContent } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
+import Gold from './gold';
 
 const CharactersDiv = styled.div`
   > span {
@@ -210,9 +211,7 @@ export default function Characters() {
                           </input>
                         </div>
 
-                        <div>
-                          {raidInfo[key].rewardGold}
-                        </div>                       
+                        <Gold goldReward={raidInfo[key].rewardGold} characterIdx={characterIdx} raidIdx={raidIdx} />                       
                       </li>
                     );
                   })}
