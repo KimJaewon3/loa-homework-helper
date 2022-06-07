@@ -52,6 +52,10 @@ type UpdateRewardGold = {
   gold: number;
 }
 
+type UpdateSixTimesLimit = {
+  characterIdx: number;
+}
+
 export const contentsSlice = createSlice({
   name: 'contents',
   initialState,
@@ -174,6 +178,26 @@ export const contentsSlice = createSlice({
       target[key].rewardGold = action.payload.gold;
       state.contents = sliced;
     },
+    updateSixTimesLimit: (state, action: PayloadAction<UpdateSixTimesLimit>) => {
+      const sliced = state.contents.slice();
+      const CheckedIdxArr: number[] = [];
+      sliced.map((el, idx) => {
+        if (el.abledReward) {
+          CheckedIdxArr.push(idx);
+        }
+      });
+
+      if (CheckedIdxArr.length === 6 && !CheckedIdxArr.includes(action.payload.characterIdx)) {
+        return;
+      }
+
+      sliced.map((el, idx) => {
+        if (idx === action.payload.characterIdx) {
+          el.abledReward = !el.abledReward;
+        }
+      });
+      state.contents = sliced;
+    },
   }
 });
 
@@ -185,6 +209,7 @@ export const {
   addList,
   initList,
   updateGoldReward,
+  updateSixTimesLimit,
 } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;

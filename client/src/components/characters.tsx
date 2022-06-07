@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
 import Gold from './gold';
@@ -166,6 +166,10 @@ export default function Characters() {
     dispatch(deleteList({ characterIdx, raidIdx }));
   }
 
+  function handleSixTimesLimit(characterIdx: number) {
+    dispatch(updateSixTimesLimit({ characterIdx }));
+  }
+
 
 
   return (
@@ -191,7 +195,7 @@ export default function Characters() {
           return (
             <div className='character-box' key={character.name} >
               <div className='character-box-title'>
-                <input type='checkbox' checked={character.abledReward} />
+                <input type='checkbox' checked={character.abledReward} onChange={()=>handleSixTimesLimit(characterIdx)} />
                 <span>{character.name}</span>
                 <div onClick={()=>handleDeleteCharacter(characterIdx)}>
                   <BsX size={30}/>
