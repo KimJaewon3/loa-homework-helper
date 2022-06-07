@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
 import Gold from './gold';
 import SumGold from './sumGold';
+import { addAccountBookList, deleteAccountBookList } from '../redux/slice/accountBookSlice';
 
 const CharactersDiv = styled.div`
   > span {
@@ -127,6 +128,11 @@ export default function Characters() {
       name: inpuValue.name,
       level: inpuValue.level,
     }));
+    dispatch(addAccountBookList({
+      type: 'character',
+      history: inpuValue.name,
+      gold: 0,
+    }))
     setIsAddCharacterModalOpen(false);
     setIsAbledInputValue(true);
     setInputValue({
@@ -160,10 +166,18 @@ export default function Characters() {
 
   function handleDeleteCharacter(idx: number) {
     dispatch(deleteCharacter({ idx }));
+    dispatch(deleteAccountBookList({
+      type: 'character',
+      targetIdx: idx,
+    }));
   }
 
   function handleDeleteList(characterIdx: number, raidIdx: number) {
     dispatch(deleteList({ characterIdx, raidIdx }));
+  }
+
+  function handleSixTimesLimit(characterIdx: number) {
+    dispatch(updateSixTimesLimit({ characterIdx }));
   }
 
 
@@ -191,7 +205,7 @@ export default function Characters() {
           return (
             <div className='character-box' key={character.name} >
               <div className='character-box-title'>
-                <input type='checkbox' checked={character.abledReward} />
+                <input type='checkbox' checked={character.abledReward} onChange={()=>handleSixTimesLimit(characterIdx)} />
                 <span>{character.name}</span>
                 <div onClick={()=>handleDeleteCharacter(characterIdx)}>
                   <BsX size={30}/>
