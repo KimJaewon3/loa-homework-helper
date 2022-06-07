@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RaidInfo, raidLevel } from '../../data/raidLevel';
+import { raidLevel } from '../../data/raidLevel';
 import { RootState } from '../store';
 
 export type RaidList = {

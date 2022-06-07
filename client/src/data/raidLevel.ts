@@ -51,7 +51,7 @@ export const raidLevel: RaidLevel = [
       },
       {
         '하드': {
-          leastLevel: 1445,
+          leastLevel: 1460,
           reward: 4500,
         }
       },

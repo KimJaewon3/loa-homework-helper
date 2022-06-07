@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
 import Gold from './gold';
 import SumGold from './sumGold';
+import { addAccountBookList, deleteAccountBookList } from '../redux/slice/accountBookSlice';
 
 const CharactersDiv = styled.div`
   > span {
@@ -127,6 +128,11 @@ export default function Characters() {
       name: inpuValue.name,
       level: inpuValue.level,
     }));
+    dispatch(addAccountBookList({
+      type: 'character',
+      history: inpuValue.name,
+      gold: 0,
+    }))
     setIsAddCharacterModalOpen(false);
     setIsAbledInputValue(true);
     setInputValue({
@@ -160,6 +166,10 @@ export default function Characters() {
 
   function handleDeleteCharacter(idx: number) {
     dispatch(deleteCharacter({ idx }));
+    dispatch(deleteAccountBookList({
+      type: 'character',
+      targetIdx: idx,
+    }));
   }
 
   function handleDeleteList(characterIdx: number, raidIdx: number) {

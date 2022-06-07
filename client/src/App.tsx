@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import './App.css';
+import AccountBook from './components/accountBook';
 import Characters from './components/characters';
 import Menu from './components/menu';
 import Monitoring from './components/monitoring';
@@ -18,6 +19,7 @@ function App() {
   return (
     <Wrap>
       <Menu />
+      <AccountBook />
       <section>
         <Monitoring />
         <Characters />
