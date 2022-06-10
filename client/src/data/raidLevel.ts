@@ -99,7 +99,7 @@ export const raidLevel: RaidLevel = [
     '아브56': [
       {
         '노말': {
-          leastLevel: 1490,
+          leastLevel: 1520,
           reward: 2500,
         },
       },
