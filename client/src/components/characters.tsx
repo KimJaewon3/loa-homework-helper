@@ -69,6 +69,9 @@ const CharactersDiv = styled.div`
       border-bottom: 2px solid #ffffff;
       background-color: rgb(172, 172, 172);
       border-radius: 10px 10px 0 0;
+      span {
+        font-weight: bold;
+      }
     }
     .character-box-list {
       ul {
