@@ -33,7 +33,6 @@ const MenuBtn = styled.div`
   border-radius: 10px;
   border: 2px solid black;
   position: relative;
-  width: 6.5em;
   z-index: 5;
   > * {
     margin: 0 5px 0 0;

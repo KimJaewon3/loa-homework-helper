@@ -9,7 +9,7 @@ const RewardInfoDiv = styled.div`
   top: 1.5em;
   padding-top: 1em;
   z-index: 4;
-  width: 7.1em;
+  width: 89%;
   border: 2px solid black;
   border-radius: 0 0 10px 10px;
   .reward-info-menu-list{
