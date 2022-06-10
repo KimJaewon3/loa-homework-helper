@@ -3,42 +3,37 @@ import styled, { keyframes } from 'styled-components';
 import { GrMoney, GrNotification } from "react-icons/gr";
 import { useAppDispatch } from '../redux/store';
 import { initList } from '../redux/slice/contentsSlice';
+import RewardInfo from './rewardInfo';
 
 const MenuDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  h1 {
+  background-color: #7686db;
+  
+ > span {
+    font-size: 1.2em;
+    font-weight: bold;
     margin: 1em;
     color: white;
   }
   > div {
     display: flex;
     align-items: center;
-    .reward-menu-box {
-      position: relative;
-    }
-    .reward-menu {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 3;
-      background-color: green;
-      padding: 0.5em;
-      width: 6.5em;
-    }
-    .is-open {
-    }
+  }
+  .reward-menu-box {
+    position: relative;
   }
 `;
 
 const MenuBtn = styled.div`
   background-color: white;
-  margin: 0 3em 0 0;
-  padding: 0.5em;
+  margin: 0 10px 0 0;
+  padding: 5px;
   border-radius: 10px;
-  width: 6.5em;
-  z-index: 5;
+  > * {
+    margin: 0 5px 0 0;
+  }
 `;
 
 export default function Menu() {
@@ -50,24 +45,24 @@ export default function Menu() {
   }
 
   function handleRewardOpen() {
-    //setIsRewardMenuOpen(true);
+    setIsRewardMenuOpen(!isRewardMenuOpen);
   }
 
   return (
     <MenuDiv>
-      <h1>로아 숙제 현황판</h1>
+      <span>로아 숙제 현황판</span>
       <div>
         <MenuBtn onClick={handleInitialList}>
-          전체 초기화 <GrNotification />
+          <span>전체 초기화</span>
+          <GrNotification />
         </MenuBtn>
         <div className='reward-menu-box'>
-          {/*
-            <div className={`reward-menu ${isRewardMenuOpen && 'is-open'}`} >준비중</div>
-          */}
-            <MenuBtn onMouseEnter={handleRewardOpen}>
-            레이드 보상 <GrMoney />
+          <MenuBtn onClick={handleRewardOpen}>
+            <span>레이드 보상</span>
+            <GrMoney />
           </MenuBtn>
-          </div>
+          {isRewardMenuOpen && <RewardInfo />}
+        </div>
       </div>
     </MenuDiv>
   )

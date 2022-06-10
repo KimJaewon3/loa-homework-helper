@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -8,12 +8,15 @@ import SumGold from './sumGold';
 import { addAccountBookList, deleteAccountBookList } from '../redux/slice/accountBookSlice';
 
 const CharactersDiv = styled.div`
+  > * {
+    margin: 1em;
+  }
   > span {
-    font-size: 30px;
+    font-size: 1.5em;
     color: white;
+    margin-left: 0;
   }
   .characters-add-box {
-    margin: 10px 0 0 30px;
     > button {
       border-radius: 5px;
       border: none;
@@ -39,47 +42,50 @@ const CharactersDiv = styled.div`
   .character-container {
     display: flex;
     flex-wrap: wrap;
-    margin: 30px;
     align-items: flex-start;
     .character-box {
       border: 2px solid #ffffff;
       border-radius: 10px;
       background-color: rgb(240, 248, 255, 0.8);
-      margin: 2em 2em 0 0;
+      margin: 0 1em 1em 0;
       > * {
-        padding: 20px;
+        padding: 5px;
       }
     }
     .character-box-title {
       display: flex;
       align-items: center;
-      padding: 10px 20px 10px 20px;
       justify-content: space-between;
       border-bottom: 2px solid #ffffff;
       background-color: rgb(172, 172, 172);
       border-radius: 10px 10px 0 0;
-      span {
-        font-size: larger;
-      }
     }
     .character-box-list {
       ul {
         padding: 0;
       }
       li {
+        border-bottom: 1px solid #8c8c8c;
         list-style: none;
         display: flex;
         align-items: center;
-        margin: 5px 0 5px 0;
+        margin: 0 0 5px 0;
+        justify-content: space-between;
+        > * {
+          margin: 0 10px 5px 0;
+        }
         >:first-child {
-          margin: 5px 1em 0 0;
+          display: flex;
+          align-items: center;
         }
       }
     }
     .character-box-add-list {
       > * {
-
         padding: 5px;
+      }
+      > input {
+        width: 14em;
       }
       > button {
         width: 2.5em;
@@ -94,7 +100,7 @@ type InputValue = {
   listName: '',
 }
 
-export default function Characters() {
+const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   const [isAbledInputValue, setIsAbledInputValue] = useState(true);
   const [alertText, setAlerText] = useState('');
   const [isAddCharacterModalOpen, setIsAddCharacterModalOpen] = useState(false);
@@ -107,6 +113,7 @@ export default function Characters() {
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.name === 'name' && e.target.value.length > 12) return;
     setInputValue({
       ...inpuValue,
       [e.target.name]: e.target.value
@@ -183,7 +190,7 @@ export default function Characters() {
 
 
   return (
-    <CharactersDiv>
+    <CharactersDiv ref={ref}>
       <span>상세 현황</span>
 
       <div className='characters-add-box'>
@@ -193,7 +200,7 @@ export default function Characters() {
         )}
         {isAddCharacterModalOpen && (
           <div className='add-box-input-info'>
-            <input name='name' placeholder='캐릭터명' onChange={e=>handleInputValue(e)}></input>
+            <input name='name' placeholder='캐릭터명' onChange={e=>handleInputValue(e)} value={inpuValue.name}></input>
             <input name='level' placeholder='레벨' onChange={e=>handleInputValue(e)}></input>
             <button onClick={submitAddCharacter}>확인</button>
           </div>
@@ -205,11 +212,11 @@ export default function Characters() {
           return (
             <div className='character-box' key={character.name} >
               <div className='character-box-title'>
-                <input type='checkbox' checked={character.abledReward} onChange={()=>handleSixTimesLimit(characterIdx)} />
-                <span>{character.name}</span>
-                <div onClick={()=>handleDeleteCharacter(characterIdx)}>
-                  <BsX size={30}/>
+                <div>
+                  <input type='checkbox' checked={character.abledReward} onChange={()=>handleSixTimesLimit(characterIdx)} />
+                  <span>{character.name}</span>
                 </div>
+                <BsX size={30} onClick={()=>handleDeleteCharacter(characterIdx)}/>
               </div>
               <div className='character-box-list'>
                 <ul>
@@ -218,9 +225,7 @@ export default function Characters() {
                     return (
                       <li key={raidIdx}>
                         <div>
-                          <div onClick={()=>handleDeleteList(characterIdx, raidIdx)}>
-                            <BsX />
-                          </div>
+                          <BsX onClick={()=>handleDeleteList(characterIdx, raidIdx)}/>
                           <div>{key}</div>
                           <input 
                             type="checkbox" checked={raidInfo[key].isDone}
@@ -247,4 +252,6 @@ export default function Characters() {
       </div>
     </CharactersDiv>
   )
-}
+});
+
+export default Characters;

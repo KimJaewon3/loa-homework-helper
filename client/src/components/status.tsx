@@ -19,7 +19,7 @@ const CircleProgress = styled.div<CircleProgressProps>`
     circle {
       fill: none;
       stroke: #b5b9b5;
-      stroke-width: 15;
+      stroke-width: 10;
     }
   }
   .circle-progress {
@@ -31,7 +31,7 @@ const CircleProgress = styled.div<CircleProgressProps>`
       transform-origin: center;
       fill: none;
       stroke: ${props => props.overall ? `#d75959` : `#3aa639`};
-      stroke-width: 15;
+      stroke-width: 10;
       stroke-linecap: round;
       stroke-dasharray: ${props => props.circumference}px;
       animation: ${props => movePercent(props.circumference, props.progress)} 1s ease forwards;
@@ -63,7 +63,7 @@ interface Props {
 }
 
 export default function Status({ percent, overall }: Props) {
-  const RADIUS = 80; // 원크기 조절
+  const RADIUS = 50; // 원크기 조절
   const circumference = 2 * Math.PI * RADIUS;
   const progress = circumference * (1 - percent / 100);
 
