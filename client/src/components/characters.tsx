@@ -6,15 +6,25 @@ import { BsX } from "react-icons/bs";
 import Gold from './gold';
 import SumGold from './sumGold';
 import { addAccountBookList, deleteAccountBookList } from '../redux/slice/accountBookSlice';
+import { GrMoney } from 'react-icons/gr';
 
 const CharactersDiv = styled.div`
   > * {
     margin: 1em;
   }
-  > span {
+  .character-title-container {
     font-size: 1.5em;
     color: white;
     margin-left: 0;
+    display: flex;
+    align-items: center;
+  }
+  .character-gold-notice {
+    margin-left: 1em;
+    font-size: 0.5em;
+    > svg path {
+      stroke: white;
+    }
   }
   .characters-add-box {
     > button {
@@ -187,11 +197,16 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     dispatch(updateSixTimesLimit({ characterIdx }));
   }
 
-
-
   return (
     <CharactersDiv ref={ref}>
-      <span>상세 현황</span>
+      <div className='character-title-container'>
+        <span>상세 현황</span>
+        <div className='character-gold-notice'>
+          <span>* </span>
+          <GrMoney size={14} />
+          <span>를 클릭해 골드를 변경할 수 있습니다.</span>
+        </div>
+      </div>
 
       <div className='characters-add-box'>
         <button onClick={handleAddCharacter}>+ 캐릭터 추가하기</button>

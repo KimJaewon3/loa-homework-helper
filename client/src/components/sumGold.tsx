@@ -8,11 +8,10 @@ type SumGoldProps = {
 }
 
 const SumGoldDiv = styled.div`
-  .sum-gold-notice {
-    font-size: 0.7em;
-    opacity: 0.7;
+  > * {
+    margin-left: 5px;
   }
-`
+`;
 
 export default function SumGold({ contents }: SumGoldProps) {
   let allSum = 0;
@@ -27,11 +26,6 @@ export default function SumGold({ contents }: SumGoldProps) {
 
   return (
     <SumGoldDiv>
-      <div className='sum-gold-notice'>
-        <span>* </span>
-        <GrMoney size={13}/>
-        <span>를 클릭해 골드를 변경할 수 있습니다.</span>
-      </div>
       <div>전체 골드: {allSum}</div>
       <div>획득 골드: {ingSum}</div>
     </SumGoldDiv>
