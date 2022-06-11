@@ -9,7 +9,7 @@ export type RaidList = {
   }
 }[];
 
-interface ContentsState {
+export interface ContentsState {
   contents: {
     name: string;
     abledReward: boolean;

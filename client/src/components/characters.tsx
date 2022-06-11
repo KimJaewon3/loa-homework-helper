@@ -203,7 +203,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   return (
     <CharactersDiv ref={ref}>
       <div className='character-title-container'>
-        <span>상세 현황</span>
+        <span>캐릭터 현황</span>
         <div className='character-gold-notice'>
           <span>* </span>
           <GrMoney size={14} />
