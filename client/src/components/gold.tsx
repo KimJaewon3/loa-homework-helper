@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { updateGoldReward } from '../redux/slice/contentsSlice';
 import { useAppDispatch } from '../redux/store';
+import { GrMoney } from "react-icons/gr";
 
 const GoldDiv = styled.div`
   .edit-gold-box {
@@ -10,8 +11,19 @@ const GoldDiv = styled.div`
       margin-left: 10px;
     }
     input {
-      width: 7em;
+      width: 6em;
     }
+    .edit-gold-v {
+      color: #088108;
+    }
+    .edit-gold-x {
+      color: #bf0d0d;
+    }
+  }
+  .gold-info {
+    > span {
+      margin-right: 5px;
+    } 
   }
 `;
 
@@ -65,11 +77,14 @@ export default function Gold({ goldReward, characterIdx, raidIdx }: GoldProps) {
       {isEdited ? (
         <div className='edit-gold-box'>
           <input type='number' name='gold' onChange={e=>handleInputValue(e)} value={inputValue.gold}/>
-          <div onClick={handleSubmitGold}>v</div>
-          <div onClick={handleCancleSubmit}>x</div>
+          <div className='edit-gold-v' onClick={handleSubmitGold}>v</div>
+          <div className='edit-gold-x' onClick={handleCancleSubmit}>x</div>
         </div>
       ) : (
-        <div onClick={handleEditGold}>{goldReward}</div>
+        <div className='gold-info' onClick={handleEditGold}>
+          <span>{goldReward}</span>
+          <GrMoney size={14}/>
+        </div>
       )}
     </GoldDiv>
   )

@@ -1,37 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../redux/store';
 import Status from './status';
 
 const Monitor = styled.div`
   > * {
-    margin: 30px;
+    margin: 1em;
   }
-  > span {
+  .monitor-title {
     margin-left: 0;
-    font-size: 30px;
+    font-size: 1.5em;
     color: white;
   }
   .monitor-progress {
     display: flex;
-    border: 2px solid #b5b2b2;
     border-radius: 10px;
-    padding: 2em;
+    padding: 0.5em;
     flex-wrap: wrap;
     background-color: rgb(240, 248, 255, 0.8);
     > div {
-      margin: 10px 20px 10px 20px;
+      margin: 5px 20px 5px 20px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       > span {
-      font-size: 20px;
-      text-align: center;
+        text-align: center;
+        font-size: 0.8em;
       }
     }
   }
 `;
 
-export default function Monitoring() {
+const Monitoring = forwardRef<HTMLDivElement>(function Monitoring(props, ref) {
   const [ percentArr, setPersentArr ] = useState<{ name: string, percent: number }[]>([]);
   const contents = useAppSelector((state => state.contentsReducer.contents));
 
@@ -55,8 +56,8 @@ export default function Monitoring() {
   }, [contents]);
 
   return (
-    <Monitor>
-      <span>전체 현황</span>
+    <Monitor ref={ref}>
+      <span className='monitor-title'>전체 현황</span>
 
       <div className='monitor-progress'>
         <div>
@@ -84,4 +85,6 @@ export default function Monitoring() {
       </div>
     </Monitor>
   )
-}
+});
+
+export default Monitoring;

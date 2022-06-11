@@ -1,9 +1,17 @@
 import React from 'react';
 import { RaidList } from '../redux/slice/contentsSlice';
+import { GrMoney } from "react-icons/gr";
+import styled from 'styled-components';
 
 type SumGoldProps = {
   contents: RaidList;
 }
+
+const SumGoldDiv = styled.div`
+  > * {
+    margin-left: 5px;
+  }
+`;
 
 export default function SumGold({ contents }: SumGoldProps) {
   let allSum = 0;
@@ -17,9 +25,9 @@ export default function SumGold({ contents }: SumGoldProps) {
   });
 
   return (
-    <div>
+    <SumGoldDiv>
       <div>전체 골드: {allSum}</div>
       <div>획득 골드: {ingSum}</div>
-    </div>
+    </SumGoldDiv>
   )
 }

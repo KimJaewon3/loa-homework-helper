@@ -1,17 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { addAccountBookList, updateAccountBookList } from '../redux/slice/accountBookSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import AccountBookList, { accGold } from './accountBookList';
 
 const AccountBookDiv = styled.div`
-  background-color: white;
-  li {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  > * {
+    margin: 1em;
+  }
+  .account-book-title {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 0;
+  }
+  .account-book-container {
+    width: fit-content;
+    background-color: rgb(240, 248, 255, 0.8);
+    border-radius: 10px;
+    padding: 0.5em;
+    > * {
+      padding: 0.5em;
+    }
+    .account-book-total-sum {
+      font-size: 1.1em;
+      font-weight: bold;
+      text-align: right;
+    }
+    .deposit-withdraw-container {
+      display: flex;
+      align-items: center;
+      input {
+        height: 20px;
+        margin: 0 10px 0 10px;
+      }
+      button {
+        height: 26px;
+      }
+    }
   }
 `;
 
-export default function AccountBook() {
+const AccountBook = forwardRef<HTMLDivElement>(function AccountBook(props, ref) {
   const dispatch = useAppDispatch();
   const contents = useAppSelector(state => state.contentsReducer.contents);
   const accountBook = useAppSelector(state => state.accountBookReducer.accountBook);
@@ -77,30 +108,34 @@ export default function AccountBook() {
   }
 
   return (
-    <AccountBookDiv>
-      <div>골드 현황 가계부</div>
+    <AccountBookDiv ref={ref}>
+      <span className='account-book-title'>골드 현황</span>
 
-      <AccountBookList type='character'/>
-      <AccountBookList type='etc'/>
-     
-      <div>
-        <span>전체 합계: </span>
-        <span>{accGold(accountBook.character) + accGold(accountBook.etc)}</span>
-      </div>
+      <div className='account-book-container'>
+        <AccountBookList type='character'/>
+        <AccountBookList type='etc'/>
       
-      <div>
-        <div>입금 : </div>
-        <input name='depositHistory' type='text' placeholder='항목' onChange={e=>handleInputValue(e)} value={inputValue.depositHistory}></input>
-        <input name='depositGold' type='number' placeholder='금액' onChange={e=>handleInputValue(e)} value={inputValue.depositGold}></input>
-        <button onClick={()=>handleAddAccountList('deposit')}>확인</button>
-      </div>
+        <div className='account-book-total-sum'>
+          <span>전체 합계: </span>
+          <span>{accGold(accountBook.character) + accGold(accountBook.etc)}</span>
+        </div>
+      
+        <div className='deposit-withdraw-container'>
+          <span>입금 : </span>
+          <input name='depositHistory' type='text' placeholder='항목' onChange={e=>handleInputValue(e)} value={inputValue.depositHistory}></input>
+          <input name='depositGold' type='number' placeholder='금액' onChange={e=>handleInputValue(e)} value={inputValue.depositGold}></input>
+          <button onClick={()=>handleAddAccountList('deposit')}>확인</button>
+        </div>
 
-      <div>
-        <div>출금 : </div>
-        <input name='withdrawHistory' type='text' placeholder='항목' onChange={e=>handleInputValue(e)} value={inputValue.withdrawHistory}></input>
-        <input name='withdrawGold' type='number' placeholder='금액' onChange={e=>handleInputValue(e)} value={inputValue.withdrawGold}></input>
-        <button onClick={()=>handleAddAccountList('withdraw')}>확인</button>
+        <div className='deposit-withdraw-container'>
+          <span>출금 : </span>
+          <input name='withdrawHistory' type='text' placeholder='항목' onChange={e=>handleInputValue(e)} value={inputValue.withdrawHistory}></input>
+          <input name='withdrawGold' type='number' placeholder='금액' onChange={e=>handleInputValue(e)} value={inputValue.withdrawGold}></input>
+          <button onClick={()=>handleAddAccountList('withdraw')}>확인</button>
+        </div>
       </div>
     </AccountBookDiv>
   )
-}
+})
+
+export default AccountBook;
