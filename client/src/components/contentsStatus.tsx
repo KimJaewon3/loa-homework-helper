@@ -62,7 +62,7 @@ const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props,
               <ul>
                 {el.total.map((character, cidx) => {
                   return (
-                    <CharacterLi isDone={el.done.includes(character)}>
+                    <CharacterLi isDone={el.done.includes(character)} key={cidx}>
                       <span>{character}</span>
                     </CharacterLi>
                   );
