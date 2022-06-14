@@ -20,6 +20,7 @@ const ContentsStatusDiv = styled.div`
     flex-wrap: wrap;
     align-items: flex-start;
     .contents-status-characters-box {
+      display: flex;
       border: 2px solid #ffffff;
       border-radius: 10px;
       background-color: rgb(240, 248, 255, 0.8);
@@ -28,15 +29,20 @@ const ContentsStatusDiv = styled.div`
         padding: 0.5em;
       }
       .contents-status-characters-title {
-        border-bottom: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
         background-color: rgb(108 184 86);
-        border-radius: 10px 10px 0 0;
+        border-radius: 10px 0px 0 10px;
+        display: flex;
+        align-items: center;
         > span {
           font-weight: bold;
         }
       }
       ul {
         padding: 0;
+        display: flex;
+        align-items: center;
+        margin: 5px 0 5px 0;
       }
       li {
         list-style: none;
@@ -46,9 +52,9 @@ const ContentsStatusDiv = styled.div`
 `;
 
 const CharacterLi = styled.li<{ isDone: boolean}>`
+  margin:  0 10px 0 10px;
   > span {
     color: ${(props) => props.isDone ? '#21aa21' : 'black'};
-    padding: 0.5em;
   }
 `;
 
@@ -105,6 +111,9 @@ const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props,
                   return (
                     <CharacterLi isDone={el.done.includes(character)} key={cidx}>
                       <span>{character}</span>
+                      {cidx !== el.total.length -1 && (
+                        <span>,</span>
+                      )}
                     </CharacterLi>
                   );
                 })}
