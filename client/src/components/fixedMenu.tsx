@@ -57,6 +57,7 @@ export default function FixedMenu({
   
   return (
     <FixedMenuDiv>
+      {isMemoBoardOpen && <MemoBoard />}
       <div onClick={()=>gotoTargetRef(monitoringRef)}>전체현황</div>
       <div onClick={()=>gotoTargetRef(characterRef)}>캐릭터현황</div>
       <div onClick={()=>gotoTargetRef(contentsStatusRef)}>컨텐츠현황</div>
@@ -65,7 +66,6 @@ export default function FixedMenu({
       <div className='fixed-menu-goto-up' onClick={gotoUp}>
         <AiOutlineArrowUp />
       </div>
-      {isMemoBoardOpen && <MemoBoard />}
     </FixedMenuDiv>
   )
 }

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { addCharacter, addList, deleteCharacter, deleteList, RaidList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -67,7 +67,7 @@ const CharactersDiv = styled.div`
       align-items: center;
       justify-content: space-between;
       border-bottom: 2px solid #ffffff;
-      background-color: rgb(172, 172, 172);
+      background-color: rgb(108 184 86);
       border-radius: 10px 10px 0 0;
       span {
         font-weight: bold;
@@ -121,9 +121,10 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     name: '',
     level: 0,
     listName: '',
-  })
+  });
   const dispatch = useAppDispatch();
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
+  // const listNameInputRef = useRef<HTMLInputElement[]>([]);
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === 'name' && e.target.value.length > 12) return;
@@ -181,7 +182,8 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     setInputValue({
       ...inpuValue,
       listName: '',
-    })
+    });
+    //listNameInputRef.current[characterIdx].value = '';
   }
 
   function handleDeleteCharacter(idx: number) {
@@ -199,6 +201,12 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   function handleSixTimesLimit(characterIdx: number) {
     dispatch(updateSixTimesLimit({ characterIdx }));
   }
+  /*
+  function handlePressEnterKey(e: React.KeyboardEvent<HTMLInputElement>, characterIdx: number) {
+    if (e.key !== 'Enter') return;
+    handleAddList(characterIdx);
+  }
+  */
 
   return (
     <CharactersDiv ref={ref}>
@@ -261,7 +269,20 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                 <SumGold contents={character.content}></SumGold>
               </div>
               <div className='character-box-add-list'>
-                <input name='listName' placeholder=' + 리스트 추가하기' onChange={e=>handleInputValue(e)} />
+                <input 
+                  name='listName' 
+                  placeholder=' + 리스트 추가하기' 
+                  onChange={e=>handleInputValue(e)}
+                  /*
+                  onKeyDown={e=>handlePressEnterKey(e, characterIdx)}
+                  ref={el => {
+                    if (el !== null) {
+                      listNameInputRef.current[characterIdx] = el;
+                    }
+                  }
+                  }
+                  */
+                />
                 <button onClick={()=>handleAddList(characterIdx)}>+</button>
               </div>
             </div>

@@ -1,15 +1,54 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ContentsState } from '../redux/slice/contentsSlice';
 import { useAppSelector } from '../redux/store';
 
 const ContentsStatusDiv = styled.div`
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  > * {
+    margin: 1em;
+  }
+  .contents-status-title {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 0;
+  }
+  .contents-status-characters-container {
+    border-radius: 10px;
+    padding: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    .contents-status-characters-box {
+      border: 2px solid #ffffff;
+      border-radius: 10px;
+      background-color: rgb(240, 248, 255, 0.8);
+      margin: 0 1em 1em 0;
+      > * {
+        padding: 0.5em;
+      }
+      .contents-status-characters-title {
+        border-bottom: 2px solid #ffffff;
+        background-color: rgb(108 184 86);
+        border-radius: 10px 10px 0 0;
+        > span {
+          font-weight: bold;
+        }
+      }
+      ul {
+        padding: 0;
+      }
+      li {
+        list-style: none;
+      }
+    }
+  }
 `;
 
 const CharacterLi = styled.li<{ isDone: boolean}>`
   > span {
-    color: ${(props) => props.isDone ? 'green' : 'black'};
+    color: ${(props) => props.isDone ? '#21aa21' : 'black'};
+    padding: 0.5em;
   }
 `;
 
@@ -53,12 +92,14 @@ const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props,
 
   return (
     <ContentsStatusDiv ref={ref}>
-      <span>컨텐츠 현황</span>
-      <div>
+      <span className='contents-status-title'>컨텐츠 현황</span>
+      <div className='contents-status-characters-container'>
         {contentsFilter?.map((el, idx) => {
           return (
-            <div key={idx}>
-              <span>{el.category}</span>
+            <div key={idx} className='contents-status-characters-box'>
+              <div className='contents-status-characters-title'>
+                <span>{el.category}</span>
+              </div>
               <ul>
                 {el.total.map((character, cidx) => {
                   return (
