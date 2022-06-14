@@ -124,7 +124,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   });
   const dispatch = useAppDispatch();
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
-  // const listNameInputRef = useRef<HTMLInputElement[]>([]);
+  const listNameInputRef = useRef<HTMLInputElement[]>([]);
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === 'name' && e.target.value.length > 12) return;
@@ -183,7 +183,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
       ...inpuValue,
       listName: '',
     });
-    //listNameInputRef.current[characterIdx].value = '';
+    listNameInputRef.current[characterIdx].value = '';
   }
 
   function handleDeleteCharacter(idx: number) {
@@ -201,12 +201,11 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   function handleSixTimesLimit(characterIdx: number) {
     dispatch(updateSixTimesLimit({ characterIdx }));
   }
-  /*
+  
   function handlePressEnterKey(e: React.KeyboardEvent<HTMLInputElement>, characterIdx: number) {
     if (e.key !== 'Enter') return;
     handleAddList(characterIdx);
   }
-  */
 
   return (
     <CharactersDiv ref={ref}>
@@ -273,7 +272,6 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                   name='listName' 
                   placeholder=' + 리스트 추가하기' 
                   onChange={e=>handleInputValue(e)}
-                  /*
                   onKeyDown={e=>handlePressEnterKey(e, characterIdx)}
                   ref={el => {
                     if (el !== null) {
@@ -281,7 +279,6 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                     }
                   }
                   }
-                  */
                 />
                 <button onClick={()=>handleAddList(characterIdx)}>+</button>
               </div>
