@@ -26,9 +26,15 @@ type FixedMenuProps = {
   accountBookRef: React.RefObject<HTMLDivElement>;
   characterRef: React.RefObject<HTMLDivElement>;
   monitoringRef: React.RefObject<HTMLDivElement>;
+  contentsStatusRef: React.RefObject<HTMLDivElement>;
 }
 
-export default function FixedMenu({ accountBookRef, characterRef, monitoringRef }: FixedMenuProps) {
+export default function FixedMenu({ 
+  accountBookRef,
+  characterRef,
+  monitoringRef,
+  contentsStatusRef
+}: FixedMenuProps) {
   const [isMemoBoardOpen, setIsMemoBoardOpen] = useState(false);
 
   function handleMemoBoardBtnClick() {
@@ -51,14 +57,15 @@ export default function FixedMenu({ accountBookRef, characterRef, monitoringRef 
   
   return (
     <FixedMenuDiv>
+      {isMemoBoardOpen && <MemoBoard />}
       <div onClick={()=>gotoTargetRef(monitoringRef)}>전체현황</div>
-      <div onClick={()=>gotoTargetRef(characterRef)}>상세현황</div>
+      <div onClick={()=>gotoTargetRef(characterRef)}>캐릭터현황</div>
+      <div onClick={()=>gotoTargetRef(contentsStatusRef)}>컨텐츠현황</div>
       <div onClick={()=>gotoTargetRef(accountBookRef)}>골드현황</div>
       <div onClick={handleMemoBoardBtnClick}>메모장</div>
       <div className='fixed-menu-goto-up' onClick={gotoUp}>
         <AiOutlineArrowUp />
       </div>
-      {isMemoBoardOpen && <MemoBoard />}
     </FixedMenuDiv>
   )
 }

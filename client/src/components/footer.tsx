@@ -5,6 +5,9 @@ import { mococoImg } from '../img/mococoImg';
 const FooterDiv = styled.footer`
   background-color: white;
   margin-top: 2em;
+  overflow: hidden;
+  max-width: 100%;
+  height: 110px;
   > img {
     width: 100px;
     height: 100px;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './App.css';
 import AccountBook from './components/accountBook';
 import Characters from './components/characters';
+import ContentsStatus from './components/contentsStatus';
 import FixedMenu from './components/fixedMenu';
 import Footer from './components/footer';
 import MemoBoard from './components/memoBoard';
@@ -17,6 +18,7 @@ const Wrap = styled.div`
     > div {
       margin-top: 1em;
     }
+    
   }
 `;
 
@@ -24,6 +26,7 @@ function App() {
   const accountBookRef = useRef<HTMLDivElement>(null);
   const characterRef = useRef<HTMLDivElement>(null);
   const monitoringRef = useRef<HTMLDivElement>(null);
+  const contentsStatusRef = useRef<HTMLDivElement>(null); 
 
   return (
     <Wrap>
@@ -31,9 +34,15 @@ function App() {
       <section>
         <Monitoring ref={monitoringRef}/>
         <Characters ref={characterRef}/>
+        <ContentsStatus ref={contentsStatusRef}/>
         <AccountBook ref={accountBookRef}/>
       </section>
-      <FixedMenu accountBookRef={accountBookRef} characterRef={characterRef} monitoringRef={monitoringRef}/>
+      <FixedMenu 
+        accountBookRef={accountBookRef}
+        characterRef={characterRef}
+        monitoringRef={monitoringRef}
+        contentsStatusRef={contentsStatusRef}
+      />
       <Footer />
     </Wrap>
   );

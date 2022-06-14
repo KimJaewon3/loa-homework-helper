@@ -6,7 +6,7 @@ import RewardInfoModal from './rewardInfoModal';
 const RewardInfoDiv = styled.div`
   position: absolute;
   background-color: white;
-  top: 1.5em;
+  top: 1.1em;
   padding-top: 1em;
   z-index: 4;
   width: 89%;
