@@ -110,7 +110,6 @@ const CharactersDiv = styled.div`
 type InputValue = {
   name: '',
   level: 0,
-  listName: '',
 }
 
 const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
@@ -120,7 +119,6 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   const [inpuValue, setInputValue] = useState<InputValue>({
     name: '',
     level: 0,
-    listName: '',
   });
   const dispatch = useAppDispatch();
   const contetnts = useAppSelector(state => state.contentsReducer.contents);
@@ -177,12 +175,9 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   }
 
   function handleAddList(characterIdx: number) {
-    if (inpuValue.listName === '') return;
-    dispatch(addList({ characterIdx, raidName: inpuValue.listName }));
-    setInputValue({
-      ...inpuValue,
-      listName: '',
-    });
+    const value = listNameInputRef.current[characterIdx].value;
+    if (value === '') return;
+    dispatch(addList({ characterIdx, raidName: value }));
     listNameInputRef.current[characterIdx].value = '';
   }
 
@@ -270,15 +265,13 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
               <div className='character-box-add-list'>
                 <input 
                   name='listName' 
-                  placeholder=' + 리스트 추가하기' 
-                  onChange={e=>handleInputValue(e)}
+                  placeholder=' + 리스트 추가하기'
                   onKeyDown={e=>handlePressEnterKey(e, characterIdx)}
                   ref={el => {
                     if (el !== null) {
                       listNameInputRef.current[characterIdx] = el;
                     }
-                  }
-                  }
+                  }}
                 />
                 <button onClick={()=>handleAddList(characterIdx)}>+</button>
               </div>
