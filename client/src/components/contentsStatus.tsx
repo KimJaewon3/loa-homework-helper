@@ -13,6 +13,12 @@ const ContentsStatusDiv = styled.div`
     color: white;
     margin-left: 0;
   }
+  .contents-status-search-bar {
+    > input {
+      padding: 5px;
+      margin-left: 0.5em;
+    }
+  }
   .contents-status-characters-container {
     border-radius: 10px;
     padding: 0.5em;
@@ -66,7 +72,8 @@ type ContentsFilter = {
 
 const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props, ref) {
   const contents = useAppSelector(state => state.contentsReducer.contents);
-  const [contentsFilter, setContentsFilter] = useState<ContentsFilter>(); 
+  const [contentsFilter, setContentsFilter] = useState<ContentsFilter>();
+  const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
     const filtered: ContentsFilter = [];
@@ -96,11 +103,19 @@ const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props,
     setContentsFilter(filtered);
   }, [contents]);
 
+  function handleSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchInputValue(e.target.value);
+  }
+
   return (
     <ContentsStatusDiv ref={ref}>
       <span className='contents-status-title'>컨텐츠 현황</span>
+      <div className='contents-status-search-bar'>
+        <input placeholder='컨텐츠 검색...' onChange={e=>handleSearchInput(e)}></input>
+      </div>
       <div className='contents-status-characters-container'>
         {contentsFilter?.map((el, idx) => {
+          if (searchInputValue !== '' && !el.category.includes(searchInputValue)) return;
           return (
             <div key={idx} className='contents-status-characters-box'>
               <div className='contents-status-characters-title'>
