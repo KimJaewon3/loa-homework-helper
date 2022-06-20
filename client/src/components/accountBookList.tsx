@@ -21,18 +21,19 @@ const AccountBookListDiv = styled.div`
     }
   }
   .account-book-list-title {
+    background-color: ${({ theme }) => theme.color.goldBoxTitleColor};
     position: absolute;
-    background-color: #c8d2e1;
     left: 1em;
     top: 0.5em;
-    padding: 0 1em 0 1em;
+    padding: 5px 1em;
     font-size: 1.1em;
     font-weight: bold;
+    border-radius: 5px;
     > button {
       margin-left: 1em;
       border: none;
       border-radius: 10px;
-      background-color: #949494;
+      background-color: #acacac;
     }
   }
   .account-book-list-sum {
@@ -73,7 +74,7 @@ export default function AccountBookList({ type }: AccountBookListProps) {
     <AccountBookListDiv>
       {type === 'etc' && (
         <div className='account-book-list-title'>
-          <span>추가사항</span>
+          <span>추가사항 (더보기, 기타획득골드 등)</span>
           <button onClick={initialBookEtcItem}>초기화</button>
         </div>
       )}

@@ -18,6 +18,9 @@ const FixedMenuDiv = styled.div`
     right: 0;
     margin: 2em;
     padding: 0.7em;
+    height: 20px;
+    width: 20px;
+    text-align: center;
     background-color: #ffe38f;
   }
 `;
@@ -49,10 +52,13 @@ export default function FixedMenu({
   }
 
   function gotoTargetRef(targetRef: React.RefObject<HTMLDivElement>) {
-    window.scroll({
-      top: targetRef.current?.offsetTop,
-      behavior: 'smooth',
-    });
+    const pos = targetRef.current?.offsetTop;
+    if (typeof pos === 'number') {
+      window.scroll({
+        top: pos - 70,
+        behavior: 'smooth',
+      });
+    }
   }
   
   return (

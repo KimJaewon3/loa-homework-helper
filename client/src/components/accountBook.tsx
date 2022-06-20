@@ -12,12 +12,13 @@ const AccountBookDiv = styled.div`
   }
   .account-book-title {
     font-size: 1.5em;
-    color: white;
+    color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
   }
   .account-book-container {
     width: fit-content;
     background-color: rgb(240, 248, 255, 0.8);
+    border: 2px solid ${({ theme }) => theme.color.borderColor};
     border-radius: 10px;
     padding: 0.5em;
     > * {

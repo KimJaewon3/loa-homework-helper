@@ -14,7 +14,7 @@ const CharactersDiv = styled.div`
   }
   .character-title-container {
     font-size: 1.5em;
-    color: white;
+    color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
     display: flex;
     align-items: center;
@@ -23,7 +23,7 @@ const CharactersDiv = styled.div`
     margin-left: 1em;
     font-size: 0.5em;
     > svg path {
-      stroke: white;
+      stroke: ${({ theme }) => theme.color.fontColor};;
     }
   }
   .characters-add-box {
@@ -33,7 +33,7 @@ const CharactersDiv = styled.div`
       padding: 5px;
     }
     .characters-add-box-alert {
-      color: white;
+      color: ${({ theme }) => theme.color.fontColor};
     }
     .add-box-input-info {
       display: flex;
@@ -54,7 +54,7 @@ const CharactersDiv = styled.div`
     flex-wrap: wrap;
     align-items: flex-start;
     .character-box {
-      border: 2px solid #ffffff;
+      border: 2px solid ${({ theme }) => theme.color.borderColor};
       border-radius: 10px;
       background-color: rgb(240, 248, 255, 0.8);
       margin: 0 1em 1em 0;
@@ -66,11 +66,11 @@ const CharactersDiv = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid #ffffff;
-      background-color: rgb(108 184 86);
-      border-radius: 10px 10px 0 0;
+      border-bottom: 2px solid ${({ theme }) => theme.color.borderColor};
+      background-color: ${({ theme }) => theme.color.titleColor};
+      border-radius: 7px 7px 0 0;
       span {
-        font-weight: bold;
+        font-size: 1.2em;
       }
     }
     .character-box-list {
