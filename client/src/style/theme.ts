@@ -16,7 +16,7 @@ const spring: Theme = {
     titleColor: '#a9db76',
     fontColor: 'black',
     borderColor: 'white',
-    goldBoxTitleColor: '#b0d099',
+    goldBoxTitleColor: '#e3f0eb',
   }
 }
 
