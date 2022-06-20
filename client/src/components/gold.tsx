@@ -46,7 +46,7 @@ export default function Gold({ goldReward, characterIdx, raidIdx }: GoldProps) {
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
     const value = Number(e.target.value);
-    if (value < 0 || value > 999999) return;
+    if (Math.abs(value) > 999999) return;
     setInputValue({
       ...inputValue,
       [e.target.name]: e.target.value,
