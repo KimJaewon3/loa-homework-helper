@@ -8,10 +8,16 @@ const ContentsStatusDiv = styled.div`
   > * {
     margin: 1em;
   }
-  .contents-status-title {
+  .contents-status-title-box {
+    display: flex;
+    align-items: center;
     font-size: 1.5em;
-    color: white;
+    color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
+    .contents-status-noti {
+      font-size: 0.5em;
+      margin-left: 1em;
+    }
   }
   .contents-status-search-bar {
     > input {
@@ -27,7 +33,7 @@ const ContentsStatusDiv = styled.div`
     align-items: flex-start;
     .contents-status-characters-box {
       display: flex;
-      border: 2px solid #ffffff;
+      border: 2px solid ${({ theme }) => theme.color.borderColor};
       border-radius: 10px;
       background-color: rgb(240, 248, 255, 0.8);
       margin: 0 1em 1em 0;
@@ -35,14 +41,11 @@ const ContentsStatusDiv = styled.div`
         padding: 0.5em;
       }
       .contents-status-characters-title {
-        border-right: 2px solid #ffffff;
-        background-color: rgb(108 184 86);
-        border-radius: 10px 0px 0 10px;
+        border-right: 2px solid ${({ theme }) => theme.color.borderColor};
+        background-color: ${({ theme }) => theme.color.titleColor};
+        border-radius: 7px 0px 0 7px;
         display: flex;
         align-items: center;
-        > span {
-          font-weight: bold;
-        }
       }
       ul {
         padding: 0;
@@ -60,7 +63,7 @@ const ContentsStatusDiv = styled.div`
 const CharacterLi = styled.li<{ isDone: boolean}>`
   margin:  0 10px 0 10px;
   > span {
-    color: ${(props) => props.isDone ? '#21aa21' : 'black'};
+    color: ${(props) => props.isDone ? '#9f9f9f' : 'black'};
   }
 `;
 
@@ -109,7 +112,10 @@ const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(props,
 
   return (
     <ContentsStatusDiv ref={ref}>
-      <span className='contents-status-title'>컨텐츠 현황</span>
+      <div className='contents-status-title-box'>
+        <span>컨텐츠 현황</span>
+        <span className='contents-status-noti'>* 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.</span>
+      </div>
       <div className='contents-status-search-bar'>
         <input placeholder='컨텐츠 검색...' onChange={e=>handleSearchInput(e)}></input>
       </div>

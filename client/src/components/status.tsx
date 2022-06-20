@@ -18,7 +18,7 @@ const CircleProgress = styled.div<CircleProgressProps>`
     height: ${props => props.size}px;
     circle {
       fill: none;
-      stroke: #b5b9b5;
+      stroke: #c1c1c1;
       stroke-width: 10;
     }
   }

@@ -14,6 +14,7 @@ import storage from 'redux-persist/lib/storage';
 import contentsReducer from '../slice/contentsSlice';
 import accountBookReducer from '../slice/accountBookSlice';
 import memoBoardReducer from "../slice/memoBoardSlice";
+import themeReducer from "../slice/themeSlice";
 
 const persistConfig = {
   key: 'root',
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   contentsReducer,
   accountBookReducer,
   memoBoardReducer,
+  themeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

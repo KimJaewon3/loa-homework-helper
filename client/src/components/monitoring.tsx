@@ -10,10 +10,11 @@ const Monitor = styled.div`
   .monitor-title {
     margin-left: 0;
     font-size: 1.5em;
-    color: white;
+    color: ${({ theme }) => theme.color.fontColor};
   }
   .monitor-progress {
     display: flex;
+    border: 2px solid ${({ theme }) => theme.color.borderColor};
     border-radius: 10px;
     padding: 0.5em;
     flex-wrap: wrap;
@@ -57,7 +58,9 @@ const Monitoring = forwardRef<HTMLDivElement>(function Monitoring(props, ref) {
 
   return (
     <Monitor ref={ref}>
-      <span className='monitor-title'>전체 현황</span>
+      <div className='monitor-title'>
+        <span>전체 현황</span>
+      </div>
 
       <div className='monitor-progress'>
         <div>
