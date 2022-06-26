@@ -22,7 +22,7 @@ export default function ThemeInfo() {
   function handleThemeUpdate(themeType: ThemeType) {
     dispatch(updateTheme({ value: themeType }));
   }
-
+  
   return (
     <OpenedMenuList>
       {(Object.keys(theme) as Array<keyof typeof theme>).map((themeType) => {

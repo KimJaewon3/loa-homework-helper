@@ -36,7 +36,7 @@ function App() {
   return (
     <ThemeProvider theme={theme[themeType]}>
       <Wrap>
-        <Menu />
+        <Menu/>
         <section>
           <Monitoring ref={monitoringRef}/>
           <Characters ref={characterRef}/>

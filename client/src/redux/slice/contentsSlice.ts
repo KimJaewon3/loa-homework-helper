@@ -56,6 +56,12 @@ type UpdateSixTimesLimit = {
   characterIdx: number;
 }
 
+export type ChangeOrder = {
+  from: number;
+  to: number;
+  behavior: 'before' | 'after';
+}
+
 export const contentsSlice = createSlice({
   name: 'contents',
   initialState,
@@ -198,6 +204,24 @@ export const contentsSlice = createSlice({
       });
       state.contents = sliced;
     },
+    changeOrder: (state, action: PayloadAction<ChangeOrder>) => {
+      const sliced = state.contents.slice();
+      let from = action.payload.from;
+      const to = action.payload.to;
+      const behavior = action.payload.behavior === 'after' ? 1 : 0;
+
+      sliced.splice(to + behavior, 0, sliced[from]);
+
+      if (from > to) {
+        // 앞으로 이동하면
+        from += 1;
+      }
+
+
+      sliced.splice(from, 1);
+
+      state.contents = sliced;
+    }
   }
 });
 
@@ -210,6 +234,7 @@ export const {
   initList,
   updateGoldReward,
   updateSixTimesLimit,
+  changeOrder,
 } = contentsSlice.actions;
 export const selectContents = (state: RootState) => state.contentsReducer.contents;
 export default contentsSlice.reducer;

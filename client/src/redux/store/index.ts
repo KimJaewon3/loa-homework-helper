@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import contentsReducer from '../slice/contentsSlice';
 import accountBookReducer from '../slice/accountBookSlice';
 import memoBoardReducer from "../slice/memoBoardSlice";
