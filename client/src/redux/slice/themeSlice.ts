@@ -3,11 +3,11 @@ import { RootState } from "../store";
 
 export type ThemeType = 'spring' | 'summer' | 'autumn' | 'winter';
 
-interface themeState {
+interface ThemeState {
   themeType: ThemeType;
 }
 
-const initialState: themeState = {
+const initialState: ThemeState = {
   themeType: 'summer',
 }
 
