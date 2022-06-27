@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { rewardImgs } from '../img/rewardImg';
 import { OpenedMenuList } from '../style/styled';
-import RewardInfoModal from './rewardInfoModal';
+import RewardInfoModal from './rewardInfoImg';
 
 export default function RewardInfo() {
   const [isRewardInfoClicked, setIsRewardInfoClicked] = useState(false);

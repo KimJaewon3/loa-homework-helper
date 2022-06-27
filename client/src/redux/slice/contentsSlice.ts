@@ -211,15 +211,11 @@ export const contentsSlice = createSlice({
       const behavior = action.payload.behavior === 'after' ? 1 : 0;
 
       sliced.splice(to + behavior, 0, sliced[from]);
-
       if (from > to) {
         // 앞으로 이동하면
         from += 1;
       }
-
-
       sliced.splice(from, 1);
-
       state.contents = sliced;
     }
   }

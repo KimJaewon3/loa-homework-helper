@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import MemoBoard from './memoBoard';
+import MemoBoard from '../modals/memoBoard';
 import { AiOutlineArrowUp } from "react-icons/ai";
 
 const FixedMenuDiv = styled.div`
