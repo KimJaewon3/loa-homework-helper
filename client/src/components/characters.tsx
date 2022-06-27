@@ -1,12 +1,13 @@
 import React, { forwardRef, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { addCharacter, addList, ChangeOrder, changeOrder, deleteCharacter, deleteList, RaidList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
+import { addCharacter, addList, changeOrder, deleteCharacter, deleteList, updateContent, updateSixTimesLimit } from '../redux/slice/contentsSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { BsX } from "react-icons/bs";
-import Gold from './gold';
-import SumGold from './sumGold';
+import Gold from './characterGold';
+import SumGold from './CharacterSumGold';
 import { addAccountBookList, deleteAccountBookList } from '../redux/slice/accountBookSlice';
-import { GrMoney } from 'react-icons/gr';
+import { RiQuestionFill } from "react-icons/ri";
+import DescWindow from '../modals/descWindow';
 
 const CharactersDiv = styled.div`
   > * {
@@ -17,13 +18,9 @@ const CharactersDiv = styled.div`
     color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
     display: flex;
-    align-items: center;
-  }
-  .character-gold-notice {
-    margin-left: 1em;
-    font-size: 0.5em;
-    > svg path {
-      stroke: ${({ theme }) => theme.color.fontColor};;
+    align-items: baseline;
+    > span {
+      margin-right: 0.5em;
     }
   }
   .characters-add-box {
@@ -140,16 +137,19 @@ type Pos = {
 }
 
 const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
-  const [isAbledInputValue, setIsAbledInputValue] = useState(true); // 6회제한
+  const dispatch = useAppDispatch();
+  const contetnts = useAppSelector(state => state.contentsReducer.contents);
+  // 6회제한
+  const [isAbledInputValue, setIsAbledInputValue] = useState(true); 
+  // 캐릭터 추가
   const [alertText, setAlerText] = useState('');
   const [isAddCharacterModalOpen, setIsAddCharacterModalOpen] = useState(false);
   const [inpuValue, setInputValue] = useState<InputValue>({
     name: '',
     level: 0,
   });
-  const dispatch = useAppDispatch();
-  const contetnts = useAppSelector(state => state.contentsReducer.contents);
-  const listNameInputRef = useRef<HTMLInputElement[]>([]); // 숙제 리스트 추가
+  // 숙제 리스트 추가
+  const listNameInputRef = useRef<HTMLInputElement[]>([]);
   // drag
   const characterRef = useRef<HTMLDivElement[]>([]);
   const pos = useRef<Pos>({
@@ -158,6 +158,8 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     clientX: 0,
     behavior: 'before',
   });
+  // 설명 모달
+  const [isDescOpen, setIsDescOpen] = useState(false);
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === 'name' && e.target.value.length > 12) return;
@@ -295,14 +297,12 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     <CharactersDiv ref={ref}>
       <div className='character-title-container'>
         <span>캐릭터 현황</span>
-        <div className='character-gold-notice'>
-          <span>* </span>
-          <GrMoney size={14} />
-          <span>를 클릭해 골드를 변경할 수 있습니다.</span>
-        </div>
-        <div>
-          <span className='character-gold-notice'>* 드래그해 캐릭터의 순서를 변경할 수 있습니다.</span>
-        </div>
+        <RiQuestionFill
+          size={18}
+          onMouseEnter={()=>setIsDescOpen(true)}
+          onMouseLeave={()=>setIsDescOpen(false)}
+        />
+        {isDescOpen && <DescWindow />}
       </div>
 
       <div className='characters-add-box'>
