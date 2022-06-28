@@ -32,8 +32,20 @@ const WeeklyResetCheckDiv = styled.div`
       flex-direction: column;
       justify-content: center;
       margin: 2em;
-      button {
-        margin-right: 1em;
+      .weekly-modal-btn-box {
+        display: flex;
+        margin-top: 1em;
+        .weekly-modal-btn {
+          display: inline-block;
+          min-width: 85px;
+          margin-right: 1em;
+          background-color: #d9f0cb;
+          border: none;
+          text-align: center;
+        }
+        .weekly-modal-btn:hover {
+          font-weight: bold;
+        }
       }
     }
   }
@@ -61,9 +73,9 @@ export default function WeeklyResetCheck({ handleWeeklyRestBtn }: Props) {
         </div>
         <div className='weekly-modal-confirm-container'>
           <p>정말 초기화하실 건가요?</p>
-          <div>
-            <button onClick={()=>confirmReset(true)}>그래</button>
-            <button onClick={()=>confirmReset(false)}>잘못눌렀어</button>
+          <div className='weekly-modal-btn-box'>
+            <div className='weekly-modal-btn' onClick={()=>confirmReset(true)}>▶ 그래</div>
+            <div className='weekly-modal-btn' onClick={()=>confirmReset(false)}>▶ 잘못눌렀어</div>
           </div>
         </div>
       </div>
