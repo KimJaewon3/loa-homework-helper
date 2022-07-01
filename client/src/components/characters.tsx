@@ -138,7 +138,7 @@ type Pos = {
 
 const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   const dispatch = useAppDispatch();
-  const contetnts = useAppSelector(state => state.contentsReducer.contents);
+  const contents = useAppSelector(state => state.contentsReducer.contents);
   // 6회제한
   const [isAbledInputValue, setIsAbledInputValue] = useState(true); 
   // 캐릭터 추가
@@ -175,7 +175,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
       setAlerText(' * 값을 입력해주세요 * ');
       return;
     }
-    if (contetnts.findIndex(el => el.name === inpuValue.name) !== -1) {
+    if (contents.findIndex(el => el.name === inpuValue.name) !== -1) {
       setIsAbledInputValue(false);
       setAlerText(' * 이미 존재하는 캐릭터입니다 * ');
       return;
@@ -320,7 +320,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
       </div>
       
       <div className='character-container'onDragEnd={handleDragzoneDragEnd} >
-        {contetnts.map((character, characterIdx) => {
+        {contents.map((character, characterIdx) => {
           return (
             <div
               className='character-box'
