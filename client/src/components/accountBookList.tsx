@@ -36,7 +36,7 @@ const AccountBookListDiv = styled.div`
       background-color: #acacac;
     }
   }
-  .account-book-list-sum {
+  .account-book-list-sum > div{
     display: flex;
     justify-content: space-between;
     margin: 0 1em 0 0;
@@ -56,6 +56,7 @@ export function accGold(bookItem: bookItem[]) {
 export default function AccountBookList({ type }: AccountBookListProps) {
   const dispatch = useAppDispatch();
   const accountBook = useAppSelector(state => state.accountBookReducer.accountBook);
+  const contents = useAppSelector(state => state.contentsReducer.contents);
   
   function deleteBookEtcItem(idx: number) {
     dispatch(deleteAccountBookList({
@@ -68,6 +69,19 @@ export default function AccountBookList({ type }: AccountBookListProps) {
     for (let i = accountBook.etc.length - 1; i >= 0; i--) {
       deleteBookEtcItem(i);
     }
+  }
+
+  function addAllCharacterGold() {
+    let sum = 0;
+    contents.map(character => {
+      if(character.abledReward) {
+        sum += character.content.reduce((acc2, content) => {
+          const key = Object.keys(content)[0];
+          return acc2 + content[key].rewardGold
+        }, 0);
+      }
+    });
+    return sum;
   }
 
   return (
@@ -97,8 +111,16 @@ export default function AccountBookList({ type }: AccountBookListProps) {
         })}
       </ul>
       <div className='account-book-list-sum'>
-        <span>합계: </span>
-        <span>{accGold(accountBook[type])}</span>
+        {type === 'character' && (
+          <div>
+            <span>예상 총합: </span>
+            <span>{addAllCharacterGold()}</span>
+          </div>
+        )}
+        <div>
+          <span>합계: </span>
+          <span>{accGold(accountBook[type])}</span>
+        </div>
       </div>
     </AccountBookListDiv>  
   )
