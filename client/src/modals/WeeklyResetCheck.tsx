@@ -37,7 +37,7 @@ const WeeklyResetCheckDiv = styled.div`
         margin-top: 1em;
         .weekly-modal-btn {
           display: inline-block;
-          min-width: 85px;
+          min-width: 90px;
           margin-right: 1em;
           background-color: #d9f0cb;
           border: none;
