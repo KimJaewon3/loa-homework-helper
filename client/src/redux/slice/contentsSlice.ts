@@ -212,7 +212,6 @@ export const contentsSlice = createSlice({
 
       sliced.splice(to + behavior, 0, sliced[from]);
       if (from > to) {
-        // 앞으로 이동하면
         from += 1;
       }
       sliced.splice(from, 1);

@@ -18,14 +18,18 @@ const MenuDiv = styled.div`
   z-index: 5;
   background-color: ${({ theme }) => theme.color.titleColor};
   box-shadow: 0 0 5px black;
- > span {
+  > h1 {
+    font-weight: unset;
     font-size: 1.2em;
     margin: 1em;
     color: ${({ theme }) => theme.color.fontColor};
   }
-  > div {
+  > aside {
     display: flex;
     align-items: center;
+    > li {
+      list-style: none;
+    }
   }
   .menu-box {
     position: relative;
@@ -66,33 +70,35 @@ export default function Menu() {
   }
 
   return (
-    <div>
+    <header>
       <MenuDiv>
-        <span>로아 숙제 현황판</span>
-        <div>
-          <MenuBtn onClick={()=>handleWeeklyRestBtn(true)}>
-            <span>주간 초기화</span>
-            <GrNotification />
-          </MenuBtn>
-          <div className='menu-box'>
+        <h1>로아 숙제 현황판</h1>
+        <aside>
+          <li>
+            <MenuBtn onClick={()=>handleWeeklyRestBtn(true)}>
+              주간 초기화
+              <GrNotification />
+            </MenuBtn>
+          </li>
+          <li className='menu-box'>
             <MenuBtn onClick={handleRewardMenuOpen}>
-              <span>레이드 보상</span>
+              레이드 보상
               <GrMoney />
             </MenuBtn>
             {isRewardMenuOpen && <RewardInfo />}
-          </div>
-          <div className='menu-box'>
+          </li>
+          <li className='menu-box'>
             <MenuBtn onClick={handleThemeMenuOpen}>
-              <span>테마 변경</span>
+              테마 변경
               <BsPalette />
             </MenuBtn>
             {isThemeMenuOpen && <ThemeInfo />}
-          </div>
-        </div>
+          </li>
+        </aside>
       </MenuDiv>
       {isWeeklyResetModalOpen && 
         <WeeklyResetCheck handleWeeklyRestBtn={handleWeeklyRestBtn}/>
       }
-    </div>
+    </header>
   );
 }
