@@ -41,6 +41,3 @@ export default function MemoBoard() {
     </MemoBoardDiv>
   );
 }
-/*
-        rows={10}
-        cols={30} */

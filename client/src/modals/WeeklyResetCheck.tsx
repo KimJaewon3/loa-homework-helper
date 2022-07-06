@@ -4,12 +4,10 @@ import { mococoImg } from '../img/mococoImg';
 import { initList } from '../redux/slice/contentsSlice';
 import { useAppDispatch } from '../redux/store';
 
-
-
 const WeeklyResetCheckDiv = styled.div`
   .weekly-modal-background {
     position: fixed;
-    background-color: gray;
+    background-color: #000000;
     opacity: 0.7;
     width: 100%;
     height: 100%;

@@ -4,10 +4,13 @@ import MemoBoard from '../modals/memoBoard';
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import LootCalculator from '../modals/lootCalculator';
 
-const FixedMenuDiv = styled.div`
+const FixedMenuDiv = styled.nav`
   position: fixed;
   top: 35%;
   right: 0%;
+  li {
+    list-style: none;
+  }
   .fixed-menu {
     padding: 3px;
     background-color: white;
@@ -24,6 +27,9 @@ const FixedMenuDiv = styled.div`
     text-align: center;
     border: 2px solid black;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .goto-up {
     bottom: 15%;
@@ -85,14 +91,18 @@ export default function FixedMenu({
     <FixedMenuDiv>
       {isMemoBoardOpen && <MemoBoard/>}
       {isLootCalculatorOpen && <LootCalculator handleLootCalculatorBtnClick={handleLootCalculatorBtnClick}/>}
-      <div className='fixed-menu' onClick={()=>gotoTargetRef(monitoringRef)}>전체현황</div>
-      <div className='fixed-menu' onClick={()=>gotoTargetRef(characterRef)}>캐릭터현황</div>
-      <div className='fixed-menu' onClick={()=>gotoTargetRef(contentsStatusRef)}>컨텐츠현황</div>
-      <div className='fixed-menu' onClick={()=>gotoTargetRef(accountBookRef)}>골드현황</div>
-      <div className='fixed-menu' onClick={handleLootCalculatorBtnClick}>입찰계산기</div>
-      <div className='fixed-menu' onClick={handleMemoBoardBtnClick}>메모장</div>
-      <div className='fixed-menu-goto-btn goto-up' onClick={gotoUp}><AiOutlineArrowUp /></div>
-      <div className='fixed-menu-goto-btn goto-down' onClick={gotoDown}><AiOutlineArrowDown /></div>
+      <ul>
+        <li className='fixed-menu' onClick={()=>gotoTargetRef(monitoringRef)}>전체현황</li>
+        <li className='fixed-menu' onClick={()=>gotoTargetRef(characterRef)}>캐릭터현황</li>
+        <li className='fixed-menu' onClick={()=>gotoTargetRef(contentsStatusRef)}>컨텐츠현황</li>
+        <li className='fixed-menu' onClick={()=>gotoTargetRef(accountBookRef)}>골드현황</li>
+        <li className='fixed-menu' onClick={handleLootCalculatorBtnClick}>입찰계산기</li>
+        <li className='fixed-menu' onClick={handleMemoBoardBtnClick}>메모장</li>
+      </ul>
+      <ul>
+        <li className='fixed-menu-goto-btn goto-up' onClick={gotoUp}><AiOutlineArrowUp /></li>
+        <li className='fixed-menu-goto-btn goto-down' onClick={gotoDown}><AiOutlineArrowDown /></li>
+      </ul>
     </FixedMenuDiv>
-  )
+  );
 }
