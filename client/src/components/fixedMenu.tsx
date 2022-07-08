@@ -6,15 +6,18 @@ import LootCalculator from '../modals/lootCalculator';
 
 const FixedMenuDiv = styled.nav`
   position: fixed;
-  top: 35%;
+  top: 36%;
   right: 0%;
   li {
     list-style: none;
   }
   .fixed-menu {
     padding: 3px;
-    background-color: white;
-    border: 2px solid black;
+    background-color: ${({ theme }) => theme.color.titleColor};
+    color: ${({ theme }) => theme.color.fontColor};
+    border-bottom: 2px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
   }
   .fixed-menu-goto-btn {
     position: fixed;
