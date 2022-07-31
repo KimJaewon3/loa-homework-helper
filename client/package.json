@@ -30,7 +30,7 @@
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://kimjaewon3.github.io/loa-homework-helper/",
+  "homepage": "https://kimjaewon3.github.io/loa-homework-helper",
   "eslintConfig": {
     "extends": [
       "react-app",
