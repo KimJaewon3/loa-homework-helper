@@ -1,6 +1,10 @@
 # loa-homework-helper
 ![image](https://user-images.githubusercontent.com/79837001/182553467-1378345c-594f-4dd8-b11e-8f3a27b6d8db.png)
 
+- 진행정도를 한 눈에 확인하세요
+- 자유로운 숙제 커스터마이징
+
+
 ## 배포 링크
 https://kimjaewon3.github.io/loa-homework-helper/
 <br/>
@@ -49,4 +53,5 @@ https://kimjaewon3.github.io/loa-homework-helper/
     - 현재까지 완료한 컨텐츠의 획득 골드를 확인할 수 있습니다.
     - 추가적인 입/출금 항목을 등록할 수 있습니다.(주간 초기화시 제외됩니다.)
 
-  
+  ## dev log
+  [노션링크](https://pinnate-tortoise-471.notion.site/89c499d570594cacb1a9fbb7ed927620)
