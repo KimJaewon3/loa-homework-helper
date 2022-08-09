@@ -51,7 +51,7 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
   const people = [4, 8];
   const [selectValue, setSelectValue] = useState(4); // 분배인원
   const [inputValue, setInputValue] = useState('0'); // 입찰금액
-  const [maximumAccount, setMaximumAccount] = useState(0); // 최대적정금액
+  const [maximumAccount, setMaximumAccount] = useState(0); // 공평금액
   const [isNumber, setIsNumber] = useState(true);
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
   }, [selectValue, inputValue]);
  
   function runCalculator(money: number, count: number) {
-    const account = Math.floor(money * 0.95 * (count - 1) / count);
+    const account = Math.floor(money * 0.95 * (count - 1) / count); // 공평금액
     setMaximumAccount(account);
   }
 
