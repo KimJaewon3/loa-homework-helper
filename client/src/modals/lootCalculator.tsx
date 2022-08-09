@@ -51,7 +51,7 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
   const people = [4, 8];
   const [selectValue, setSelectValue] = useState(4); // 분배인원
   const [inputValue, setInputValue] = useState('0'); // 입찰금액
-  const [maximumAccount, setMaximumAccount] = useState(0); // 공평금액
+  const [maximumAccount, setMaximumAccount] = useState(0); // 공평금액 test
   const [isNumber, setIsNumber] = useState(true);
 
   useEffect(() => {
