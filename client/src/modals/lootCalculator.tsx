@@ -64,7 +64,7 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
   }, [selectValue, inputValue]);
  
   function runCalculator(money: number, count: number) {
-    const account = Math.floor(Number(money) * 0.95 / count * (count - 1));
+    const account = Math.floor(money * 0.95 * (count - 1) / count);
     setMaximumAccount(account);
   }
 
@@ -99,7 +99,8 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
           onChange={e=>handleInputValue(e)}
           className={`${!isNumber ? 'input-is-not-number' : ''} loot-calculator-input`}
         ></input>
-        <div>{maximumAccount} 원 까지 이득</div>
+        <div>공평분배 : {maximumAccount} 원</div>
+        <div>극한이득 : {Math.floor(maximumAccount / 1.1)} 원</div>
       </div>
       <div className='loot-calculator-modal-back' onClick={()=>handleLootCalculatorBtnClick()}></div>
     </LootCalculatorDiv>

@@ -15,7 +15,7 @@ const FixedMenuDiv = styled.nav`
     padding: 3px;
     background-color: ${({ theme }) => theme.color.titleColor};
     color: ${({ theme }) => theme.color.fontColor};
-    border-bottom: 2px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     margin-top: 5px;
   }
