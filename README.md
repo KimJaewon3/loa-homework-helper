@@ -32,7 +32,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
    ```
    <details>
      <summary>기능 시연</summary>
-
+      <img src='https://user-images.githubusercontent.com/79837001/190986642-132a05ac-ce19-45d0-aa23-6431dc2b9d1a.gif'/>
     </details>    
 <br/>
     
@@ -45,7 +45,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
    ```
    <details>
      <summary>기능 시연</summary>
-
+       <img src='https://user-images.githubusercontent.com/79837001/190986652-68316335-ef68-45f0-a9bf-57e2138ae01e.gif'/>
     </details>    
 <br/>
     
@@ -55,7 +55,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
    ```
    <details>
      <summary>기능 시연</summary>
-
+       <img src='https://user-images.githubusercontent.com/79837001/190986649-2ec7d2d1-b104-4643-b54b-25ff3a0a4c56.gif'/>
     </details>    
     <br/>
     
@@ -69,7 +69,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
      ```
      <details>
      <summary>기능 시연</summary>
-
+       <img src='https://user-images.githubusercontent.com/79837001/190986609-1b387d2a-a5bc-4a43-9845-3b8e13ce5cdd.gif'/>
     </details>    
     <br/>
     
@@ -83,7 +83,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
      ```
      <details>
      <summary>기능 시연</summary>
-
+       <img src='https://user-images.githubusercontent.com/79837001/190986624-db38141f-6184-4f62-941c-d2a4df6018e2.gif'/>
     </details>    
     <br/>
     
@@ -91,10 +91,11 @@ https://kimjaewon3.github.io/loa-homework-helper/
     ```
       1. 캐릭터에 등록된 모든 컨텐츠가 표시됩니다.
       2. 컨텐츠를 진행한 캐릭터는 흐리게 표시되어 해당 컨텐츠의 진행 정도를 확인할 수 있습니다.
+      3. 컨텐츠를 검색할 수 있습니다.
     ```
     <details>
      <summary>기능 시연</summary>
-
+        <img src='https://user-images.githubusercontent.com/79837001/190986627-ed0d900f-f40d-458c-866b-f03588ac889f.gif'/>
     </details>    
     <br/>
     
@@ -106,7 +107,7 @@ https://kimjaewon3.github.io/loa-homework-helper/
     ```
     <details>
      <summary>기능 시연</summary>
-
+        <img src='https://user-images.githubusercontent.com/79837001/190986632-c042bc6e-e675-44d9-a16b-599c87d17347.gif'/>
     </details>    
    <br/>
    
