@@ -149,12 +149,21 @@ export const contentsSlice = createSlice({
     },
     addList: (state, action: PayloadAction<AddList>) => {
       const sliced = state.contents.slice();
-      sliced[action.payload.characterIdx].content.push({
-        [action.payload.raidName]: {
-          isDone: false,
-          rewardGold: 0,
-        },
+      const alreadyRaidName = sliced[
+        action.payload.characterIdx
+      ].content.filter((raid) => {
+        const raidName = Object.keys(raid)[0];
+        return raidName === action.payload.raidName;
       });
+
+      if (alreadyRaidName.length === 0) {
+        sliced[action.payload.characterIdx].content.push({
+          [action.payload.raidName]: {
+            isDone: false,
+            rewardGold: 0,
+          },
+        });
+      }
       state.contents = sliced;
     },
     deleteCharacter: (state, action: PayloadAction<DeleteCharacter>) => {

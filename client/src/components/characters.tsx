@@ -95,11 +95,16 @@ const CharactersDiv = styled.div`
             justify-content: space-between;
             > * {
               margin: 0 10px 5px 0;
-            }
-            > :first-child {
               display: flex;
               align-items: center;
             }
+          }
+
+          .character-box-list-content-drag-icon {
+            margin-right: 0.5em;
+          }
+          .character-box-list-content-delete-icon {
+            margin-left: 0.5em;
           }
         }
         .character-box-add-list {
@@ -133,9 +138,6 @@ const CharactersDiv = styled.div`
   }
   .mute-drag-children * {
     pointer-events: none;
-  }
-  .test {
-    padding-bottom: 30px;
   }
 `;
 
@@ -358,15 +360,17 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     e.dataTransfer.setDragImage(img, 0, 0);
     const raidName = Object.keys(raidInfo)[0];
     setContentDragTarget(raidName);
+    e.currentTarget.classList.add("drag-start");
   }
 
   function handleContentDragEnd(e: React.DragEvent<HTMLLIElement>) {
     setIsContentDragging(false);
+    e.currentTarget.classList.remove("drag-start");
   }
 
   function handleContentDragOver(
     e: React.DragEvent<HTMLLIElement>,
-    raidInfo: ContentList ,
+    raidInfo: ContentList,
     characterIdx: number
   ) {
     e.preventDefault();
@@ -465,7 +469,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                       const key = Object.keys(raidInfo)[0];
                       return (
                         <li
-                          key={raidIdx}
+                          key={key}
                           draggable={isContentDragging}
                           onDragStart={(e) =>
                             handleContentDragStart(e, raidInfo)
@@ -477,16 +481,12 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                         >
                           <div>
                             <div
+                              className="character-box-list-content-drag-icon"
                               onMouseDown={() => setIsContentDragging(true)}
                               onMouseUp={() => setIsContentDragging(false)}
                             >
                               :::
                             </div>
-                            <BsX
-                              onClick={() =>
-                                handleDeleteList(characterIdx, raidIdx)
-                              }
-                            />
                             <div>{key}</div>
                             <input
                               type="checkbox"
@@ -496,12 +496,19 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                               }
                             ></input>
                           </div>
-
-                          <Gold
-                            goldReward={raidInfo[key].rewardGold}
-                            characterIdx={characterIdx}
-                            raidIdx={raidIdx}
-                          />
+                          <div>
+                            <Gold
+                              goldReward={raidInfo[key].rewardGold}
+                              characterIdx={characterIdx}
+                              raidIdx={raidIdx}
+                            />
+                            <BsX
+                              className="character-box-list-content-delete-icon"
+                              onClick={() =>
+                                handleDeleteList(characterIdx, raidIdx)
+                              }
+                            />
+                          </div>
                         </li>
                       );
                     })}
