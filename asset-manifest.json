@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/loa-homework-helper/static/css/main.eda76a69.css",
-    "main.js": "/loa-homework-helper/static/js/main.01f56f02.js",
+    "main.js": "/loa-homework-helper/static/js/main.884b9ac7.js",
     "static/js/787.c4e7f8f9.chunk.js": "/loa-homework-helper/static/js/787.c4e7f8f9.chunk.js",
     "static/media/비아보상.png": "/loa-homework-helper/static/media/비아보상.ab7a69f6052518f06a6b.png",
     "static/media/아브보상.png": "/loa-homework-helper/static/media/아브보상.2eee7dd68cba2150b5d9.png",
@@ -11,11 +11,11 @@
     "static/media/아르고스보상.png": "/loa-homework-helper/static/media/아르고스보상.68c4653652f33894fe7b.png",
     "index.html": "/loa-homework-helper/index.html",
     "main.eda76a69.css.map": "/loa-homework-helper/static/css/main.eda76a69.css.map",
-    "main.01f56f02.js.map": "/loa-homework-helper/static/js/main.01f56f02.js.map",
+    "main.884b9ac7.js.map": "/loa-homework-helper/static/js/main.884b9ac7.js.map",
     "787.c4e7f8f9.chunk.js.map": "/loa-homework-helper/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.eda76a69.css",
-    "static/js/main.01f56f02.js"
+    "static/js/main.884b9ac7.js"
   ]
 }
