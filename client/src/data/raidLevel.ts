@@ -112,6 +112,54 @@ export const raidLevel: RaidLevel = [
     ]
   },
   {
+    '일리아칸1': [
+      {
+        '노말': {
+          leastLevel: 1580,
+          reward: 1500,
+        }
+      },
+      {
+        '하드': {
+          leastLevel: 1600,
+          reward: 1750,
+        }
+      }
+    ]
+  },
+  {
+    '일리아칸2': [
+      {
+        '노말': {
+          leastLevel: 1580,
+          reward: 1750,
+        }
+      },
+      {
+        '하드': {
+          leastLevel: 1600,
+          reward: 2000,
+        }
+      }
+    ]
+  },
+  {
+    '일리아칸3': [
+      {
+        '노말': {
+          leastLevel: 1580,
+          reward: 2250,
+        }
+      },
+      {
+        '하드': {
+          leastLevel: 1600,
+          reward: 2750,
+        }
+      }
+    ]
+  },
+  {
     '카양겔': [
       {
         '노말': {

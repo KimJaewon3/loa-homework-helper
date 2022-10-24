@@ -12,7 +12,7 @@ import {
 } from "../redux/slice/contentsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { BsArrowReturnRight, BsX } from "react-icons/bs";
-import Gold from "./characterGold";
+import Gold from "./CharacterGold";
 import SumGold from "./CharacterSumGold";
 import {
   addAccountBookList,
