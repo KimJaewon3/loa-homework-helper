@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import './App.css';
-import AccountBook from './components/accountBook';
-import Characters from './components/characters';
-import ContentsStatus from './components/contentsStatus';
-import FixedMenu from './components/fixedMenu';
-import Footer from './components/footer';
+import AccountBook from './components/AccountBook';
+import Characters from './components/Characters';
+import ContentsStatus from './components/ContentsStatus';
+import FixedMenu from './components/FixedMenu';
+import Footer from './components/Footer';
 import Menu from './components/menu';
-import Monitoring from './components/monitoring';
+import Monitoring from './components/Monitoring';
 import { RootState, useAppSelector } from './redux/store';
 import { theme } from './style/theme';
 

@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { addAccountBookList, updateAccountBookList } from '../redux/slice/accountBookSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
-import AccountBookList, { accGold } from './accountBookList';
+import AccountBookList, { accGold } from './AccountBookList';
 
 const AccountBookDiv = styled.div`
   display: flex;

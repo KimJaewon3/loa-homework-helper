@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppSelector } from '../redux/store';
-import Status from './status';
+import Status from './Status';
 
 const Monitor = styled.div`
   > * {
