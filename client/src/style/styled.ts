@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const OpenedMenuList = styled.div`
+export const OpenedHeaderMenu = styled.div`
   position: absolute;
   background-color: white;
   top: 1.1em;
@@ -9,9 +9,9 @@ export const OpenedMenuList = styled.div`
   width: 120px;
   border: 2px solid black;
   border-radius: 0 0 10px 10px;
-  .opened-list{
+  .opened-list {
     margin: 5px 0 5px 0;
-    padding: 0 5px 0 5px; 
+    padding: 0 5px 0 5px;
   }
   .opened-list:not(:last-of-type) {
     border-bottom: 2px solid black;

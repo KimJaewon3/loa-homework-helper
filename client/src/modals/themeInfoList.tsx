@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { ThemeType, updateTheme } from "../redux/slice/themeSlice";
+import { updateTheme } from "../redux/slice/themeSlice";
 import { useAppDispatch } from "../redux/store";
-import { OpenedMenuList } from "../style/styled";
-import { theme } from "../style/theme";
+import { OpenedHeaderMenu } from "../style/styled";
+import { theme, ThemeType } from "../style/theme";
 
 const ThemeSampleList = styled.div`
   svg {
@@ -22,18 +22,18 @@ export default function ThemeInfo() {
   function handleThemeUpdate(themeType: ThemeType) {
     dispatch(updateTheme({ value: themeType }));
   }
-  
+
   return (
-    <OpenedMenuList>
+    <OpenedHeaderMenu>
       {(Object.keys(theme) as Array<keyof typeof theme>).map((themeType) => {
         return (
-          <ThemeSampleList key={themeType} className='opened-list'>
-            <svg onClick={()=>handleThemeUpdate(themeType)}>
+          <ThemeSampleList key={themeType} className="opened-list">
+            <svg onClick={() => handleThemeUpdate(themeType)}>
               <rect fill={theme[themeType].color.backgroundColor}></rect>
             </svg>
           </ThemeSampleList>
-        )
+        );
       })}
-    </OpenedMenuList>
-  )
+    </OpenedHeaderMenu>
+  );
 }

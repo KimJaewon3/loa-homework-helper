@@ -1,11 +1,10 @@
-import React from 'react';
-import { RaidList } from '../redux/slice/contentsSlice';
-import { GrMoney } from "react-icons/gr";
-import styled from 'styled-components';
+import React from "react";
+import { RaidList } from "../redux/slice/contentsSlice";
+import styled from "styled-components";
 
 type SumGoldProps = {
   contents: RaidList;
-}
+};
 
 const SumGoldDiv = styled.div`
   > * {
@@ -16,7 +15,8 @@ const SumGoldDiv = styled.div`
 export default function SumGold({ contents }: SumGoldProps) {
   let allSum = 0;
   let ingSum = 0;
-  contents.forEach(el => {
+
+  contents.forEach((el) => {
     const key = Object.keys(el)[0];
     allSum += el[key].rewardGold;
     if (el[key].isDone) {
@@ -29,5 +29,5 @@ export default function SumGold({ contents }: SumGoldProps) {
       <div>전체 골드: {allSum}</div>
       <div>획득 골드: {ingSum}</div>
     </SumGoldDiv>
-  )
+  );
 }

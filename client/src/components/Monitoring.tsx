@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useAppSelector } from '../redux/store';
-import Status from './Status';
+import React, { forwardRef, useEffect, useState } from "react";
+import styled from "styled-components";
+import { useAppSelector } from "../redux/store";
+import Status from "./Status";
 
 const Monitor = styled.div`
   > * {
@@ -34,43 +34,44 @@ const Monitor = styled.div`
 `;
 
 const Monitoring = forwardRef<HTMLDivElement>(function Monitoring(props, ref) {
-  const [ percentArr, setPersentArr ] = useState<{ name: string, percent: number }[]>([]);
-  const contents = useAppSelector((state => state.contentsReducer.contents));
+  const [percentArr, setPersentArr] = useState<
+    { name: string; percent: number }[]
+  >([]);
+  const contents = useAppSelector((state) => state.contentsReducer.contents);
 
   useEffect(() => {
     setPersentArr(() => {
-      return contents.map(character => {
+      return contents.map((character) => {
         let percent = 100;
         if (character.content.length > 0) {
-          const done = character.content.filter(el => {
+          const done = character.content.filter((el) => {
             const key = Object.keys(el)[0];
             return el[key].isDone;
           }).length;
-          percent = done / character.content.length * 100;
+          percent = (done / character.content.length) * 100;
         }
-        return { 
+        return {
           name: character.name,
           percent,
         };
       });
-    })
+    });
   }, [contents]);
 
   return (
     <Monitor ref={ref}>
-      <div className='monitor-title'>
+      <div className="monitor-title">
         <span>전체 현황</span>
       </div>
 
-      <div className='monitor-progress'>
+      <div className="monitor-progress">
         <div>
-          <Status 
+          <Status
             percent={
-              percentArr.length === 0 ? (
-                100
-              ) : (
-                (percentArr.reduce((acc, el) => acc += el.percent, 0)) / percentArr.length
-              )
+              percentArr.length === 0
+                ? 100
+                : percentArr.reduce((acc, el) => (acc += el.percent), 0) /
+                  percentArr.length
             }
             overall={true}
           ></Status>
@@ -83,11 +84,11 @@ const Monitoring = forwardRef<HTMLDivElement>(function Monitoring(props, ref) {
               <Status percent={el.percent} overall={false}></Status>
               <span>{el.name}</span>
             </div>
-          )
+          );
         })}
       </div>
     </Monitor>
-  )
+  );
 });
 
 export default Monitoring;

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 
 const LootCalculatorDiv = styled.div`
   .loot-calculator-modal-back {
@@ -12,7 +12,7 @@ const LootCalculatorDiv = styled.div`
     top: 0;
     left: 0;
   }
-  .loot-calculator-modal{
+  .loot-calculator-modal {
     position: fixed;
     background-color: ${({ theme }) => theme.color.titleColor};
     display: flex;
@@ -20,7 +20,7 @@ const LootCalculatorDiv = styled.div`
     z-index: 11;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 1em;
     > * {
@@ -32,39 +32,41 @@ const LootCalculatorDiv = styled.div`
       }
     }
   }
-  .loot-calculator-input{
+  .loot-calculator-input {
     border: 3px solid green;
   }
-  .loot-calculator-input:focus{
+  .loot-calculator-input:focus {
     outline: none;
   }
-  .input-is-not-number{
+  .input-is-not-number {
     border: 3px solid red;
   }
 `;
 
 type Props = {
   handleLootCalculatorBtnClick: () => void;
-}
+};
 
-export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) {
+export default function LootCalculator({
+  handleLootCalculatorBtnClick,
+}: Props) {
   const people = [4, 8];
   const [selectValue, setSelectValue] = useState(4); // 분배인원
-  const [inputValue, setInputValue] = useState('0'); // 입찰금액
+  const [inputValue, setInputValue] = useState("0"); // 입찰금액
   const [maximumAccount, setMaximumAccount] = useState(0); // 최대적정금액
   const [isNumber, setIsNumber] = useState(true);
 
   useEffect(() => {
-    if (/^[0-9]+$/.test(inputValue) || inputValue === '') {
+    if (/^[0-9]+$/.test(inputValue) || inputValue === "") {
       setIsNumber(true);
       runCalculator(Number(inputValue), selectValue);
     } else {
       setIsNumber(false);
     }
   }, [selectValue, inputValue]);
- 
+
   function runCalculator(money: number, count: number) {
-    const account = Math.floor(money * 0.95 * (count - 1) / count);
+    const account = Math.floor((money * 0.95 * (count - 1)) / count);
     setMaximumAccount(account);
   }
 
@@ -78,31 +80,36 @@ export default function LootCalculator({ handleLootCalculatorBtnClick }: Props) 
 
   return (
     <LootCalculatorDiv>
-      <div className='loot-calculator-modal'>
+      <div className="loot-calculator-modal">
         <div>* 입찰 계산기 *</div>
-        <div className='loot-calculator-people-container'>
+        <div className="loot-calculator-people-container">
           {people.map((el, idx) => {
             return (
               <label key={idx}>
                 {el}인
-                <input 
-                  type='radio'
-                  name='people'
-                  checked={el===selectValue}
-                  onChange={()=>handleRadioValue(el)}
+                <input
+                  type="radio"
+                  name="people"
+                  checked={el === selectValue}
+                  onChange={() => handleRadioValue(el)}
                 />
               </label>
-            )
+            );
           })}
         </div>
-        <input 
-          onChange={e=>handleInputValue(e)}
-          className={`${!isNumber ? 'input-is-not-number' : ''} loot-calculator-input`}
+        <input
+          onChange={(e) => handleInputValue(e)}
+          className={`${
+            !isNumber ? "input-is-not-number" : ""
+          } loot-calculator-input`}
         ></input>
         <div>공평분배 : {maximumAccount} 원</div>
         <div>극한이득 : {Math.floor(maximumAccount / 1.1)} 원</div>
       </div>
-      <div className='loot-calculator-modal-back' onClick={()=>handleLootCalculatorBtnClick()}></div>
+      <div
+        className="loot-calculator-modal-back"
+        onClick={() => handleLootCalculatorBtnClick()}
+      ></div>
     </LootCalculatorDiv>
-  )
+  );
 }
