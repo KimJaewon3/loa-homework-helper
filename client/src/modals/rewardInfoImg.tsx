@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 type RewardInfoModalProps = {
   src: string;
-}
+};
 
 const RewardInfoModalDiv = styled.div`
   position: absolute;
@@ -19,10 +19,10 @@ const RewardInfoModalDiv = styled.div`
   ::-webkit-scrollbar {
     width: 5px;
   }
-  ::-webkit-scrollbar-thumb{
+  ::-webkit-scrollbar-thumb {
     height: 30%;
     background-color: #ffffff;
-    border-radius: 10px;    
+    border-radius: 10px;
   }
   img {
     width: 600px;
@@ -30,10 +30,9 @@ const RewardInfoModalDiv = styled.div`
 `;
 
 export default function RewardInfoModal({ src }: RewardInfoModalProps) {
-
   return (
     <RewardInfoModalDiv>
-      <img src={src}/>
+      <img src={src} />
     </RewardInfoModalDiv>
   );
 }

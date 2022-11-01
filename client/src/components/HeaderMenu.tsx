@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 import { GrMoney, GrNotification } from "react-icons/gr";
 import { BsPalette } from "react-icons/bs";
-import { useAppDispatch } from '../redux/store';
-import { initList } from '../redux/slice/contentsSlice';
-import RewardInfo from '../modals/rewardInfoList';
-import ThemeInfo from '../modals/themeInfoList';
-import WeeklyResetCheck from '../modals/WeeklyResetCheck';
+import { useAppDispatch } from "../redux/store";
+import RewardInfo from "../modals/rewardInfoList";
+import ThemeInfo from "../modals/themeInfoList";
+import WeeklyResetCheck from "../modals/weeklyResetCheck";
 
-const MenuDiv = styled.div`
+const HeaderMenuDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,8 +50,7 @@ const MenuBtn = styled.div`
   }
 `;
 
-export default function Menu() {
-  const dispatch = useAppDispatch();
+export default function HeaderMenu() {
   const [isRewardMenuOpen, setIsRewardMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isWeeklyResetModalOpen, setIsWeeklyResetModalOpen] = useState(false);
@@ -71,23 +69,23 @@ export default function Menu() {
 
   return (
     <header>
-      <MenuDiv>
+      <HeaderMenuDiv>
         <h1>로아 숙제 현황판</h1>
         <aside>
           <li>
-            <MenuBtn onClick={()=>handleWeeklyRestBtn(true)}>
+            <MenuBtn onClick={() => handleWeeklyRestBtn(true)}>
               주간 초기화
               <GrNotification />
             </MenuBtn>
           </li>
-          <li className='menu-box'>
+          <li className="menu-box">
             <MenuBtn onClick={handleRewardMenuOpen}>
               레이드 보상
               <GrMoney />
             </MenuBtn>
             {isRewardMenuOpen && <RewardInfo />}
           </li>
-          <li className='menu-box'>
+          <li className="menu-box">
             <MenuBtn onClick={handleThemeMenuOpen}>
               테마 변경
               <BsPalette />
@@ -95,10 +93,10 @@ export default function Menu() {
             {isThemeMenuOpen && <ThemeInfo />}
           </li>
         </aside>
-      </MenuDiv>
-      {isWeeklyResetModalOpen && 
-        <WeeklyResetCheck handleWeeklyRestBtn={handleWeeklyRestBtn}/>
-      }
+      </HeaderMenuDiv>
+      {isWeeklyResetModalOpen && (
+        <WeeklyResetCheck handleWeeklyRestBtn={handleWeeklyRestBtn} />
+      )}
     </header>
   );
 }

@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { mococoImg } from '../img/mococoImg';
-import { initList } from '../redux/slice/contentsSlice';
-import { useAppDispatch } from '../redux/store';
+import React from "react";
+import styled from "styled-components";
+import { mococoImg } from "../img/mococoImg";
+import { initList } from "../redux/slice/contentsSlice";
+import { useAppDispatch } from "../redux/store";
 
 const WeeklyResetCheckDiv = styled.div`
   .weekly-modal-background {
@@ -22,7 +22,7 @@ const WeeklyResetCheckDiv = styled.div`
     z-index: 11;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     border-radius: 10px;
     .weekly-modal-confirm-container {
       display: flex;
@@ -51,11 +51,11 @@ const WeeklyResetCheckDiv = styled.div`
 
 type Props = {
   handleWeeklyRestBtn: (isOpen: boolean) => void;
-}
+};
 
 export default function WeeklyResetCheck({ handleWeeklyRestBtn }: Props) {
   const dispatch = useAppDispatch();
-  
+
   function confirmReset(check: boolean) {
     if (check) {
       dispatch(initList());
@@ -65,19 +65,32 @@ export default function WeeklyResetCheck({ handleWeeklyRestBtn }: Props) {
 
   return (
     <WeeklyResetCheckDiv>
-      <div className='weekly-modal'>
+      <div className="weekly-modal">
         <div>
           <img src={mococoImg[0]} />
         </div>
-        <div className='weekly-modal-confirm-container'>
+        <div className="weekly-modal-confirm-container">
           <p>정말 초기화하실 건가요?</p>
-          <div className='weekly-modal-btn-box'>
-            <div className='weekly-modal-btn' onClick={()=>confirmReset(true)}>▶ 그래</div>
-            <div className='weekly-modal-btn' onClick={()=>confirmReset(false)}>▶ 잘못눌렀어</div>
+          <div className="weekly-modal-btn-box">
+            <div
+              className="weekly-modal-btn"
+              onClick={() => confirmReset(true)}
+            >
+              ▶ 그래
+            </div>
+            <div
+              className="weekly-modal-btn"
+              onClick={() => confirmReset(false)}
+            >
+              ▶ 잘못눌렀어
+            </div>
           </div>
         </div>
       </div>
-      <div className='weekly-modal-background' onClick={()=>confirmReset(false)}></div>
+      <div
+        className="weekly-modal-background"
+        onClick={() => confirmReset(false)}
+      ></div>
     </WeeklyResetCheckDiv>
   );
 }

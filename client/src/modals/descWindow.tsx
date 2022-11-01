@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { BsQuestionCircle } from "react-icons/bs";
+import React from "react";
+import styled from "styled-components";
 import { GrMoney } from "react-icons/gr";
 
 const DescWindowDiv = styled.div`
@@ -18,16 +17,15 @@ const DescWindowDiv = styled.div`
     padding: 1em;
     top: -80px;
     svg path {
-      stroke: ${({ theme }) => theme.color.fontColor};;
+      stroke: ${({ theme }) => theme.color.fontColor};
     }
   }
 `;
 
 export default function DescWindow() {
-
   return (
     <DescWindowDiv>
-      <div className='description-window'>
+      <div className="description-window">
         <span>
           <span>* </span>
           <GrMoney size={14} />

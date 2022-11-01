@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { mococoImg } from '../img/mococoImg';
+import React from "react";
+import styled from "styled-components";
+import { mococoImg } from "../img/mococoImg";
 
 const FooterDiv = styled.footer`
   background-color: white;
@@ -16,14 +16,11 @@ const FooterDiv = styled.footer`
 `;
 
 export default function Footer() {
-
   return (
     <FooterDiv>
       {mococoImg.map((src, idx) => {
-        return (
-          <img src={src} key={idx}></img>
-        )
+        return <img src={src} key={idx}></img>;
       })}
     </FooterDiv>
-  )
+  );
 }
