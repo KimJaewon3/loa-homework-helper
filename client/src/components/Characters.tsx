@@ -11,8 +11,8 @@ import {
   updateSixTimesLimit,
 } from "../redux/slice/contentsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { BsArrowReturnRight, BsX } from "react-icons/bs";
-import Gold from "./characterGold";
+import { BsX } from "react-icons/bs";
+import Gold from "./CharacterGold";
 import SumGold from "./CharacterSumGold";
 import {
   addAccountBookList,
@@ -163,12 +163,11 @@ type ContentList = {
 const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   const dispatch = useAppDispatch();
   const contents = useAppSelector((state) => state.contentsReducer.contents);
-  // 6회제한
-  const [isAbledInputValue, setIsAbledInputValue] = useState(true);
+  const [sixTimeLimit, setSixTimeLimit] = useState(true);
   // 캐릭터 추가
-  const [alertText, setAlerText] = useState("");
+  const [addCharacterAlert, setAddCharacterAlert] = useState("");
   const [isAddCharacterModalOpen, setIsAddCharacterModalOpen] = useState(false);
-  const [inpuValue, setInputValue] = useState<InputValue>({
+  const [characterInfo, setCharacterInfo] = useState<InputValue>({
     name: "",
     level: 0,
   });
@@ -185,43 +184,46 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
   // 설명 모달
   const [isDescOpen, setIsDescOpen] = useState(false);
   const [isCharacterDraggable, setIsCharacterDraggable] = useState(false);
+  // 숙제리스트 드래그 순서바꾸기
+  const [contentDragTarget, setContentDragTarget] = useState("");
+  const [isContentDragging, setIsContentDragging] = useState(false);
 
   function handleInputValue(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.name === "name" && e.target.value.length > 12) return;
-    setInputValue({
-      ...inpuValue,
+    setCharacterInfo({
+      ...characterInfo,
       [e.target.name]: e.target.value,
     });
   }
 
   function submitAddCharacter() {
-    if (inpuValue.name === "" || inpuValue.level === 0) {
-      setIsAbledInputValue(false);
-      setAlerText(" * 값을 입력해주세요 * ");
+    if (characterInfo.name === "" || characterInfo.level === 0) {
+      setSixTimeLimit(false);
+      setAddCharacterAlert(" * 값을 입력해주세요 * ");
       return;
     }
-    if (contents.findIndex((el) => el.name === inpuValue.name) !== -1) {
-      setIsAbledInputValue(false);
-      setAlerText(" * 이미 존재하는 캐릭터입니다 * ");
+    if (contents.findIndex((el) => el.name === characterInfo.name) !== -1) {
+      setSixTimeLimit(false);
+      setAddCharacterAlert(" * 이미 존재하는 캐릭터입니다 * ");
       return;
     }
     dispatch(
       addCharacter({
-        name: inpuValue.name,
-        level: inpuValue.level,
+        name: characterInfo.name,
+        level: characterInfo.level,
       })
     );
     dispatch(
       addAccountBookList({
         type: "character",
-        history: inpuValue.name,
+        history: characterInfo.name,
         gold: 0,
       })
     );
     setIsAddCharacterModalOpen(false);
-    setIsAbledInputValue(true);
-    setInputValue({
-      ...inpuValue,
+    setSixTimeLimit(true);
+    setCharacterInfo({
+      ...characterInfo,
       name: "",
       level: 0,
     });
@@ -243,7 +245,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
 
   function handleAddCharacter() {
     setIsAddCharacterModalOpen(!isAddCharacterModalOpen);
-    setIsAbledInputValue(true);
+    setSixTimeLimit(true);
   }
 
   function handleAddList(characterIdx: number) {
@@ -348,9 +350,6 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
     setIsCharacterDraggable(false);
   }
 
-  const [contentDragTarget, setContentDragTarget] = useState("");
-  const [isContentDragging, setIsContentDragging] = useState(false);
-
   function handleContentDragStart(
     e: React.DragEvent<HTMLLIElement>,
     raidInfo: ContentList
@@ -405,8 +404,8 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
 
       <div className="characters-add-box">
         <button onClick={handleAddCharacter}>+ 캐릭터 추가하기</button>
-        {!isAbledInputValue && (
-          <span className="characters-add-box-alert">{alertText}</span>
+        {!sixTimeLimit && (
+          <span className="characters-add-box-alert">{addCharacterAlert}</span>
         )}
         {isAddCharacterModalOpen && (
           <div className="add-box-input-info">
@@ -414,7 +413,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
               name="name"
               placeholder="캐릭터명"
               onChange={(e) => handleInputValue(e)}
-              value={inpuValue.name}
+              value={characterInfo.name}
             ></input>
             <input
               name="level"
@@ -470,7 +469,7 @@ const Characters = forwardRef<HTMLDivElement>(function Characters(props, ref) {
                       return (
                         <li
                           key={key}
-                          draggable={isContentDragging}
+                          draggable="true"
                           onDragStart={(e) =>
                             handleContentDragStart(e, raidInfo)
                           }

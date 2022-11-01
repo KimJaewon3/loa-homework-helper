@@ -1,7 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { bookItem, deleteAccountBookList } from '../redux/slice/accountBookSlice';
-import { useAppDispatch, useAppSelector } from '../redux/store';
+import React from "react";
+import styled from "styled-components";
+import {
+  bookItem,
+  deleteAccountBookList,
+} from "../redux/slice/accountBookSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { BsX } from "react-icons/bs";
 
 const AccountBookListDiv = styled.div`
@@ -36,7 +39,7 @@ const AccountBookListDiv = styled.div`
       background-color: #acacac;
     }
   }
-  .account-book-list-sum > div{
+  .account-book-list-sum > div {
     display: flex;
     justify-content: space-between;
     margin: 0 1em 0 0;
@@ -44,8 +47,8 @@ const AccountBookListDiv = styled.div`
 `;
 
 type AccountBookListProps = {
-  type: 'character' | 'etc';
-}
+  type: "character" | "etc";
+};
 
 export function accGold(bookItem: bookItem[]) {
   return bookItem.reduce((acc, el) => {
@@ -55,14 +58,18 @@ export function accGold(bookItem: bookItem[]) {
 
 export default function AccountBookList({ type }: AccountBookListProps) {
   const dispatch = useAppDispatch();
-  const accountBook = useAppSelector(state => state.accountBookReducer.accountBook);
-  const contents = useAppSelector(state => state.contentsReducer.contents);
-  
+  const accountBook = useAppSelector(
+    (state) => state.accountBookReducer.accountBook
+  );
+  const contents = useAppSelector((state) => state.contentsReducer.contents);
+
   function deleteBookEtcItem(idx: number) {
-    dispatch(deleteAccountBookList({
-      type: 'etc',
-      targetIdx: idx,
-    }));
+    dispatch(
+      deleteAccountBookList({
+        type: "etc",
+        targetIdx: idx,
+      })
+    );
   }
 
   function initialBookEtcItem() {
@@ -73,11 +80,11 @@ export default function AccountBookList({ type }: AccountBookListProps) {
 
   function addAllCharacterGold() {
     let sum = 0;
-    contents.map(character => {
-      if(character.abledReward) {
+    contents.map((character) => {
+      if (character.abledReward) {
         sum += character.content.reduce((acc2, content) => {
           const key = Object.keys(content)[0];
-          return acc2 + content[key].rewardGold
+          return acc2 + content[key].rewardGold;
         }, 0);
       }
     });
@@ -86,32 +93,36 @@ export default function AccountBookList({ type }: AccountBookListProps) {
 
   return (
     <AccountBookListDiv>
-      {type === 'etc' && (
-        <div className='account-book-list-title'>
+      {type === "etc" && (
+        <div className="account-book-list-title">
           <span>추가사항 (더보기, 기타획득골드 등)</span>
           <button onClick={initialBookEtcItem}>초기화</button>
         </div>
       )}
-      {type === 'character' && (
-        <span className='account-book-list-title'>캐릭터</span>
+      {type === "character" && (
+        <span className="account-book-list-title">캐릭터</span>
       )}
       <ul>
         {accountBook[type].map((el, idx) => {
           return (
             <li key={idx}>
-              <div className='account-book-list-history'>
-                {type === 'etc' && (
-                  <BsX size={20} color='#bf0d0d' onClick={()=>deleteBookEtcItem(idx)}/>
+              <div className="account-book-list-history">
+                {type === "etc" && (
+                  <BsX
+                    size={20}
+                    color="#bf0d0d"
+                    onClick={() => deleteBookEtcItem(idx)}
+                  />
                 )}
                 <div>{el.history}</div>
               </div>
               <div>{el.gold}</div>
             </li>
-          )
+          );
         })}
       </ul>
-      <div className='account-book-list-sum'>
-        {type === 'character' && (
+      <div className="account-book-list-sum">
+        {type === "character" && (
           <div>
             <span>예상 총합: </span>
             <span>{addAllCharacterGold()}</span>
@@ -122,6 +133,6 @@ export default function AccountBookList({ type }: AccountBookListProps) {
           <span>{accGold(accountBook[type])}</span>
         </div>
       </div>
-    </AccountBookListDiv>  
-  )
+    </AccountBookListDiv>
+  );
 }
