@@ -9,6 +9,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
+  PersistConfig,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -17,10 +18,12 @@ import accountBookReducer from "../slice/accountBookSlice";
 import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
 
+import characterReducer from "../slice/FcharacterSlice";
+
 const persistConfig = {
   key: "root",
   version: 1,
-  storage,
+  storage,  
 };
 
 const rootReducer = combineReducers({
@@ -28,6 +31,7 @@ const rootReducer = combineReducers({
   accountBookReducer,
   memoBoardReducer,
   themeReducer,
+  characterReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
