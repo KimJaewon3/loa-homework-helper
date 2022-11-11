@@ -2,21 +2,23 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RaidData, raidInfos } from "../../data/FraidLevel";
 import { RootState } from "../store";
 
-type Character = {
+export type ContentsType = {
+  raidName: string;
+  raidData: {
+    difficulty?: string;
+    reward: number;
+  };
+  isDone: boolean;
+};
+
+export type CharacterType = {
   name: string;
   isLimitedSixTime: boolean;
-  contents: {
-    raidName: string;
-    raidData: {
-      difficulty?: string;
-      reward: number;
-    };
-    isDone: boolean;
-  }[];
+  contents: ContentsType[];
 };
 
 type InitialState = {
-  characters: Character[];
+  characters: CharacterType[];
 };
 
 type AddCharacter = {
@@ -46,7 +48,7 @@ type UpdateRaidIsDone = {
 };
 
 type DeleteCharacter = {
-  name: string;
+  characterName: string;
 };
 
 type DeleteRaidList = {
@@ -78,7 +80,7 @@ export const characterSlice = createSlice({
       const { name, level } = action.payload;
       const sixTimeCheck =
         state.characters.filter((ch) => ch.isLimitedSixTime).length < 6;
-      const newCharacter: Character = {
+      const newCharacter: CharacterType = {
         name,
         isLimitedSixTime: sixTimeCheck,
         contents: [],
@@ -146,9 +148,9 @@ export const characterSlice = createSlice({
       const { characterIdx, raidListIdx, isDone } = action.payload;
       state.characters[characterIdx].contents[raidListIdx].isDone = isDone;
     },
-    deleteChracter: (state, action: PayloadAction<DeleteCharacter>) => {
+    deleteCharacter: (state, action: PayloadAction<DeleteCharacter>) => {
       state.characters = state.characters.filter((character) => {
-        return character.name !== action.payload.name;
+        return character.name !== action.payload.characterName;
       });
     },
     deleteRaidList: (state, action: PayloadAction<DeleteRaidList>) => {
@@ -166,7 +168,7 @@ export const characterSlice = createSlice({
     reorderCharacter: (state, action: PayloadAction<ReorderCharacter>) => {
       let { fromIdx, toIdx, behavior } = action.payload;
       let move = behavior === "after" ? 1 : 0;
-       
+
       state.characters.splice(toIdx + move, 0, state.characters[fromIdx]);
       if (fromIdx > toIdx) {
         fromIdx += 1;
@@ -197,7 +199,7 @@ export const {
   updateReward,
   updateSixTimeLimit,
   updateRaidIsDone,
-  deleteChracter,
+  deleteCharacter,
   deleteRaidList,
   reorderRaidList,
   reorderCharacter,
