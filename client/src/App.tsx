@@ -4,11 +4,12 @@ import "./App.css";
 import AccountBook from "./components/AccountBook";
 import Characters from "./components/Characters";
 import ContentsStatus from "./components/ContentsStatus";
+import { Character } from "./components/character/FCharacter";
+import { CharacterStatus } from "./components/character/FCharacterStatus";
 import FixedMenu from "./components/FixedMenu";
 import Footer from "./components/Footer";
 import HeaderMenu from "./components/HeaderMenu";
 import Monitoring from "./components/Monitoring";
-import { Test } from "./components/Test";
 import { RootState, useAppSelector } from "./redux/store";
 import { theme } from "./style/theme";
 
@@ -41,7 +42,7 @@ function App() {
       <Wrap>
         <HeaderMenu />
         <section>
-          <Test />
+          <CharacterStatus />
           <Monitoring ref={monitoringRef} />
           <Characters ref={characterRef} />
           <ContentsStatus ref={contentsStatusRef} />
