@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GrMoney } from "react-icons/gr";
-import { ContentsType, updateReward } from "../../redux/slice/FcharacterSlice";
+import styled from "styled-components";
+import { updateReward } from "../../redux/slice/FcharacterSlice";
 import { useAppDispatch } from "../../redux/store";
 
 type Props = {
@@ -27,7 +28,7 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
   };
 
   return (
-    <div>
+    <RaidListGoldContainer>
       {isEditing ? (
         <div>
           <input
@@ -35,17 +36,35 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <div onClick={handleSubmit}>v</div>
-          <div onClick={cancleSubmit}>x</div>
+          <div onClick={handleSubmit} style={{ color: "green" }}>
+            v
+          </div>
+          <div onClick={cancleSubmit} style={{ color: "red" }}>
+            x
+          </div>
         </div>
       ) : (
         <div onClick={() => setIsEditing(true)}>
           <div>{reward}</div>
-          <GrMoney size={14} />
+          <div className="svg-wrap">
+            <GrMoney size={14} />
+          </div>
         </div>
       )}
-    </div>
+    </RaidListGoldContainer>
   );
 };
 
-export { RaidListGold };
+const RaidListGoldContainer = styled.div`
+  > * {
+    display: flex;
+    > * {
+      margin: 0 5px 0 5px;
+    }
+    > input {
+      width: 6em;
+    }
+  }
+`;
+
+export default RaidListGold;
