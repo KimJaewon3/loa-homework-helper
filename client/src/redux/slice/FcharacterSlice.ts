@@ -56,16 +56,16 @@ type DeleteRaidList = {
   raidListIdx: number;
 };
 
-type ReorderRaidList = {
+export type ReorderRaidList = {
   fromIdx: number;
   toIdx: number;
   characterIdx: number;
 };
 
-type ReorderCharacter = {
+export type ReorderCharacter = {
   fromIdx: number;
   toIdx: number;
-  behavior: "before" | "after";
+  move: "before" | "after";
 };
 
 const initialState: InitialState = {
@@ -166,10 +166,10 @@ export const characterSlice = createSlice({
       state.characters[characterIdx].contents.splice(toIdx, 0, slice[0]);
     },
     reorderCharacter: (state, action: PayloadAction<ReorderCharacter>) => {
-      let { fromIdx, toIdx, behavior } = action.payload;
-      let move = behavior === "after" ? 1 : 0;
+      let { fromIdx, toIdx, move } = action.payload;
+      let goto = move === "after" ? 1 : 0;
 
-      state.characters.splice(toIdx + move, 0, state.characters[fromIdx]);
+      state.characters.splice(toIdx + goto, 0, state.characters[fromIdx]);
       if (fromIdx > toIdx) {
         fromIdx += 1;
       }
