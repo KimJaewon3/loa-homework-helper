@@ -12,9 +12,7 @@ export interface CharacterDragInfo extends ReorderCharacter {
 }
 
 const CharacterStatus = forwardRef<HTMLDivElement>((props, ref) => {
-  const characters = useAppSelector(
-    (state) => state.characterReducer.characters
-  );
+  const { characters } = useAppSelector((state) => state.characterReducer);
   const [isInfoWindowOpen, setIsInfoWindowOpen] = useState(false);
   const charactersRef = useRef<HTMLDivElement[]>([]);
   const [characterDragInfo, setCharacterDragInfo] = useState<CharacterDragInfo>(
@@ -78,4 +76,4 @@ const CharacterStatusContainer = styled.div`
   }
 `;
 
-export { CharacterStatus };
+export default CharacterStatus;

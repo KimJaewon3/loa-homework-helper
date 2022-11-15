@@ -1,10 +1,56 @@
 import React from "react";
 import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
-import { initList } from "../redux/slice/contentsSlice";
+import { initRaidList } from "../redux/slice/FcharacterSlice";
 import { useAppDispatch } from "../redux/store";
 
-const WeeklyResetCheckDiv = styled.div`
+type Props = {
+  handleWeeklyRestBtn: (isOpen: boolean) => void;
+};
+
+const WeeklyResetCheck = ({ handleWeeklyRestBtn }: Props) => {
+  const dispatch = useAppDispatch();
+
+  const confirmReset = (check: boolean) => {
+    if (check) {
+      dispatch(initRaidList());
+    }
+    handleWeeklyRestBtn(false);
+  };
+
+  return (
+    <WeeklyResetCheckContainer>
+      <div className="weekly-modal">
+        <div>
+          <img src={mococoImg[0]} />
+        </div>
+        <div className="weekly-modal-confirm-container">
+          <p>정말 초기화하실 건가요?</p>
+          <div className="weekly-modal-btn-box">
+            <div
+              className="weekly-modal-btn"
+              onClick={() => confirmReset(true)}
+            >
+              ▶ 그래
+            </div>
+            <div
+              className="weekly-modal-btn"
+              onClick={() => confirmReset(false)}
+            >
+              ▶ 잘못눌렀어
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="weekly-modal-background"
+        onClick={() => confirmReset(false)}
+      ></div>
+    </WeeklyResetCheckContainer>
+  );
+};
+
+const WeeklyResetCheckContainer = styled.div`
   .weekly-modal-background {
     position: fixed;
     background-color: #000000;
@@ -49,48 +95,4 @@ const WeeklyResetCheckDiv = styled.div`
   }
 `;
 
-type Props = {
-  handleWeeklyRestBtn: (isOpen: boolean) => void;
-};
-
-export default function WeeklyResetCheck({ handleWeeklyRestBtn }: Props) {
-  const dispatch = useAppDispatch();
-
-  function confirmReset(check: boolean) {
-    if (check) {
-      dispatch(initList());
-    }
-    handleWeeklyRestBtn(false);
-  }
-
-  return (
-    <WeeklyResetCheckDiv>
-      <div className="weekly-modal">
-        <div>
-          <img src={mococoImg[0]} />
-        </div>
-        <div className="weekly-modal-confirm-container">
-          <p>정말 초기화하실 건가요?</p>
-          <div className="weekly-modal-btn-box">
-            <div
-              className="weekly-modal-btn"
-              onClick={() => confirmReset(true)}
-            >
-              ▶ 그래
-            </div>
-            <div
-              className="weekly-modal-btn"
-              onClick={() => confirmReset(false)}
-            >
-              ▶ 잘못눌렀어
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="weekly-modal-background"
-        onClick={() => confirmReset(false)}
-      ></div>
-    </WeeklyResetCheckDiv>
-  );
-}
+export default WeeklyResetCheck;

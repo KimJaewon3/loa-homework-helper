@@ -15,6 +15,11 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(`${reward}`);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 5) return;
+    setInputValue(e.target.value);
+  };
+
   const handleSubmit = () => {
     dispatch(
       updateReward({ characterIdx, raidListIdx, gold: Number(inputValue) })
@@ -33,8 +38,9 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
         <div>
           <input
             type="number"
+            max="99999"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={handleInput}
           />
           <div onClick={handleSubmit} style={{ color: "green" }}>
             v
