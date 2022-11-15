@@ -1,8 +1,90 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../redux/store";
+import { makeRaidFullName } from "./characters/Character";
 
-const ContentsStatusDiv = styled.div`
+type ContentsFilter = {
+  raidName: string;
+  characters: {
+    name: string;
+    isDone: boolean;
+  }[];
+};
+
+const ContentsStatus = forwardRef<HTMLDivElement>((props, ref) => {
+  const { characters } = useAppSelector((state) => state.characterReducer);
+  const [contentsFilter, setContentsFilter] = useState<ContentsFilter[]>([]);
+  const [searchInputValue, setSearchInputValue] = useState("");
+
+  useEffect(() => {
+    const filtered: ContentsFilter[] = [];
+
+    characters.forEach((ch) => {
+      ch.contents.forEach((c) => {
+        const fullName = makeRaidFullName(c);
+        const info = {
+          name: ch.name,
+          isDone: c.isDone,
+        };
+        let raidIdx = filtered.findIndex((el) => el.raidName === fullName);
+
+        if (raidIdx === -1) {
+          filtered.push({
+            raidName: fullName,
+            characters: [{ ...info }],
+          });
+        } else {
+          filtered[raidIdx].characters.push({ ...info });
+        }
+      });
+    });
+
+    setContentsFilter(filtered);
+  }, [characters]);
+
+  return (
+    <ContentsStatusContainer ref={ref}>
+      <div className="contents-status-title-box">
+        <span>컨텐츠 현황</span>
+        <span className="contents-status-noti">
+          * 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
+        </span>
+      </div>
+      <div className="contents-status-search-bar">
+        <input
+          placeholder="컨텐츠 검색..."
+          onChange={(e) => setSearchInputValue(e.target.value)}
+        />
+      </div>
+      <div className="contents-status-characters-container">
+        {contentsFilter
+          .filter((c) => {
+            if (searchInputValue === "") {
+              return true;
+            } else {
+              return c.raidName.includes(searchInputValue);
+            }
+          })
+          .map((c) => (
+            <div className="contents-status-characters-box" key={c.raidName}>
+              <div className="contents-status-characters-title">
+                <div>{c.raidName}</div>
+              </div>
+              <ul>
+                {c.characters.map((ch) => (
+                  <CharacterLi key={ch.name} isDone={ch.isDone}>
+                    <span>{ch.name}</span>
+                  </CharacterLi>
+                ))}
+              </ul>
+            </div>
+          ))}
+      </div>
+    </ContentsStatusContainer>
+  );
+});
+
+const ContentsStatusContainer = styled.div`
   display: flex;
   flex-direction: column;
   > * {
@@ -53,113 +135,16 @@ const ContentsStatusDiv = styled.div`
         align-items: center;
         margin: 5px 0 5px 0;
       }
-      li {
-        list-style: none;
-      }
     }
   }
 `;
 
 const CharacterLi = styled.li<{ isDone: boolean }>`
   margin: 0 10px 0 10px;
+  list-style: none;
   > span {
     color: ${(props) => (props.isDone ? "#9f9f9f" : "black")};
   }
 `;
-
-type ContentsFilter = {
-  category: string;
-  done: string[];
-  total: string[];
-}[];
-
-const ContentsStatus = forwardRef<HTMLDivElement>(function ContentsStatus(
-  props,
-  ref
-) {
-  const contents = useAppSelector((state) => state.contentsReducer.contents);
-  const [contentsFilter, setContentsFilter] = useState<ContentsFilter>();
-  const [searchInputValue, setSearchInputValue] = useState("");
-
-  useEffect(() => {
-    const filtered: ContentsFilter = [];
-
-    contents.map((info) => {
-      info.content.map((c) => {
-        const key = Object.keys(c)[0];
-        const categoryIdx = filtered.findIndex((el) => {
-          return el.category === key;
-        });
-
-        if (categoryIdx !== -1) {
-          if (c[key].isDone) {
-            filtered[categoryIdx].done.push(info.name);
-          }
-          filtered[categoryIdx].total.push(info.name);
-        } else {
-          filtered.push({
-            category: key,
-            done: c[key].isDone ? [info.name] : [],
-            total: [info.name],
-          });
-        }
-      });
-    });
-
-    setContentsFilter(filtered);
-  }, [contents]);
-
-  function handleSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchInputValue(e.target.value);
-  }
-
-  return (
-    <ContentsStatusDiv ref={ref}>
-      <div className="contents-status-title-box">
-        <span>컨텐츠 현황</span>
-        <span className="contents-status-noti">
-          * 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
-        </span>
-      </div>
-      <div className="contents-status-search-bar">
-        <input
-          placeholder="컨텐츠 검색..."
-          onChange={(e) => handleSearchInput(e)}
-        ></input>
-      </div>
-      <div className="contents-status-characters-container">
-        {contentsFilter?.map((el, idx) => {
-          if (
-            searchInputValue !== "" &&
-            !el.category.includes(searchInputValue)
-          ) {
-            return;
-          }
-
-          return (
-            <div key={idx} className="contents-status-characters-box">
-              <div className="contents-status-characters-title">
-                <span>{el.category}</span>
-              </div>
-              <ul>
-                {el.total.map((character, cidx) => {
-                  return (
-                    <CharacterLi
-                      isDone={el.done.includes(character)}
-                      key={cidx}
-                    >
-                      <span>{character}</span>
-                      {cidx !== el.total.length - 1 && <span>,</span>}
-                    </CharacterLi>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </ContentsStatusDiv>
-  );
-});
 
 export default ContentsStatus;
