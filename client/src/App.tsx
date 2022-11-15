@@ -3,13 +3,13 @@ import styled, { ThemeProvider } from "styled-components";
 import "./App.css";
 import AccountBook from "./components/AccountBook";
 import ContentsStatus from "./components/ContentsStatus";
-import { CharacterStatus } from "./components/CharacterStatus";
-import FixedMenu from "./components/FixedMenu";
+import CharacterStatus from "./components/CharacterStatus";
 import Footer from "./components/Footer";
 import HeaderMenu from "./components/HeaderMenu";
-import Monitoring from "./components/Monitoring";
 import { RootState, useAppSelector } from "./redux/store";
 import { theme } from "./style/theme";
+import MonitoringStatus from "./components/MonitoringStatus";
+import NavMenu from "./components/NavMenu";
 
 const App = () => {
   const accountBookRef = useRef<HTMLDivElement>(null);
@@ -25,12 +25,12 @@ const App = () => {
       <Wrap>
         <HeaderMenu />
         <section>
-          <Monitoring ref={monitoringRef} />
+          <MonitoringStatus ref={monitoringRef} />
           <CharacterStatus ref={characterRef} />
           <ContentsStatus ref={contentsStatusRef} />
           <AccountBook ref={accountBookRef} />
         </section>
-        <FixedMenu
+        <NavMenu
           accountBookRef={accountBookRef}
           characterRef={characterRef}
           monitoringRef={monitoringRef}

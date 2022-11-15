@@ -4,6 +4,26 @@ import { useAppDispatch } from "../redux/store";
 import { OpenedHeaderMenu } from "../style/styled";
 import { theme, ThemeType } from "../style/theme";
 
+const ThemeInfo = () => {
+  const dispatch = useAppDispatch();
+
+  const handleThemeUpdate = (themeType: ThemeType) => {
+    dispatch(updateTheme({ value: themeType }));
+  };
+
+  return (
+    <OpenedHeaderMenu>
+      {(Object.keys(theme) as Array<keyof typeof theme>).map((themeType) => (
+        <ThemeSampleList key={themeType} className="opened-list">
+          <svg onClick={() => handleThemeUpdate(themeType)}>
+            <rect fill={theme[themeType].color.backgroundColor}></rect>
+          </svg>
+        </ThemeSampleList>
+      ))}
+    </OpenedHeaderMenu>
+  );
+};
+
 const ThemeSampleList = styled.div`
   svg {
     width: 100%;
@@ -16,24 +36,4 @@ const ThemeSampleList = styled.div`
   }
 `;
 
-export default function ThemeInfo() {
-  const dispatch = useAppDispatch();
-
-  function handleThemeUpdate(themeType: ThemeType) {
-    dispatch(updateTheme({ value: themeType }));
-  }
-
-  return (
-    <OpenedHeaderMenu>
-      {(Object.keys(theme) as Array<keyof typeof theme>).map((themeType) => {
-        return (
-          <ThemeSampleList key={themeType} className="opened-list">
-            <svg onClick={() => handleThemeUpdate(themeType)}>
-              <rect fill={theme[themeType].color.backgroundColor}></rect>
-            </svg>
-          </ThemeSampleList>
-        );
-      })}
-    </OpenedHeaderMenu>
-  );
-}
+export default ThemeInfo;

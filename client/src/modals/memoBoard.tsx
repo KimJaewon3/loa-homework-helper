@@ -3,7 +3,26 @@ import styled from "styled-components";
 import { updateMemo } from "../redux/slice/memoBoardSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 
-const MemoBoardDiv = styled.div`
+const MemoBoard = () => {
+  const dispatch = useAppDispatch();
+  const memoBoard = useAppSelector((state) => state.memoBoardReducer.memo);
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(updateMemo({ value: e.target.value }));
+  };
+
+  return (
+    <MemoBoardContainer>
+      <textarea
+        onChange={(e) => handleTextChange(e)}
+        value={memoBoard}
+        placeholder="...memo"
+      ></textarea>
+    </MemoBoardContainer>
+  );
+};
+
+const MemoBoardContainer = styled.div`
   position: absolute;
   top: 0;
   left: -380px;
@@ -23,21 +42,4 @@ const MemoBoardDiv = styled.div`
   }
 `;
 
-export default function MemoBoard() {
-  const dispatch = useAppDispatch();
-  const memoBoard = useAppSelector((state) => state.memoBoardReducer.memo);
-
-  function handleTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    dispatch(updateMemo({ value: e.target.value }));
-  }
-
-  return (
-    <MemoBoardDiv>
-      <textarea
-        onChange={(e) => handleTextChange(e)}
-        value={memoBoard}
-        placeholder="...memo"
-      ></textarea>
-    </MemoBoardDiv>
-  );
-}
+export default MemoBoard;

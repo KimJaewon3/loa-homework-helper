@@ -5,9 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 const AddCharacter = () => {
   const dispatch = useAppDispatch();
-  const characters = useAppSelector(
-    (state) => state.characterReducer.characters
-  );
+  const { characters } = useAppSelector((state) => state.characterReducer);
   const [isAddCharacterOpen, setIsAddCharacterOpen] = useState(false);
   const [addCharacterAlert, setAddCharacterAlert] = useState("");
   const [addCharacterInput, setAddCharacterInput] = useState({

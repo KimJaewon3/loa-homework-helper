@@ -1,11 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-type RewardInfoModalProps = {
+type Props = {
   src: string;
 };
 
-const RewardInfoModalDiv = styled.div`
+const RewardInfoModal = ({ src }: Props) => {
+  return (
+    <RewardInfoModalContainer>
+      <img src={src} />
+    </RewardInfoModalContainer>
+  );
+};
+
+const RewardInfoModalContainer = styled.div`
   position: absolute;
   top: 1.5em;
   left: -634px;
@@ -29,10 +37,4 @@ const RewardInfoModalDiv = styled.div`
   }
 `;
 
-export default function RewardInfoModal({ src }: RewardInfoModalProps) {
-  return (
-    <RewardInfoModalDiv>
-      <img src={src} />
-    </RewardInfoModalDiv>
-  );
-}
+export default RewardInfoModal;

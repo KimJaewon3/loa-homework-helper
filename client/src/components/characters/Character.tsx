@@ -109,6 +109,7 @@ const Character = ({
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return;
     charactersRef.current.map((el) => {
       el.classList.remove(
         "mute-pointer",
@@ -191,6 +192,11 @@ const Character = ({
 const CharacterContainer = styled.li`
   list-style: none;
   margin: 0 1em 1em 0;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
   .character-item-wrap {
     border: 2px solid ${({ theme }) => theme.color.borderColor};
     border-radius: 10px;
@@ -215,11 +221,14 @@ const CharacterContainer = styled.li`
     }
   }
   .character-item-add-raid-list {
+    display: flex;
+    width: auto;
     > * {
       padding: 5px;
     }
     > input {
       width: 14em;
+      width: -webkit-fill-available;
     }
     > button {
       width: 2.5em;

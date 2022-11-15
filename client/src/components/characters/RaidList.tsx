@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BsX } from "react-icons/bs";
 import styled from "styled-components";
 import {
@@ -24,6 +25,7 @@ const RaidList = ({
   raidListDragIdx,
 }: Props) => {
   const dispatch = useAppDispatch();
+  const [isRaidListDraggable, setIsRaidListDraggable] = useState(false);
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     const img = new Image();
@@ -35,6 +37,7 @@ const RaidList = ({
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     e.currentTarget.classList.remove("drag-start");
+    setIsRaidListDraggable(false);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -58,14 +61,20 @@ const RaidList = ({
   return (
     <RaidListContainer>
       <div
-        draggable="true"
+        draggable={isRaidListDraggable}
         onDragStart={(e) => handleDragStart(e)}
         onDragEnd={(e) => handleDragEnd(e)}
         onDragOver={(e) => handleDragOver(e)}
       >
         <div className="chracter-raid-list-wrap">
           <div>
-            <div className="chracter-raid-list-drag-icon">:::</div>
+            <div
+              className="chracter-raid-list-drag-icon"
+              onMouseDown={() => setIsRaidListDraggable(true)}
+              onMouseUp={() => setIsRaidListDraggable(false)}
+            >
+              :::
+            </div>
             <div>{makeRaidFullName(content)}</div>
             <input
               type="checkbox"
