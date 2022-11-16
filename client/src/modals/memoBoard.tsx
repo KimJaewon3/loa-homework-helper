@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { updateMemo } from "../redux/slice/memoBoardSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";

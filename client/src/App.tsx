@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import "./App.css";
-import AccountBook from "./components/AccountBook";
+import "./App.css"; 
 import ContentsStatus from "./components/ContentsStatus";
 import CharacterStatus from "./components/CharacterStatus";
 import Footer from "./components/Footer";
@@ -10,9 +9,10 @@ import { RootState, useAppSelector } from "./redux/store";
 import { theme } from "./style/theme";
 import MonitoringStatus from "./components/MonitoringStatus";
 import NavMenu from "./components/NavMenu";
+import AccountStatus from "./components/AccoutStatus";
 
 const App = () => {
-  const accountBookRef = useRef<HTMLDivElement>(null);
+  const accountRef = useRef<HTMLDivElement>(null);
   const characterRef = useRef<HTMLDivElement>(null);
   const monitoringRef = useRef<HTMLDivElement>(null);
   const contentsStatusRef = useRef<HTMLDivElement>(null);
@@ -28,13 +28,13 @@ const App = () => {
           <MonitoringStatus ref={monitoringRef} />
           <CharacterStatus ref={characterRef} />
           <ContentsStatus ref={contentsStatusRef} />
-          <AccountBook ref={accountBookRef} />
+          <AccountStatus ref={accountRef} />
         </section>
         <NavMenu
-          accountBookRef={accountBookRef}
-          characterRef={characterRef}
           monitoringRef={monitoringRef}
+          characterRef={characterRef}
           contentsStatusRef={contentsStatusRef}
+          accountBookRef={accountRef}
         />
         <Footer />
       </Wrap>

@@ -6,10 +6,9 @@ import {
   CharacterType,
   ContentsType,
   deleteCharacter,
-  ReorderCharacter,
   reorderCharacter,
   updateSixTimeLimit,
-} from "../../redux/slice/FcharacterSlice";
+} from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
 import { CharacterDragInfo } from "../CharacterStatus";
 import RaidList from "./RaidList";
