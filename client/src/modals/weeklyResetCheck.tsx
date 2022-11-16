@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
-import { initRaidList } from "../redux/slice/FcharacterSlice";
+import { initRaidList } from "../redux/slice/characterSlice";
 import { useAppDispatch } from "../redux/store";
 
 type Props = {

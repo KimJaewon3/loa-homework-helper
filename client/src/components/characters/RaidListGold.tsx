@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GrMoney } from "react-icons/gr";
 import styled from "styled-components";
-import { updateReward } from "../../redux/slice/FcharacterSlice";
+import { updateReward } from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
 
 type Props = {

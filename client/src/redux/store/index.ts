@@ -9,29 +9,25 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-  PersistConfig,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import contentsReducer from "../slice/contentsSlice";
-import accountBookReducer from "../slice/accountBookSlice";
 import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
-
-import characterReducer from "../slice/FcharacterSlice";
+import characterReducer from "../slice/characterSlice";
+import accountReducer from "../slice/accountSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
-  storage,  
+  storage,
 };
 
 const rootReducer = combineReducers({
-  contentsReducer,
-  accountBookReducer,
   memoBoardReducer,
   themeReducer,
   characterReducer,
+  accountReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -46,11 +42,11 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store);
-export default store;
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const persistor = persistStore(store);
+export default store;

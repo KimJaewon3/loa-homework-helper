@@ -2,6 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
 
+const Footer = () => {
+  return (
+    <FooterDiv>
+      {mococoImg.map((src, idx) => {
+        return <img src={src} key={idx}></img>;
+      })}
+    </FooterDiv>
+  );
+};
+
 const FooterDiv = styled.footer`
   background-color: white;
   margin-top: 2em;
@@ -15,12 +25,4 @@ const FooterDiv = styled.footer`
   }
 `;
 
-export default function Footer() {
-  return (
-    <FooterDiv>
-      {mococoImg.map((src, idx) => {
-        return <img src={src} key={idx}></img>;
-      })}
-    </FooterDiv>
-  );
-}
+export default Footer;

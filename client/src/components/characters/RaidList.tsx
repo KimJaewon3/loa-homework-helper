@@ -6,7 +6,7 @@ import {
   deleteRaidList,
   reorderRaidList,
   updateRaidIsDone,
-} from "../../redux/slice/FcharacterSlice";
+} from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
 import { makeRaidFullName } from "./Character";
 import RaidListGold from "./RaidListGold";

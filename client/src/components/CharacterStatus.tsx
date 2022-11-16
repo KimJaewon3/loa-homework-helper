@@ -2,7 +2,7 @@ import { forwardRef, useRef, useState } from "react";
 import { RiQuestionFill } from "react-icons/ri";
 import styled from "styled-components";
 import DescWindow from "../modals/descWindow";
-import { ReorderCharacter } from "../redux/slice/FcharacterSlice";
+import { ReorderCharacter } from "../redux/slice/characterSlice";
 import { useAppSelector } from "../redux/store";
 import AddCharacter from "./characters/AddCharacter";
 import Character from "./characters/Character";

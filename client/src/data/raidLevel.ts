@@ -1,190 +1,159 @@
-export type RaidInfo = {
-  leastLevel: number;
-  maximumLevel?: number;
+export type RaidData = {
+  difficulty?: string;
+  minLevel: number;
+  maxLevel?: number;
   reward: number;
-}
+};
 
-type RaidLevel = {
-  [key: string]: RaidInfo | {
-    [key: string]: RaidInfo;
-  }[];
-}[];
+export type RaidInfo = {
+  raidName: string;
+  info: RaidData[];
+};
 
-export const raidLevel: RaidLevel = [
-  { 
-    '오레하': { 
-      leastLevel: 1325,
-      maximumLevel: 1415,
-      reward: 1300,
-    }
+export const raidInfos: RaidInfo[] = [
+  {
+    raidName: "오레하",
+    info: [
+      {
+        minLevel: 1325,
+        maxLevel: 1415,
+        reward: 1300,
+      },
+    ],
   },
   {
-    '아르고스': {
-      leastLevel: 1370,
-      maximumLevel: 1475,
-      reward: 1600,
-    }
-  },
-  { 
-    '발탄': [
+    raidName: "아르고스",
+    info: [
       {
-        '노말': {
-          leastLevel: 1415,
-          reward: 2500,
-        }
+        minLevel: 1370,
+        maxLevel: 1475,
+        reward: 1600,
       },
-      {
-        '하드': {
-          leastLevel: 1445,
-          reward: 4500,
-        }
-      },
-    ]
+    ],
   },
   {
-    '비아': [
+    raidName: "발탄",
+    info: [
       {
-        '노말': {
-          leastLevel: 1430,
-          reward: 2500,
-        },
+        difficulty: "노말",
+        minLevel: 1415,
+        reward: 2500,
       },
       {
-        '하드': {
-          leastLevel: 1460,
-          reward: 4500,
-        }
+        difficulty: "하드",
+        minLevel: 1445,
+        reward: 4500,
       },
-    ]
+    ],
   },
   {
-    '쿠크': {
-      leastLevel: 1475,
-      reward: 4500,
-    }
+    raidName: "비아",
+    info: [
+      {
+        difficulty: "노말",
+        minLevel: 1430,
+        reward: 2500,
+      },
+      {
+        difficulty: "하드",
+        minLevel: 1460,
+        reward: 4500,
+      },
+    ],
   },
   {
-    '아브12': [
+    raidName: "쿠크",
+    info: [
       {
-        '노말': {
-          leastLevel: 1490,
-          reward: 4500,
-        },
+        difficulty: "",
+        minLevel: 1475,
+        reward: 4500,
       },
-      {
-        '하드': {
-          leastLevel: 1540,
-          reward: 5500,
-        }
-      }
-    ]
+    ],
   },
   {
-    '아브34': [
+    raidName: "아브12",
+    info: [
       {
-        '노말': {
-          leastLevel: 1500,
-          reward: 1500,
-        },
+        difficulty: "노말",
+        minLevel: 1490,
+        reward: 4500,
       },
       {
-        '하드': {
-          leastLevel: 1550,
-          reward: 2000,
-        }
-      }
-    ]
+        difficulty: "하드",
+        minLevel: 1540,
+        reward: 5500,
+      },
+    ],
   },
   {
-    '아브56': [
+    raidName: "아브34",
+    info: [
       {
-        '노말': {
-          leastLevel: 1520,
-          reward: 2500,
-        },
+        difficulty: "노말",
+        minLevel: 1500,
+        reward: 1500,
       },
       {
-        '하드': {
-          leastLevel: 1560,
-          reward: 3000,
-        }
-      }
-    ]
+        difficulty: "하드",
+        minLevel: 1550,
+        reward: 2000,
+      },
+    ],
   },
   {
-    '일리아칸1': [
+    raidName: "아브56",
+    info: [
       {
-        '노말': {
-          leastLevel: 1580,
-          reward: 1500,
-        }
+        difficulty: "노말",
+        minLevel: 1520,
+        reward: 2500,
       },
       {
-        '하드': {
-          leastLevel: 1600,
-          reward: 1750,
-        }
-      }
-    ]
+        difficulty: "하드",
+        minLevel: 1560,
+        reward: 3000,
+      },
+    ],
   },
   {
-    '일리아칸2': [
+    raidName: "일리아칸",
+    info: [
       {
-        '노말': {
-          leastLevel: 1580,
-          reward: 1750,
-        }
+        difficulty: "노말",
+        minLevel: 1580,
+        reward: 5500,
       },
       {
-        '하드': {
-          leastLevel: 1600,
-          reward: 2000,
-        }
-      }
-    ]
+        difficulty: "하드",
+        minLevel: 1600,
+        reward: 6500,
+      },
+    ],
   },
   {
-    '일리아칸3': [
+    raidName: "카양겔",
+    info: [
       {
-        '노말': {
-          leastLevel: 1580,
-          reward: 2250,
-        }
+        difficulty: "노말",
+        minLevel: 1475,
+        reward: 0,
       },
       {
-        '하드': {
-          leastLevel: 1600,
-          reward: 2750,
-        }
-      }
-    ]
+        difficulty: "하드1",
+        minLevel: 1520,
+        reward: 0,
+      },
+      {
+        difficulty: "하드2",
+        minLevel: 1560,
+        reward: 0,
+      },
+      {
+        difficulty: "하드3",
+        minLevel: 1580,
+        reward: 0,
+      },
+    ],
   },
-  {
-    '카양겔': [
-      {
-        '노말': {
-          leastLevel: 1475,
-          reward: 0,
-        },
-      },
-      {
-        '하드1': {
-          leastLevel: 1520,
-          reward: 0,
-        },
-      },
-      {
-        '하드2': {
-          leastLevel: 1560,
-          reward: 0,
-        },
-      },
-      {
-        '하드3': {
-          leastLevel: 1580,
-          reward: 0,
-        }
-      }
-    ]
-  }
 ];

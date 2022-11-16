@@ -15,14 +15,6 @@ const HeaderMenu = () => {
     setIsWeeklyResetModalOpen(isOpen);
   };
 
-  const handleRewardMenuOpen = () => {
-    setIsRewardMenuOpen(!isRewardMenuOpen);
-  };
-
-  const handleThemeMenuOpen = () => {
-    setIsThemeMenuOpen(!isThemeMenuOpen);
-  };
-
   return (
     <HeaderMenuContainer>
       <div className="menu-box">
@@ -37,7 +29,7 @@ const HeaderMenu = () => {
             </MenuBtn>
           </li>
           <li className="menu-drop">
-            <MenuBtn onClick={handleRewardMenuOpen}>
+            <MenuBtn onClick={() => setIsRewardMenuOpen(!isRewardMenuOpen)}>
               레이드 보상
               <div className="svg-wrap">
                 <GrMoney />
@@ -46,7 +38,7 @@ const HeaderMenu = () => {
             {isRewardMenuOpen && <RewardInfo />}
           </li>
           <li className="menu-drop">
-            <MenuBtn onClick={handleThemeMenuOpen}>
+            <MenuBtn onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}>
               테마 변경
               <div className="svg-wrap">
                 <BsPalette />
