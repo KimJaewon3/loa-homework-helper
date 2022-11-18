@@ -3,20 +3,15 @@ import styled from "styled-components";
 import MemoBoard from "../modals/memoBoard";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import LootCalculator from "../modals/lootCalculator";
+import { display, size } from "../style/display";
+import { SectionItemRef } from "../hooks/useNavMenu";
+import { ACCOUNT, CHARACTERS, CONTENTS, MONITORING } from "../App";
 
-type FixedMenuProps = {
-  accountBookRef: React.RefObject<HTMLDivElement>;
-  characterRef: React.RefObject<HTMLDivElement>;
-  monitoringRef: React.RefObject<HTMLDivElement>;
-  contentsStatusRef: React.RefObject<HTMLDivElement>;
+type Props = {
+  sectionItemsRef: React.MutableRefObject<SectionItemRef>;
 };
 
-const NavMenu = ({
-  accountBookRef,
-  characterRef,
-  monitoringRef,
-  contentsStatusRef,
-}: FixedMenuProps) => {
+const NavMenu = ({ sectionItemsRef }: Props) => {
   const [isMemoBoardOpen, setIsMemoBoardOpen] = useState(false);
   const [isLootCalculatorOpen, setIsLootCalculatorOpen] = useState(false);
 
@@ -34,8 +29,8 @@ const NavMenu = ({
     });
   };
 
-  const gotoTargetRef = (targetRef: React.RefObject<HTMLDivElement>) => {
-    const pos = targetRef.current?.offsetTop;
+  const gotoTargetRef = (key: string) => {
+    const pos = sectionItemsRef.current?.[key].offsetTop;
     if (typeof pos === "number") {
       window.scroll({
         top: pos - 70,
@@ -46,41 +41,38 @@ const NavMenu = ({
 
   return (
     <NavMenuContainer>
-      {isMemoBoardOpen && <MemoBoard />}
+      {isMemoBoardOpen && <MemoBoard setIsMemoBoardOpen={setIsMemoBoardOpen} />}
       {isLootCalculatorOpen && (
-        <LootCalculator
-          handleLootCalculatorBtnClick={() =>
-            setIsLootCalculatorOpen(!isLootCalculatorOpen)
-          }
-        />
+        <LootCalculator setIsLootCalculatorOpen={setIsLootCalculatorOpen} />
       )}
-      <aside>
-        <NavMenuList onClick={() => gotoTargetRef(monitoringRef)}>
-          전체현황
+      <aside className="nav-menu-btn-box">
+        <NavMenuList onClick={() => gotoTargetRef(MONITORING)}>
+          전체 현황
         </NavMenuList>
-        <NavMenuList onClick={() => gotoTargetRef(characterRef)}>
-          캐릭터현황
+        <NavMenuList onClick={() => gotoTargetRef(CHARACTERS)}>
+          캐릭터 현황
         </NavMenuList>
-        <NavMenuList onClick={() => gotoTargetRef(contentsStatusRef)}>
-          컨텐츠현황
+        <NavMenuList onClick={() => gotoTargetRef(CONTENTS)}>
+          컨텐츠 현황
         </NavMenuList>
-        <NavMenuList onClick={() => gotoTargetRef(accountBookRef)}>
-          골드현황
+        <NavMenuList onClick={() => gotoTargetRef(ACCOUNT)}>
+          골드 현황
         </NavMenuList>
         <NavMenuList
           onClick={() => setIsLootCalculatorOpen(!isLootCalculatorOpen)}
         >
-          입찰계산기
+          입찰 계산기
         </NavMenuList>
         <NavMenuList onClick={() => setIsMemoBoardOpen(!isMemoBoardOpen)}>
           메모장
         </NavMenuList>
       </aside>
-      <aside>
-        <div className="fixed-menu-goto-btn goto-up" onClick={gotoUp}>
+
+      <aside className="nav-menu-goto-btn-box">
+        <div className="svg-wrap" onClick={gotoUp}>
           <AiOutlineArrowUp />
         </div>
-        <div className="fixed-menu-goto-btn goto-down" onClick={gotoDown}>
+        <div className="svg-wrap" onClick={gotoDown}>
           <AiOutlineArrowDown />
         </div>
       </aside>
@@ -92,36 +84,46 @@ const NavMenuContainer = styled.nav`
   position: fixed;
   top: 36%;
   right: 0%;
-  .fixed-menu-goto-btn {
+  .nav-menu-goto-btn-box {
     position: fixed;
-    background-color: #ffe38f;
     right: 0;
-    margin: 2em;
-    padding: 0.5em;
-    height: 20px;
-    width: 20px;
-    text-align: center;
-    border: 2px solid black;
-    border-radius: 5px;
+    bottom: 10vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    > * {
+      background-color: #ffe38f;
+      border: 2px solid black;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      padding: 0.5em;
+    }
   }
-  .goto-up {
-    bottom: 14%;
-  }
-  .goto-down {
-    bottom: 10%;
+  @media ${display.mobile} {
+    .nav-menu-btn-box {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+    }
   }
 `;
 
 const NavMenuList = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 3px;
   background-color: ${({ theme }) => theme.color.titleColor};
   color: ${({ theme }) => theme.color.fontColor};
   border: 2px solid black;
   border-radius: 5px;
   margin-top: 5px;
+  @media ${display.mobile} {
+    padding: 10px;
+    word-break: keep-all;
+  }
 `;
 
 export default NavMenu;

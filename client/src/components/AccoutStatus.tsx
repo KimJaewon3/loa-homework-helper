@@ -7,6 +7,7 @@ import {
   updateCharacterAccount,
 } from "../redux/slice/accountSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
+import { display } from "../style/display";
 import AccountList from "./account/accountList";
 
 export const sumGold = (item: AccountItem[]) => {
@@ -168,6 +169,17 @@ const AccountContainer = styled.div`
       button {
         height: 26px;
       }
+    }
+  }
+  @media ${display.mobile} {
+    .account-input-box {
+      flex-direction: column;
+      > * {
+        margin: 10px 0 10px 0;
+      }
+    }
+    .account-wrap {
+      width: auto;
     }
   }
 `;

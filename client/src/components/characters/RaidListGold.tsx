@@ -3,6 +3,7 @@ import { GrMoney } from "react-icons/gr";
 import styled from "styled-components";
 import { updateReward } from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
+import { display } from "../../style/display";
 
 type Props = {
   characterIdx: number;
@@ -37,6 +38,7 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
       {isEditing ? (
         <div>
           <input
+            className="raid-gold-list-input"
             type="number"
             max="99999"
             value={inputValue}
@@ -67,8 +69,13 @@ const RaidListGoldContainer = styled.div`
     > * {
       margin: 0 5px 0 5px;
     }
-    > input {
-      width: 6em;
+  }
+  .raid-gold-list-input {
+    width: 6em;
+  }
+  @media ${display.mobile} {
+    .raid-gold-list-input {
+      width: 3.5em;
     }
   }
 `;

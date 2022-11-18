@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsX } from "react-icons/bs";
 import styled from "styled-components";
 import {
@@ -8,6 +8,7 @@ import {
   updateRaidIsDone,
 } from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
+import { display } from "../../style/display";
 import { makeRaidFullName } from "./Character";
 import RaidListGold from "./RaidListGold";
 
@@ -75,7 +76,9 @@ const RaidList = ({
             >
               :::
             </div>
-            <div>{makeRaidFullName(content)}</div>
+            <div className="character-raid-list-name">
+              {makeRaidFullName(content)}
+            </div>
             <input
               type="checkbox"
               checked={content.isDone}
@@ -129,6 +132,17 @@ const RaidListContainer = styled.li`
   }
   .drag-start {
     opacity: 0.5;
+  }
+  @media ${display.mobile} {
+    margin: 10px;
+    font-size: large;
+    .character-raid-list-name {
+      width: 6em;
+      white-space: nowrap;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 `;
 

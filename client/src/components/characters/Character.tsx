@@ -10,6 +10,7 @@ import {
   updateSixTimeLimit,
 } from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
+import { display } from "../../style/display";
 import { CharacterDragInfo } from "../CharacterStatus";
 import RaidList from "./RaidList";
 
@@ -250,6 +251,10 @@ const CharacterContainer = styled.li`
   }
   .mute-pointer * {
     pointer-events: none;
+  }
+  @media ${display.mobile} {
+    width: 100%;
+    margin: 1em 0 1em 0;
   }
 `;
 

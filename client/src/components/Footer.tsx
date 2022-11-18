@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
+import { display } from "../style/display";
 
 const Footer = () => {
   return (
@@ -22,6 +23,9 @@ const FooterDiv = styled.footer`
     width: 100px;
     height: 100px;
     margin-left: 50px;
+  }
+  @media ${display.mobile} {
+    display: none;
   }
 `;
 

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
 import { initRaidList } from "../redux/slice/characterSlice";
 import { useAppDispatch } from "../redux/store";
+import { display } from "../style/display";
+import { ModalBack } from "../style/styled";
 
 type Props = {
   handleWeeklyRestBtn: (isOpen: boolean) => void;
@@ -21,7 +23,7 @@ const WeeklyResetCheck = ({ handleWeeklyRestBtn }: Props) => {
   return (
     <WeeklyResetCheckContainer>
       <div className="weekly-modal">
-        <div>
+        <div className="img-box">
           <img src={mococoImg[0]} />
         </div>
         <div className="weekly-modal-confirm-container">
@@ -42,25 +44,12 @@ const WeeklyResetCheck = ({ handleWeeklyRestBtn }: Props) => {
           </div>
         </div>
       </div>
-      <div
-        className="weekly-modal-background"
-        onClick={() => confirmReset(false)}
-      ></div>
+      <ModalBack onClick={() => confirmReset(false)} />
     </WeeklyResetCheckContainer>
   );
 };
 
 const WeeklyResetCheckContainer = styled.div`
-  .weekly-modal-background {
-    position: fixed;
-    background-color: #000000;
-    opacity: 0.7;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-  }
   .weekly-modal {
     position: fixed;
     background-color: #d9f0cb;
@@ -90,6 +79,16 @@ const WeeklyResetCheckContainer = styled.div`
         .weekly-modal-btn:hover {
           font-weight: bold;
         }
+      }
+    }
+  }
+  @media ${display.mobile} {
+    .img-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > img {
+        max-width: 150px;
       }
     }
   }

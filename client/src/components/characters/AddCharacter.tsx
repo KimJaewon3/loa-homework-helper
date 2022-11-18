@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { addCharacter } from "../../redux/slice/characterSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { display } from "../../style/display";
 
 const AddCharacter = () => {
   const dispatch = useAppDispatch();
@@ -98,6 +99,16 @@ const AddCharacterContainer = styled.div`
     }
     button {
       height: 30px;
+    }
+  }
+  @media ${display.mobile} {
+    .character-add-input-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .character-add-alert {
+      display: block;
+      margin-top: 10px;
     }
   }
 `;

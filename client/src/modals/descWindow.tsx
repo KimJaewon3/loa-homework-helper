@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { GrMoney } from "react-icons/gr";
+import { display } from "../style/display";
 
 const DescWindow = () => {
   return (
@@ -33,6 +34,15 @@ const DescWindowContainer = styled.div`
     padding: 1em;
     top: -80px;
     color: black;
+  }
+  @media ${display.mobile} {
+    position: absolute;
+    z-index: 5;
+    .description-window {
+      > span {
+        word-break: keep-all;
+      }
+    }
   }
 `;
 
