@@ -1,5 +1,5 @@
-export type ThemeType = "spring" | "summer" | "autumn" | "winter";
-export type Theme = {
+export type ThemeInfo = {
+  name: "spring" | "summer" | "autumn" | "winter";
   color: {
     backgroundColor: string;
     titleColor: string;
@@ -9,10 +9,9 @@ export type Theme = {
   };
 };
 
-export const theme: {
-  [key in ThemeType]: Theme;
-} = {
-  spring: {
+export const themeInfo: ThemeInfo[] = [
+  {
+    name: "spring",
     color: {
       backgroundColor: "#b0d099",
       titleColor: "#a9db76",
@@ -21,7 +20,8 @@ export const theme: {
       goldBoxTitleColor: "#e3f0eb",
     },
   },
-  summer: {
+  {
+    name: "summer",
     color: {
       backgroundColor: "#293e68",
       titleColor: "#7686db",
@@ -30,7 +30,8 @@ export const theme: {
       goldBoxTitleColor: "#c8d2e1",
     },
   },
-  autumn: {
+  {
+    name: "autumn",
     color: {
       backgroundColor: "#dda651",
       titleColor: "#95531f",
@@ -39,7 +40,8 @@ export const theme: {
       goldBoxTitleColor: "#ece7dc",
     },
   },
-  winter: {
+  {
+    name: "winter",
     color: {
       backgroundColor: "#7cbbcc",
       titleColor: "#4fa1ca",
@@ -48,4 +50,4 @@ export const theme: {
       goldBoxTitleColor: "#d9ebf5",
     },
   },
-};
+];

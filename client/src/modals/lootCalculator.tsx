@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ModalBack } from "../style/styled";
 
 type Props = {
-  handleLootCalculatorBtnClick: () => void;
+  setIsLootCalculatorOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const LootCalculator = ({ handleLootCalculatorBtnClick }: Props) => {
+const LootCalculator = ({ setIsLootCalculatorOpen }: Props) => {
   const people = [4, 8];
   const [selectValue, setSelectValue] = useState(4); // 분배인원
   const [inputValue, setInputValue] = useState("0"); // 입찰금액
@@ -60,25 +61,12 @@ const LootCalculator = ({ handleLootCalculatorBtnClick }: Props) => {
         <div>공평분배 : {maximumAccount} 원</div>
         <div>극한이득 : {Math.floor(maximumAccount / 1.1)} 원</div>
       </div>
-      <div
-        className="loot-calculator-modal-back"
-        onClick={() => handleLootCalculatorBtnClick()}
-      ></div>
+      <ModalBack onClick={() => setIsLootCalculatorOpen(false)} />
     </LootCalculatorContainer>
   );
 };
 
 const LootCalculatorContainer = styled.div`
-  .loot-calculator-modal-back {
-    position: fixed;
-    background-color: #000000;
-    opacity: 0.7;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-  }
   .loot-calculator-modal {
     position: fixed;
     background-color: ${({ theme }) => theme.color.titleColor};

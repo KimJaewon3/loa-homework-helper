@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../redux/store";
+import { display } from "../style/display";
 import CircleProgress from "./monitoring/CircleProgress";
 
 type Percent = {
@@ -76,7 +77,7 @@ const MonitoringContainer = styled.div`
     flex-wrap: wrap;
     background-color: rgb(240, 248, 255, 0.8);
     .monitoring-progress {
-      margin: 5px 20px 5px 20px;
+      margin: 5px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -85,6 +86,11 @@ const MonitoringContainer = styled.div`
         text-align: center;
         font-size: 0.8em;
       }
+    }
+  }
+  @media ${display.mobile} {
+    .monitoring-progress-box {
+      justify-content: space-between;
     }
   }
 `;
