@@ -5,15 +5,15 @@ type UpdateTheme = {
   themeIdx: number;
 };
 
-export type ThemeInitialState = {
+type ThemeInitialState = {
   themeInfo: ThemeInfo;
 };
 
-export const initialState: ThemeInitialState = {
+const initialState: ThemeInitialState = {
   themeInfo: themeInfo[0],
 };
 
-export const themeSlice = createSlice({
+const themeSlice = createSlice({
   name: "theme",
   initialState,
   reducers: {
@@ -23,5 +23,7 @@ export const themeSlice = createSlice({
   },
 });
 
+export type { ThemeInitialState };
+export { initialState, themeSlice };
 export const { updateTheme } = themeSlice.actions;
 export default themeSlice.reducer;

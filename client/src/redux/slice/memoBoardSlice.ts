@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-export type MemoInitialState = {
+type MemoInitialState = {
   memo: string;
 };
 
@@ -13,7 +13,7 @@ type UpdateMemo = {
   value: string;
 };
 
-export const memoBoardSlice = createSlice({
+const memoBoardSlice = createSlice({
   name: "memoBoard",
   initialState,
   reducers: {
@@ -23,7 +23,7 @@ export const memoBoardSlice = createSlice({
   },
 });
 
+export type { MemoInitialState };
+export { initialState, memoBoardSlice };
 export const { updateMemo } = memoBoardSlice.actions;
-export const selectMemoBoard = (state: RootState) =>
-  state.memoBoardReducer.memo;
 export default memoBoardSlice.reducer;

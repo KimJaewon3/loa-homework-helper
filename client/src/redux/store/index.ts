@@ -11,16 +11,16 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { migrate, VERSION } from "./migration";
 
 import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
 import characterReducer from "../slice/characterSlice";
 import accountReducer from "../slice/accountSlice";
-import { migrate } from "./migration";
 
 const persistConfig = {
   key: "root",
-  version: 3,
+  version: VERSION,
   storage,
   whitelist: [
     "memoBoardReducer",
