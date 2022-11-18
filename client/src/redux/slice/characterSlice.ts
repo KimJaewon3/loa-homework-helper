@@ -17,7 +17,7 @@ export type CharacterType = {
   contents: ContentsType[];
 };
 
-type InitialState = {
+export type CharacterInitialState = {
   characters: CharacterType[];
 };
 
@@ -68,7 +68,7 @@ export type ReorderCharacter = {
   move: "before" | "after";
 };
 
-const initialState: InitialState = {
+const initialState: CharacterInitialState = {
   characters: [],
 };
 

@@ -8,7 +8,7 @@ export type AccountItem = {
   accountType: AccountType;
 };
 
-type InitialState = {
+export type AccountInitialState = {
   accountList: {
     characters: AccountItem[];
     etc: AccountItem[];
@@ -24,7 +24,7 @@ type DeleteAccount = {
   accountType: AccountType;
 };
 
-const initialState: InitialState = {
+const initialState: AccountInitialState = {
   accountList: {
     characters: [],
     etc: [],

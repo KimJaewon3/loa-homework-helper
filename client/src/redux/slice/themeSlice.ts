@@ -5,11 +5,11 @@ type UpdateTheme = {
   themeIdx: number;
 };
 
-type InitialState = {
+export type ThemeInitialState = {
   themeInfo: ThemeInfo;
 };
 
-const initialState: InitialState = {
+export const initialState: ThemeInitialState = {
   themeInfo: themeInfo[0],
 };
 

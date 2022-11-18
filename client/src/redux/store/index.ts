@@ -16,11 +16,19 @@ import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
 import characterReducer from "../slice/characterSlice";
 import accountReducer from "../slice/accountSlice";
+import { migrate } from "./migration";
 
 const persistConfig = {
   key: "root",
-  version: 1,
+  version: 3,
   storage,
+  whitelist: [
+    "memoBoardReducer",
+    "themeReducer",
+    "characterReducer",
+    "accountReducer",
+  ],
+  migrate,
 };
 
 const rootReducer = combineReducers({
