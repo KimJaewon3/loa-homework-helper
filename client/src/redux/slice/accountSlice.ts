@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type AccountType = Readonly<"characters" | "etc">;
+type AccountType = Readonly<"characters" | "etc">;
 
-export type AccountItem = {
+type AccountItem = {
   history: string;
   gold: number;
   accountType: AccountType;
 };
 
-type InitialState = {
+type AccountInitialState = {
   accountList: {
     characters: AccountItem[];
     etc: AccountItem[];
@@ -24,14 +24,14 @@ type DeleteAccount = {
   accountType: AccountType;
 };
 
-const initialState: InitialState = {
+const initialState: AccountInitialState = {
   accountList: {
     characters: [],
     etc: [],
   },
 };
 
-export const accountSlice = createSlice({
+const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
@@ -64,6 +64,8 @@ export const accountSlice = createSlice({
   },
 });
 
+export type { AccountType, AccountItem, AccountInitialState, DeleteAccount };
+export { initialState, accountSlice };
 export const {
   addAccount,
   updateAccount,

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RaidData, raidInfos } from "../../data/raidLevel";
 import { RootState } from "../store";
 
-export type ContentsType = {
+type ContentsType = {
   raidName: string;
   raidData: {
     difficulty?: string;
@@ -11,13 +11,13 @@ export type ContentsType = {
   isDone: boolean;
 };
 
-export type CharacterType = {
+type CharacterType = {
   name: string;
   isLimitedSixTime: boolean;
   contents: ContentsType[];
 };
 
-type InitialState = {
+type CharacterInitialState = {
   characters: CharacterType[];
 };
 
@@ -56,23 +56,23 @@ type DeleteRaidList = {
   raidListIdx: number;
 };
 
-export type ReorderRaidList = {
+type ReorderRaidList = {
   fromIdx: number;
   toIdx: number;
   characterIdx: number;
 };
 
-export type ReorderCharacter = {
+type ReorderCharacter = {
   fromIdx: number;
   toIdx: number;
   move: "before" | "after";
 };
 
-const initialState: InitialState = {
+const initialState: CharacterInitialState = {
   characters: [],
 };
 
-export const characterSlice = createSlice({
+const characterSlice = createSlice({
   name: "character",
   initialState,
   reducers: {
@@ -193,6 +193,14 @@ export const characterSlice = createSlice({
   },
 });
 
+export type {
+  ContentsType,
+  CharacterType,
+  CharacterInitialState,
+  ReorderCharacter,
+  ReorderRaidList,
+};
+export { characterSlice, initialState };
 export const {
   addCharacter,
   addRaidList,
@@ -205,6 +213,4 @@ export const {
   reorderCharacter,
   initRaidList,
 } = characterSlice.actions;
-export const selectCharacter = (state: RootState) =>
-  state.characterReducer.characters;
 export default characterSlice.reducer;

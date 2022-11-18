@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { migrate, VERSION } from "./migration";
 
 import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
@@ -19,8 +20,15 @@ import accountReducer from "../slice/accountSlice";
 
 const persistConfig = {
   key: "root",
-  version: 1,
+  version: VERSION,
   storage,
+  whitelist: [
+    "memoBoardReducer",
+    "themeReducer",
+    "characterReducer",
+    "accountReducer",
+  ],
+  migrate,
 };
 
 const rootReducer = combineReducers({
