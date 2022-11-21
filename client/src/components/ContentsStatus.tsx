@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../redux/store";
+import { display } from "../style/display";
 import { makeRaidFullName } from "./characters/Character";
 
 type ContentsFilter = {
@@ -44,19 +45,19 @@ const ContentsStatus = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <ContentsStatusContainer ref={ref}>
-      <div className="contents-status-title-box">
+      <div className="contents-title-box">
         <span>컨텐츠 현황</span>
-        <span className="contents-status-noti">
+        <span className="contents-noti">
           * 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
         </span>
       </div>
-      <div className="contents-status-search-bar">
+      <div className="contents-search-bar">
         <input
           placeholder="컨텐츠 검색..."
           onChange={(e) => setSearchInputValue(e.target.value)}
         />
       </div>
-      <div className="contents-status-characters-container">
+      <div className="contents-box">
         {contentsFilter
           .filter((c) => {
             if (searchInputValue === "") {
@@ -66,9 +67,9 @@ const ContentsStatus = forwardRef<HTMLDivElement>((props, ref) => {
             }
           })
           .map((c) => (
-            <div className="contents-status-characters-box" key={c.raidName}>
-              <div className="contents-status-characters-title">
-                <div>{c.raidName}</div>
+            <div className="contents-item" key={c.raidName}>
+              <div className="contents-raid-name">
+                <span>{c.raidName}</span>
               </div>
               <ul>
                 {c.characters.map((ch) => (
@@ -90,30 +91,30 @@ const ContentsStatusContainer = styled.div`
   > * {
     margin: 1em;
   }
-  .contents-status-title-box {
+  .contents-title-box {
     display: flex;
     align-items: center;
     font-size: 1.5em;
     color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
-    .contents-status-noti {
+    .contents-noti {
       font-size: 0.5em;
       margin-left: 1em;
     }
   }
-  .contents-status-search-bar {
+  .contents-search-bar {
     > input {
       padding: 5px;
       margin-left: 0.5em;
     }
   }
-  .contents-status-characters-container {
+  .contents-box {
     border-radius: 10px;
     padding: 0.5em;
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    .contents-status-characters-box {
+    .contents-item {
       display: flex;
       border: 2px solid ${({ theme }) => theme.color.borderColor};
       border-radius: 10px;
@@ -122,7 +123,7 @@ const ContentsStatusContainer = styled.div`
       > * {
         padding: 0.5em;
       }
-      .contents-status-characters-title {
+      .contents-raid-name {
         border-right: 2px solid ${({ theme }) => theme.color.borderColor};
         background-color: ${({ theme }) => theme.color.titleColor};
         border-radius: 7px 0px 0 7px;
@@ -134,6 +135,23 @@ const ContentsStatusContainer = styled.div`
         display: flex;
         align-items: center;
         margin: 5px 0 5px 0;
+      }
+    }
+  }
+  @media ${display.mobile} {
+    .contents-item {
+      width: 100%;
+      ul {
+        flex-wrap: wrap;
+      }
+    }
+    .contents-raid-name {
+      > span {
+        width: 6em;
+        white-space: nowrap;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
     }
   }

@@ -32,7 +32,7 @@ const MonitoringStatus = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <MonitoringContainer ref={ref}>
-      <div className="monitoring-title">
+      <div className="monitoring-title-box">
         <span>전체 현황</span>
       </div>
 
@@ -64,7 +64,7 @@ const MonitoringContainer = styled.div`
   > * {
     margin: 1em;
   }
-  .monitoring-title {
+  .monitoring-title-box {
     margin-left: 0;
     font-size: 1.5em;
     color: ${({ theme }) => theme.color.fontColor};

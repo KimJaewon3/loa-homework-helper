@@ -53,11 +53,11 @@ const AddCharacter = () => {
     <AddCharacterContainer>
       <button onClick={handleAddBtn}>+ 캐릭터 추가하기</button>
       {addCharacterAlert && (
-        <span className="character-add-alert">{addCharacterAlert}</span>
+        <span className="add-character-alert">{addCharacterAlert}</span>
       )}
       {isAddCharacterOpen && (
         <div>
-          <div className="character-add-input-box">
+          <div className="add-character-input-box">
             <input
               name="name"
               placeholder="캐릭터명"
@@ -85,10 +85,10 @@ const AddCharacterContainer = styled.div`
     border: none;
     padding: 5px;
   }
-  .character-add-alert {
+  .add-character-alert {
     color: ${({ theme }) => theme.color.fontColor};
   }
-  .character-add-input-box {
+  .add-character-input-box {
     display: flex;
     align-items: center;
     > * {
@@ -102,11 +102,11 @@ const AddCharacterContainer = styled.div`
     }
   }
   @media ${display.mobile} {
-    .character-add-input-box {
+    .add-character-input-box {
       flex-direction: column;
       align-items: flex-start;
     }
-    .character-add-alert {
+    .add-character-alert {
       display: block;
       margin-top: 10px;
     }

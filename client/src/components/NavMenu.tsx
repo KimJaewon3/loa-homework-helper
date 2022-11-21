@@ -3,15 +3,14 @@ import styled from "styled-components";
 import MemoBoard from "../modals/memoBoard";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import LootCalculator from "../modals/lootCalculator";
-import { display, size } from "../style/display";
-import { SectionItemRef } from "../hooks/useNavMenu";
+import { display } from "../style/display";
 import { ACCOUNT, CHARACTERS, CONTENTS, MONITORING } from "../App";
 
 type Props = {
-  sectionItemsRef: React.MutableRefObject<SectionItemRef>;
+  gotoTargetRef: (key: string) => void;
 };
 
-const NavMenu = ({ sectionItemsRef }: Props) => {
+const NavMenu = ({ gotoTargetRef }: Props) => {
   const [isMemoBoardOpen, setIsMemoBoardOpen] = useState(false);
   const [isLootCalculatorOpen, setIsLootCalculatorOpen] = useState(false);
 
@@ -27,16 +26,6 @@ const NavMenu = ({ sectionItemsRef }: Props) => {
       top: document.body.scrollHeight,
       behavior: "smooth",
     });
-  };
-
-  const gotoTargetRef = (key: string) => {
-    const pos = sectionItemsRef.current?.[key].offsetTop;
-    if (typeof pos === "number") {
-      window.scroll({
-        top: pos - 70,
-        behavior: "smooth",
-      });
-    }
   };
 
   return (

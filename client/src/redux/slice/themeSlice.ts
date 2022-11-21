@@ -1,5 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { themeInfo, ThemeInfo } from "../../style/theme";
+import { createSlice } from "@reduxjs/toolkit";
+import { themeInfo } from "../../style/theme";
+
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { ThemeInfo } from "../../style/theme";
 
 type UpdateTheme = {
   themeIdx: number;

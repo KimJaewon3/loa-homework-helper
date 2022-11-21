@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { display } from "../../style/display";
 
 interface CircleProgressProps {
   size: number;

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import DescWindow from "../modals/descWindow";
 import { ReorderCharacter } from "../redux/slice/characterSlice";
 import { useAppSelector } from "../redux/store";
-import { display } from "../style/display";
 import AddCharacter from "./characters/AddCharacter";
 import Character from "./characters/Character";
 
@@ -27,7 +26,7 @@ const CharacterStatus = forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <CharacterStatusContainer ref={ref}>
-      <div className="character-title">
+      <div className="characters-title">
         <span>캐릭터 현황</span>
         <RiQuestionFill
           size={18}
@@ -59,7 +58,7 @@ const CharacterStatusContainer = styled.div`
   > * {
     margin: 1em;
   }
-  .character-title {
+  .characters-title {
     font-size: 1.5em;
     color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;

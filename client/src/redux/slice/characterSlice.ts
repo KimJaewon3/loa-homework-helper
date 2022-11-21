@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RaidData, raidInfos } from "../../data/raidLevel";
-import { RootState } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
+import { raidInfos } from "../../data/raidLevel";
+
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { RaidData } from "../../data/raidLevel";
 
 type ContentsType = {
   raidName: string;

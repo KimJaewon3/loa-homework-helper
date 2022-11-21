@@ -36,9 +36,8 @@ const RaidListGold = ({ characterIdx, raidListIdx, reward }: Props) => {
   return (
     <RaidListGoldContainer>
       {isEditing ? (
-        <div>
+        <div className="raid-list-gold-input-box">
           <input
-            className="raid-gold-list-input"
             type="number"
             max="99999"
             value={inputValue}
@@ -70,12 +69,18 @@ const RaidListGoldContainer = styled.div`
       margin: 0 5px 0 5px;
     }
   }
-  .raid-gold-list-input {
-    width: 6em;
+  @media ${display.desktop} {
+    .raid-list-gold-input-box {
+      > input {
+        width: 6em;
+      }
+    }
   }
   @media ${display.mobile} {
-    .raid-gold-list-input {
-      width: 3.5em;
+    .raid-list-gold-input-box {
+      > input {
+        width: 3.5em;
+      }
     }
   }
 `;

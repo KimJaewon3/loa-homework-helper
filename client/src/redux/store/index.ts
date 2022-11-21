@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   persistStore,
   persistReducer,
@@ -17,6 +17,8 @@ import memoBoardReducer from "../slice/memoBoardSlice";
 import themeReducer from "../slice/themeSlice";
 import characterReducer from "../slice/characterSlice";
 import accountReducer from "../slice/accountSlice";
+
+import type { TypedUseSelectorHook } from "react-redux";
 
 const persistConfig = {
   key: "root",

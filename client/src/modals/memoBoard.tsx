@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { updateMemo } from "../redux/slice/memoBoardSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
+import { display } from "../style/display";
 import { ModalBack } from "../style/styled";
 
 type Props = {
@@ -35,22 +36,36 @@ const MemoBoardContainer = styled.div`
     position: fixed;
     display: flex;
     z-index: 11;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border: 2px solid black;
     background-color: white;
-    width: 370px;
     height: 500px;
     textarea {
+      margin: 1em;
       resize: none;
       border: none;
       margin: 1em;
-      width: 350px;
-      height: 450px;
+      overflow-y: scroll;
+      width: 100%;
     }
     textarea:focus {
       outline: none;
+    }
+  }
+  @media ${display.desktop} {
+    .memo-modal {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 370px;
+    }
+  }
+  @media ${display.mobile} {
+    .memo-modal {
+      margin: 2em 0 2em 0;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      border: none;
     }
   }
 `;

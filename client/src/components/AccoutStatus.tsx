@@ -1,14 +1,14 @@
 import { forwardRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
-  AccountItem,
-  AccountType,
   addAccount,
   updateCharacterAccount,
 } from "../redux/slice/accountSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { display } from "../style/display";
 import AccountList from "./account/accountList";
+
+import type { AccountItem, AccountType } from "../redux/slice/accountSlice";
 
 export const sumGold = (item: AccountItem[]) => {
   return item.reduce((acc, el) => {
@@ -96,7 +96,7 @@ const AccountStatus = forwardRef<HTMLDivElement>((props, ref) => {
     <AccountContainer ref={ref}>
       <span className="account-title">골드 현황</span>
 
-      <div className="account-wrap">
+      <div className="account-box">
         <AccountList type="characters" />
         <AccountList type="etc" />
 
@@ -125,7 +125,9 @@ const AccountStatus = forwardRef<HTMLDivElement>((props, ref) => {
                 onChange={(e) => handleInputValue(e)}
                 value={inputValue[type].gold}
               />
-              <button onClick={() => handleAddAccountList(type)}>확인</button>
+              <div className="account-btn-box">
+                <button onClick={() => handleAddAccountList(type)}>확인</button>
+              </div>
             </div>
           </div>
         ))}
@@ -145,7 +147,7 @@ const AccountContainer = styled.div`
     color: ${({ theme }) => theme.color.fontColor};
     margin-left: 0;
   }
-  .account-wrap {
+  .account-box {
     width: fit-content;
     background-color: rgb(240, 248, 255, 0.8);
     border: 2px solid ${({ theme }) => theme.color.borderColor};
@@ -161,6 +163,10 @@ const AccountContainer = styled.div`
     }
     .account-input-box {
       display: flex;
+    }
+  }
+  @media ${display.desktop} {
+    .account-input-box {
       align-items: center;
       input {
         height: 20px;
@@ -172,14 +178,20 @@ const AccountContainer = styled.div`
     }
   }
   @media ${display.mobile} {
+    .account-box {
+      width: auto;
+    }
     .account-input-box {
       flex-direction: column;
-      > * {
-        margin: 10px 0 10px 0;
+      align-items: flex-start;
+      input {
+        margin-top: 5px;
       }
-    }
-    .account-wrap {
-      width: auto;
+      .account-btn-box {
+        display: flex;
+        justify-content: end;
+        width: 100%;
+      }
     }
   }
 `;
