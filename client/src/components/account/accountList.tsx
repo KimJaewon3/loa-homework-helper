@@ -1,13 +1,11 @@
 import { useMemo } from "react";
 import { BsX } from "react-icons/bs";
 import styled from "styled-components";
-import {
-  AccountType,
-  deleteAccount,
-  initAccountEtc,
-} from "../../redux/slice/accountSlice";
+import { deleteAccount, initAccountEtc } from "../../redux/slice/accountSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { sumGold } from "../AccoutStatus";
+
+import type { AccountType } from "../../redux/slice/accountSlice";
 
 type Props = {
   type: AccountType;
@@ -37,11 +35,11 @@ const AccountList = ({ type }: Props) => {
     <AccountListContainer>
       <div>
         {type === "characters" ? (
-          <div className="account-list-title">
+          <div className="account-list-title-box">
             <span>캐릭터</span>
           </div>
         ) : (
-          <div className="account-list-title">
+          <div className="account-list-title-box">
             <span>추가사항 (더보기, 기타획득골드 등)</span>
             <button onClick={() => dispatch(initAccountEtc())}>초기화</button>
           </div>
@@ -51,7 +49,7 @@ const AccountList = ({ type }: Props) => {
       <ul>
         {accountList[type].map((el, idx) => (
           <li key={idx}>
-            <div className="account-list-history">
+            <div className="account-list-history-box">
               {type === "etc" && (
                 <BsX
                   size={20}
@@ -66,10 +64,11 @@ const AccountList = ({ type }: Props) => {
         ))}
       </ul>
 
-      <div className="account-list-sum">
+      <div className="account-list-gold-sum-box">
         {type === "characters" && (
           <div>
-            <span>{`예상 총합: ${allSumCharactersGold}`}</span>
+            <span>예상 총합</span>
+            <span>{allSumCharactersGold}</span>
           </div>
         )}
         <div>
@@ -91,13 +90,13 @@ const AccountListContainer = styled.div`
       margin: 10px 0 10px 0;
       justify-content: space-between;
       border-bottom: 1px solid gray;
-      .account-list-history {
+      .account-list-history-box {
         display: flex;
         margin-right: 1em;
       }
     }
   }
-  .account-list-title {
+  .account-list-title-box {
     background-color: ${({ theme }) => theme.color.goldBoxTitleColor};
     position: absolute;
     left: 1em;
@@ -113,7 +112,7 @@ const AccountListContainer = styled.div`
       background-color: #acacac;
     }
   }
-  .account-list-sum > div {
+  .account-list-gold-sum-box > div {
     display: flex;
     justify-content: space-between;
     margin: 0 1em 0 0;

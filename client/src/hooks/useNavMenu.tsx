@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { size } from "../style/display";
+import { useRef } from "react";
 
 export type SectionItemRef = {
   [key: string]: HTMLDivElement;
@@ -16,9 +15,19 @@ const useNavMenu = () => {
     };
   };
 
+  const gotoTargetRef = (key: string) => {
+    const pos = sectionItemsRef.current?.[key].offsetTop;
+    if (typeof pos === "number") {
+      window.scroll({
+        top: pos - 70,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return {
-    sectionItemsRef,
     refCallback,
+    gotoTargetRef,
   };
 };
 

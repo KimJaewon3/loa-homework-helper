@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsX } from "react-icons/bs";
 import styled from "styled-components";
 import {
-  ContentsType,
   deleteRaidList,
   reorderRaidList,
   updateRaidIsDone,
@@ -12,11 +11,14 @@ import { display } from "../../style/display";
 import { makeRaidFullName } from "./Character";
 import RaidListGold from "./RaidListGold";
 
+import type { ContentsType } from "../../redux/slice/characterSlice";
+
 type Props = {
   characterIdx: number;
   raidListIdx: number;
   content: ContentsType;
   raidListDragIdx: React.MutableRefObject<number>;
+  raidListsRef: React.MutableRefObject<HTMLDivElement[]>;
 };
 
 const RaidList = ({
@@ -24,19 +26,27 @@ const RaidList = ({
   raidListIdx,
   content,
   raidListDragIdx,
+  raidListsRef,
 }: Props) => {
   const dispatch = useAppDispatch();
   const [isRaidListDraggable, setIsRaidListDraggable] = useState(false);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const img = new Image();
-    img.src = "";
-    e.dataTransfer.setDragImage(img, 0, 0);
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
+    const { dataTransfer } = e as React.DragEvent<HTMLDivElement>;
+    if (dataTransfer) {
+      const img = new Image();
+      img.src = "";
+      dataTransfer.setDragImage(img, 0, 0);
+    }
     e.currentTarget.classList.add("drag-start");
     raidListDragIdx.current = raidListIdx;
   };
 
-  const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnd = (
+    e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => {
     e.currentTarget.classList.remove("drag-start");
     setIsRaidListDraggable(false);
   };
@@ -59,26 +69,57 @@ const RaidList = ({
     }
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isRaidListDraggable) return;
+    for (let idx = 0; idx < raidListsRef.current.length; idx++) {
+      const { top, height } = raidListsRef.current[idx].getBoundingClientRect();
+      const { clientY } = e.targetTouches[0];
+      if (
+        clientY > top + height / 2 &&
+        clientY < top + height &&
+        idx !== raidListIdx
+      ) {
+        dispatch(
+          reorderRaidList({
+            characterIdx,
+            fromIdx: raidListIdx,
+            toIdx: idx,
+          })
+        );
+        const slice = raidListsRef.current.splice(raidListIdx, 1);
+        raidListsRef.current.splice(idx, 0, slice[0]);
+        break;
+      }
+    }
+  };
+
   return (
     <RaidListContainer>
       <div
+        ref={(el) => {
+          if (!el) return;
+          raidListsRef.current[raidListIdx] = el;
+        }}
         draggable={isRaidListDraggable}
         onDragStart={(e) => handleDragStart(e)}
         onDragEnd={(e) => handleDragEnd(e)}
         onDragOver={(e) => handleDragOver(e)}
+        onTouchStart={(e) => handleDragStart(e)}
+        onTouchMove={(e) => handleTouchMove(e)}
+        onTouchEnd={(e) => handleDragEnd(e)}
       >
-        <div className="chracter-raid-list-wrap">
+        <div className="raid-list-box">
           <div>
             <div
-              className="chracter-raid-list-drag-icon"
+              className="raid-list-drag-icon"
               onMouseDown={() => setIsRaidListDraggable(true)}
               onMouseUp={() => setIsRaidListDraggable(false)}
+              onTouchStart={() => setIsRaidListDraggable(true)}
+              onTouchEnd={() => setIsRaidListDraggable(false)}
             >
               :::
             </div>
-            <div className="character-raid-list-name">
-              {makeRaidFullName(content)}
-            </div>
+            <div className="raid-list-title">{makeRaidFullName(content)}</div>
             <input
               type="checkbox"
               checked={content.isDone}
@@ -115,7 +156,7 @@ const RaidList = ({
 const RaidListContainer = styled.li`
   margin: 5px;
   list-style: none;
-  .chracter-raid-list-wrap {
+  .raid-list-box {
     border-bottom: 1px solid #8c8c8c;
     display: flex;
     align-items: center;
@@ -127,16 +168,14 @@ const RaidListContainer = styled.li`
       align-items: center;
     }
   }
-  .chracter-raid-list-drag-icon {
+  .raid-list-drag-icon {
     margin-right: 5px;
-  }
-  .drag-start {
-    opacity: 0.5;
+    touch-action: none;
   }
   @media ${display.mobile} {
     margin: 10px;
     font-size: large;
-    .character-raid-list-name {
+    .raid-list-title {
       width: 6em;
       white-space: nowrap;
       word-break: break-all;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { display } from "../style/display";
 import { ModalBack } from "../style/styled";
@@ -11,7 +11,7 @@ type Props = {
 const RewardInfoModal = ({ src, setIsRewardInfoClicked }: Props) => {
   return (
     <RewardInfoModalContainer onClick={() => setIsRewardInfoClicked(false)}>
-      <div className="img-box">
+      <div className="reward-info-img-box">
         <img src={src} />
       </div>
       <ModalBack />
@@ -27,7 +27,7 @@ const RewardInfoModalContainer = styled.div`
   padding: 15px 10px 15px 15px;
   background-color: #429497;
   max-height: 800px;
-  .img-box {
+  .reward-info-img-box {
     position: fixed;
     background-color: ${({ theme }) => theme.color.titleColor};
     z-index: 11;
@@ -51,7 +51,7 @@ const RewardInfoModalContainer = styled.div`
   }
   @media ${display.mobile} {
     touch-action: none;
-    .img-box {
+    .reward-info-img-box {
       width: 100%;
       max-height: 80%;
       img {

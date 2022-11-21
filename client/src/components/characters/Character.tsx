@@ -3,16 +3,19 @@ import { BsX } from "react-icons/bs";
 import styled from "styled-components";
 import {
   addRaidList,
-  CharacterType,
-  ContentsType,
   deleteCharacter,
   reorderCharacter,
   updateSixTimeLimit,
 } from "../../redux/slice/characterSlice";
 import { useAppDispatch } from "../../redux/store";
 import { display } from "../../style/display";
-import { CharacterDragInfo } from "../CharacterStatus";
 import RaidList from "./RaidList";
+
+import type {
+  CharacterType,
+  ContentsType,
+} from "../../redux/slice/characterSlice";
+import type { CharacterDragInfo } from "../CharacterStatus";
 
 const makeRaidFullName = (content: ContentsType) => {
   let fullName = content.raidName;
@@ -42,6 +45,7 @@ const Character = ({
   const { name, isLimitedSixTime, contents } = character;
   const [raidListInput, setRaidListInput] = useState("");
   const raidListDragIdx = useRef(0);
+  const raidListsRef = useRef<HTMLDivElement[]>([]);
 
   const goldCounter = useMemo(() => {
     let allSum = 0;
@@ -91,10 +95,8 @@ const Character = ({
     const { left, width } = e.currentTarget.getBoundingClientRect();
     const xpos = e.clientX;
     let move: "before" | "after" = xpos < left + width / 2 ? "before" : "after";
-    e.currentTarget.classList.remove(
-      `drag-over-move-${characterDragInfo.move}`
-    );
-    e.currentTarget.classList.add(`drag-over-move-${move}`);
+    e.currentTarget.classList.remove(`drag-move-${characterDragInfo.move}`);
+    e.currentTarget.classList.add(`drag-move-${move}`);
     setCharacterDragInfo({ ...characterDragInfo, move });
   };
 
@@ -102,7 +104,7 @@ const Character = ({
     if (e.target !== e.currentTarget) return;
     charactersRef.current.map((el, idx) => {
       if (idx !== characterIdx) {
-        el.classList.remove(`drag-over-move-${characterDragInfo.move}`);
+        el.classList.remove(`drag-move-${characterDragInfo.move}`);
       }
     });
     setCharacterDragInfo({ ...characterDragInfo, toIdx: characterIdx });
@@ -113,7 +115,7 @@ const Character = ({
     charactersRef.current.map((el) => {
       el.classList.remove(
         "mute-pointer",
-        `drag-over-move-${characterDragInfo.move}`,
+        `drag-move-${characterDragInfo.move}`,
         "drag-start"
       );
     });
@@ -135,9 +137,9 @@ const Character = ({
           }
         }}
       >
-        <div className="character-item-wrap">
+        <div className="character-box">
           <div
-            className="character-item-title-box"
+            className="character-title-box"
             onMouseDown={() => setIsCharacterDraggable(true)}
             onMouseUp={() => setIsCharacterDraggable(false)}
           >
@@ -163,6 +165,7 @@ const Character = ({
                 raidListIdx={raidListIdx}
                 content={content}
                 raidListDragIdx={raidListDragIdx}
+                raidListsRef={raidListsRef}
               />
             ))}
           </ul>
@@ -172,7 +175,7 @@ const Character = ({
             <div>획득 골드: {goldCounter.currentSum}</div>
           </div>
 
-          <div className="character-item-add-raid-list">
+          <div className="character-add-raid-list">
             <input
               placeholder=" + 리스트 추가하기"
               value={raidListInput}
@@ -197,7 +200,7 @@ const CharacterContainer = styled.li`
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  .character-item-wrap {
+  .character-box {
     border: 2px solid ${({ theme }) => theme.color.borderColor};
     border-radius: 10px;
     background-color: rgb(240, 248, 255, 0.8);
@@ -209,7 +212,7 @@ const CharacterContainer = styled.li`
       margin: 1em 0 1em 0;
     }
   }
-  .character-item-title-box {
+  .character-title-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -220,7 +223,7 @@ const CharacterContainer = styled.li`
       font-size: 1.2em;
     }
   }
-  .character-item-add-raid-list {
+  .character-add-raid-list {
     display: flex;
     width: auto;
     > * {
@@ -237,13 +240,13 @@ const CharacterContainer = styled.li`
   .drag-start {
     opacity: 0.5;
   }
-  .drag-over-move-before {
+  .drag-move-before {
     transform: translateX(10px);
     > div {
       box-shadow: -7px 0 9px -4px ${({ theme }) => theme.color.fontColor};
     }
   }
-  .drag-over-move-after {
+  .drag-move-after {
     transform: translateX(-10px);
     > div {
       box-shadow: 7px 0 9px -4px ${({ theme }) => theme.color.fontColor};

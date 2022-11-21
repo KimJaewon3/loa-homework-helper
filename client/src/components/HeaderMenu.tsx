@@ -18,7 +18,7 @@ const HeaderMenu = () => {
 
   return (
     <HeaderMenuContainer>
-      <div className="menu-box">
+      <div className="header-menu-box">
         <h1>로아 숙제 현황판</h1>
         <ul>
           <li>
@@ -60,7 +60,7 @@ const HeaderMenu = () => {
 };
 
 const HeaderMenuContainer = styled.header`
-  .menu-box {
+  .header-menu-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
