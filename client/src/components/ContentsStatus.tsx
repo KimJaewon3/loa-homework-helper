@@ -46,9 +46,9 @@ const ContentsStatus = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <ContentsStatusContainer ref={ref}>
       <div className="contents-title-box">
-        <span>컨텐츠 현황</span>
+        <span>콘텐츠 현황</span>
         <span className="contents-noti">
-          * 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
+          * 해당 콘텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
         </span>
       </div>
       <div className="contents-search-bar">

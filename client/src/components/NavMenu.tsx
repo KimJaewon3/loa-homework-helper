@@ -42,7 +42,7 @@ const NavMenu = ({ gotoTargetRef }: Props) => {
           캐릭터 현황
         </NavMenuList>
         <NavMenuList onClick={() => gotoTargetRef(CONTENTS)}>
-          컨텐츠 현황
+          콘텐츠 현황
         </NavMenuList>
         <NavMenuList onClick={() => gotoTargetRef(ACCOUNT)}>
           골드 현황
