@@ -5,10 +5,40 @@ interface CircleProgressProps {
   size: number;
   progress: number;
   circumference: number;
-  overall: boolean;
+  overall?: boolean;
 }
 
-const CircleProgress = styled.div<CircleProgressProps>`
+interface Props {
+  percent: number;
+  overall?: boolean;
+}
+
+const CircleProgress = ({ percent, overall }: Props) => {
+  const RADIUS = 50;
+  const circumference = 2 * Math.PI * RADIUS;
+  const progress = circumference * (1 - percent / 100);
+
+  return (
+    <CircleProgressContainer
+      size={RADIUS * 2 + 20}
+      progress={progress}
+      circumference={circumference}
+      overall={overall}
+    >
+      <svg className="circle-progress-sketch">
+        <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS} />
+      </svg>
+
+      <svg className="circle-progress">
+        <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS} />
+      </svg>
+
+      <span>{Math.floor(percent)}%</span>
+    </CircleProgressContainer>
+  );
+};
+
+const CircleProgressContainer = styled.div<CircleProgressProps>`
   position: relative;
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
@@ -58,32 +88,4 @@ const movePercent = (circumference: number, progress: number) => keyframes`
   }
 `;
 
-interface Props {
-  percent: number;
-  overall: boolean;
-}
-
-export default function Status({ percent, overall }: Props) {
-  const RADIUS = 50; // 원크기 조절
-  const circumference = 2 * Math.PI * RADIUS;
-  const progress = circumference * (1 - percent / 100);
-
-  return (
-    <CircleProgress
-      size={RADIUS * 2 + 20}
-      progress={progress}
-      circumference={circumference}
-      overall={overall}
-    >
-      <svg className="circle-progress-sketch">
-        <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS} />
-      </svg>
-
-      <svg className="circle-progress">
-        <circle cx={RADIUS + 10} cy={RADIUS + 10} r={RADIUS} />
-      </svg>
-
-      <span>{Math.floor(percent)}%</span>
-    </CircleProgress>
-  );
-}
+export default CircleProgress;

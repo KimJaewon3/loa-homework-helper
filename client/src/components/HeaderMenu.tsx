@@ -2,101 +2,109 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { GrMoney, GrNotification } from "react-icons/gr";
 import { BsPalette } from "react-icons/bs";
-import { useAppDispatch } from "../redux/store";
-import RewardInfo from "../modals/rewardInfoList";
-import ThemeInfo from "../modals/themeInfoList";
 import WeeklyResetCheck from "../modals/weeklyResetCheck";
+import { display } from "../style/display";
+import RewardInfoList from "../modals/rewardInfoList";
+import ThemeInfoList from "../modals/themeInfoList";
 
-const HeaderMenuDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  height: 70px;
-  width: 100%;
-  z-index: 5;
-  background-color: ${({ theme }) => theme.color.titleColor};
-  box-shadow: 0 0 5px black;
-  > h1 {
-    font-weight: unset;
-    font-size: 1.2em;
-    margin: 1em;
-    color: ${({ theme }) => theme.color.fontColor};
-  }
-  > aside {
-    display: flex;
-    align-items: center;
-    > li {
-      list-style: none;
-    }
-  }
-  .menu-box {
-    position: relative;
-  }
-`;
-
-const MenuBtn = styled.div`
-  background-color: white;
-  margin: 0 10px 0 0;
-  padding: 5px;
-  border-radius: 10px;
-  border: 2px solid black;
-  position: relative;
-  z-index: 5;
-  width: 120px;
-  text-align: center;
-  > * {
-    margin: 0 5px 0 0;
-  }
-`;
-
-export default function HeaderMenu() {
+const HeaderMenu = () => {
   const [isRewardMenuOpen, setIsRewardMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isWeeklyResetModalOpen, setIsWeeklyResetModalOpen] = useState(false);
 
-  function handleWeeklyRestBtn(isOpen: boolean) {
+  const handleWeeklyRestBtn = (isOpen: boolean) => {
     setIsWeeklyResetModalOpen(isOpen);
-  }
-
-  function handleRewardMenuOpen() {
-    setIsRewardMenuOpen(!isRewardMenuOpen);
-  }
-
-  function handleThemeMenuOpen() {
-    setIsThemeMenuOpen(!isThemeMenuOpen);
-  }
+  };
 
   return (
-    <header>
-      <HeaderMenuDiv>
+    <HeaderMenuContainer>
+      <div className="header-menu-box">
         <h1>로아 숙제 현황판</h1>
-        <aside>
+        <ul>
           <li>
             <MenuBtn onClick={() => handleWeeklyRestBtn(true)}>
-              주간 초기화
-              <GrNotification />
+              <span>주간 초기화</span>
+              <div className="svg-wrap">
+                <GrNotification />
+              </div>
             </MenuBtn>
           </li>
-          <li className="menu-box">
-            <MenuBtn onClick={handleRewardMenuOpen}>
-              레이드 보상
-              <GrMoney />
+
+          <li>
+            <MenuBtn onClick={() => setIsRewardMenuOpen(!isRewardMenuOpen)}>
+              <span>레이드 보상</span>
+              <div className="svg-wrap">
+                <GrMoney />
+              </div>
             </MenuBtn>
-            {isRewardMenuOpen && <RewardInfo />}
+            {isRewardMenuOpen && <RewardInfoList />}
           </li>
-          <li className="menu-box">
-            <MenuBtn onClick={handleThemeMenuOpen}>
-              테마 변경
-              <BsPalette />
+
+          <li>
+            <MenuBtn onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}>
+              <span>테마 변경</span>
+              <div className="svg-wrap">
+                <BsPalette />
+              </div>
             </MenuBtn>
-            {isThemeMenuOpen && <ThemeInfo />}
+            {isThemeMenuOpen && <ThemeInfoList />}
           </li>
-        </aside>
-      </HeaderMenuDiv>
+        </ul>
+      </div>
+
       {isWeeklyResetModalOpen && (
         <WeeklyResetCheck handleWeeklyRestBtn={handleWeeklyRestBtn} />
       )}
-    </header>
+    </HeaderMenuContainer>
   );
-}
+};
+
+const HeaderMenuContainer = styled.header`
+  .header-menu-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    height: 70px;
+    width: 100%;
+    z-index: 5;
+    background-color: ${({ theme }) => theme.color.titleColor};
+    box-shadow: 0 0 5px black;
+    > h1 {
+      font-weight: unset;
+      font-size: 1.2em;
+      margin: 1em;
+      color: ${({ theme }) => theme.color.fontColor};
+    }
+    > ul {
+      display: flex;
+      align-items: center;
+      > li {
+        list-style: none;
+        margin: 0 10px 0 10px;
+      }
+    }
+  }
+`;
+
+const MenuBtn = styled.div`
+  padding: 5px;
+  position: relative;
+  z-index: 5;
+  width: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > * {
+    margin: 0 5px 0 0;
+  }
+  @media ${display.mobile} {
+    width: auto;
+    > span {
+      display: none;
+    }
+  }
+`;
+
+export default HeaderMenu;

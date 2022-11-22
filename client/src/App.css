@@ -38,5 +38,11 @@
 }
 
 body {
-  font-family: 'Jua', sans-serif;
+  font-family: "Jua", sans-serif;
+}
+
+.svg-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

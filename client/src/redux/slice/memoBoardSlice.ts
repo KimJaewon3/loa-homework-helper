@@ -1,30 +1,30 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface MemoBoardState {
+import type { PayloadAction } from "@reduxjs/toolkit";
+
+type MemoInitialState = {
   memo: string;
-}
+};
 
-const initialState: MemoBoardState = {
-  memo: '',
-}
+const initialState: MemoInitialState = {
+  memo: "",
+};
 
 type UpdateMemo = {
   value: string;
-}
+};
 
-export const memoBoardSlice = createSlice({
-  name: 'memoBoard',
+const memoBoardSlice = createSlice({
+  name: "memoBoard",
   initialState,
   reducers: {
     updateMemo: (state, action: PayloadAction<UpdateMemo>) => {
       state.memo = action.payload.value;
     },
-  } 
+  },
 });
 
-export const {
-  updateMemo,
-} = memoBoardSlice.actions;
-export const selectMemoBoard = (state: RootState) => state.memoBoardReducer.memo;
+export type { MemoInitialState };
+export { initialState, memoBoardSlice };
+export const { updateMemo } = memoBoardSlice.actions;
 export default memoBoardSlice.reducer;

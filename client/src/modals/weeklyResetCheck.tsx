@@ -1,20 +1,45 @@
 import React from "react";
 import styled from "styled-components";
 import { mococoImg } from "../img/mococoImg";
-import { initList } from "../redux/slice/contentsSlice";
+import { initRaidList } from "../redux/slice/characterSlice";
 import { useAppDispatch } from "../redux/store";
+import { display } from "../style/display";
+import { ModalBack } from "../style/styled";
 
-const WeeklyResetCheckDiv = styled.div`
-  .weekly-modal-background {
-    position: fixed;
-    background-color: #000000;
-    opacity: 0.7;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-  }
+type Props = {
+  handleWeeklyRestBtn: (isOpen: boolean) => void;
+};
+
+const WeeklyResetCheck = ({ handleWeeklyRestBtn }: Props) => {
+  const dispatch = useAppDispatch();
+
+  const confirmReset = (check: boolean) => {
+    if (check) {
+      dispatch(initRaidList());
+    }
+    handleWeeklyRestBtn(false);
+  };
+
+  return (
+    <WeeklyResetCheckContainer>
+      <div className="weekly-modal">
+        <div className="weekly-modal-img-box">
+          <img src={mococoImg[0]} />
+        </div>
+        <div className="weekly-modal-confirm-container">
+          <p>정말 초기화하실 건가요?</p>
+          <div className="weekly-modal-btn-box">
+            <div onClick={() => confirmReset(true)}>▶ 그래</div>
+            <div onClick={() => confirmReset(false)}>▶ 잘못눌렀어</div>
+          </div>
+        </div>
+      </div>
+      <ModalBack onClick={() => confirmReset(false)} />
+    </WeeklyResetCheckContainer>
+  );
+};
+
+const WeeklyResetCheckContainer = styled.div`
   .weekly-modal {
     position: fixed;
     background-color: #d9f0cb;
@@ -33,64 +58,29 @@ const WeeklyResetCheckDiv = styled.div`
       .weekly-modal-btn-box {
         display: flex;
         margin-top: 1em;
-        .weekly-modal-btn {
-          display: inline-block;
+        > div {
           min-width: 90px;
           margin-right: 1em;
           background-color: #d9f0cb;
           border: none;
           text-align: center;
         }
-        .weekly-modal-btn:hover {
+        > div:hover {
           font-weight: bold;
         }
       }
     }
   }
+  @media ${display.mobile} {
+    .weekly-modal-img-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      > img {
+        max-width: 150px;
+      }
+    }
+  }
 `;
 
-type Props = {
-  handleWeeklyRestBtn: (isOpen: boolean) => void;
-};
-
-export default function WeeklyResetCheck({ handleWeeklyRestBtn }: Props) {
-  const dispatch = useAppDispatch();
-
-  function confirmReset(check: boolean) {
-    if (check) {
-      dispatch(initList());
-    }
-    handleWeeklyRestBtn(false);
-  }
-
-  return (
-    <WeeklyResetCheckDiv>
-      <div className="weekly-modal">
-        <div>
-          <img src={mococoImg[0]} />
-        </div>
-        <div className="weekly-modal-confirm-container">
-          <p>정말 초기화하실 건가요?</p>
-          <div className="weekly-modal-btn-box">
-            <div
-              className="weekly-modal-btn"
-              onClick={() => confirmReset(true)}
-            >
-              ▶ 그래
-            </div>
-            <div
-              className="weekly-modal-btn"
-              onClick={() => confirmReset(false)}
-            >
-              ▶ 잘못눌렀어
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="weekly-modal-background"
-        onClick={() => confirmReset(false)}
-      ></div>
-    </WeeklyResetCheckDiv>
-  );
-}
+export default WeeklyResetCheck;
