@@ -4,6 +4,7 @@ import styled from "styled-components";
 import DescWindow from "../modals/descWindow";
 import { ReorderCharacter } from "../redux/slice/characterSlice";
 import { useAppSelector } from "../redux/store";
+import { display } from "../style/display";
 import AddCharacter from "./characters/AddCharacter";
 import Character from "./characters/Character";
 
@@ -73,6 +74,11 @@ const CharacterStatusContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+  }
+  @media ${display.mobile} {
+    > * {
+      margin: 1em 0 1em 0;
+    }
   }
 `;
 

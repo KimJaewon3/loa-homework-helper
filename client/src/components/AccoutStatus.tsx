@@ -178,6 +178,9 @@ const AccountContainer = styled.div`
     }
   }
   @media ${display.mobile} {
+    > * {
+      margin: 1em 0 1em 0;
+    }
     .account-box {
       width: auto;
     }

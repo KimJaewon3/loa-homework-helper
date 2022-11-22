@@ -37,7 +37,7 @@ const RaidList = ({
     const delay = 500;
     const timer = setTimeout(() => {
       setIsRaidListDraggable(true);
-      raidListsRef.current[raidListIdx].classList.add("touch-start");
+      raidListsRef.current[raidListIdx].classList.add("drag-start");
       raidListDragIdx.current = raidListIdx;
     }, delay);
 
@@ -57,7 +57,7 @@ const RaidList = ({
   const handleDragEnd = (
     e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    e.currentTarget.classList.remove("drag-start", "touch-start");
+    e.currentTarget.classList.remove("drag-start");
     setIsRaidListDraggable(false);
   };
 
@@ -183,6 +183,11 @@ const RaidListContainer = styled.li`
   .raid-list-drag-icon {
     margin-right: 5px;
     touch-action: none;
+    padding: 5px 5px 5px 0;
+  }
+  .drag-start {
+    box-shadow: 1px 1px 15px 3px #4fa1ca;
+    border-radius: 5px;
   }
   @media ${display.mobile} {
     margin: 10px;
@@ -193,10 +198,6 @@ const RaidListContainer = styled.li`
       word-break: break-all;
       text-overflow: ellipsis;
       overflow: hidden;
-    }
-    .touch-start {
-      box-shadow: 1px 1px 15px 3px #4fa1ca;
-      border-radius: 5px;
     }
   }
 `;

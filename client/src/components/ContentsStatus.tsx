@@ -139,6 +139,9 @@ const ContentsStatusContainer = styled.div`
     }
   }
   @media ${display.mobile} {
+    > * {
+      margin: 1em 0 1em 0;
+    }
     .contents-item {
       width: 100%;
       ul {
@@ -161,7 +164,7 @@ const CharacterLi = styled.li<{ isDone: boolean }>`
   margin: 0 10px 0 10px;
   list-style: none;
   > span {
-    color: ${(props) => (props.isDone ? "#9f9f9f" : "black")};
+    color: ${(props) => (props.isDone ? "#cecece" : "black")};
   }
 `;
 
