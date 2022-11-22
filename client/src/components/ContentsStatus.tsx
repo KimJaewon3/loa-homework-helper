@@ -46,9 +46,9 @@ const ContentsStatus = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <ContentsStatusContainer ref={ref}>
       <div className="contents-title-box">
-        <span>컨텐츠 현황</span>
+        <span>콘텐츠 현황</span>
         <span className="contents-noti">
-          * 해당 컨텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
+          * 해당 콘텐츠를 진행한 캐릭터는 흐리게 표시됩니다.
         </span>
       </div>
       <div className="contents-search-bar">
@@ -139,6 +139,9 @@ const ContentsStatusContainer = styled.div`
     }
   }
   @media ${display.mobile} {
+    > * {
+      margin: 1em 0 1em 0;
+    }
     .contents-item {
       width: 100%;
       ul {
@@ -161,7 +164,7 @@ const CharacterLi = styled.li<{ isDone: boolean }>`
   margin: 0 10px 0 10px;
   list-style: none;
   > span {
-    color: ${(props) => (props.isDone ? "#9f9f9f" : "black")};
+    color: ${(props) => (props.isDone ? "#cecece" : "black")};
   }
 `;
 

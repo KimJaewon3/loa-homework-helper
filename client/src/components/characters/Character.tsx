@@ -170,9 +170,11 @@ const Character = ({
             ))}
           </ul>
 
-          <div>
-            <div>전체 골드: {goldCounter.allSum}</div>
-            <div>획득 골드: {goldCounter.currentSum}</div>
+          <div className="character-gold-box">
+            <div>
+              <div>전체 골드: {goldCounter.allSum}</div>
+              <div>획득 골드: {goldCounter.currentSum}</div>
+            </div>
           </div>
 
           <div className="character-add-raid-list">
@@ -223,6 +225,14 @@ const CharacterContainer = styled.li`
       font-size: 1.2em;
     }
   }
+  .character-gold-box {
+    display: flex;
+    flex-direction: column;
+     align-items: flex-end;
+    > * {
+      margin: 10px;
+    }
+  }
   .character-add-raid-list {
     display: flex;
     width: auto;
@@ -236,9 +246,6 @@ const CharacterContainer = styled.li`
     > button {
       width: 2.5em;
     }
-  }
-  .drag-start {
-    opacity: 0.5;
   }
   .drag-move-before {
     transform: translateX(10px);

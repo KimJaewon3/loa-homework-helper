@@ -89,6 +89,9 @@ const MonitoringContainer = styled.div`
     }
   }
   @media ${display.mobile} {
+    > * {
+      margin: 1em 0 1em 0;
+    }
     .monitoring-progress-box {
       justify-content: space-between;
     }
