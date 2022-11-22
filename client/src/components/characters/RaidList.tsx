@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsX } from "react-icons/bs";
 import styled from "styled-components";
+import { useAppDispatch } from "../../redux/store";
+import { display } from "../../style/display";
+import { makeRaidFullName } from "./Character";
+import RaidListGold from "./RaidListGold";
 import {
   deleteRaidList,
   reorderRaidList,
   updateRaidIsDone,
 } from "../../redux/slice/characterSlice";
-import { useAppDispatch } from "../../redux/store";
-import { display } from "../../style/display";
-import { makeRaidFullName } from "./Character";
-import RaidListGold from "./RaidListGold";
 
 import type { ContentsType } from "../../redux/slice/characterSlice";
 
@@ -30,16 +30,26 @@ const RaidList = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const [isRaidListDraggable, setIsRaidListDraggable] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => {
-    const { dataTransfer } = e as React.DragEvent<HTMLDivElement>;
-    if (dataTransfer) {
-      const img = new Image();
-      img.src = "";
-      dataTransfer.setDragImage(img, 0, 0);
-    }
+  useEffect(() => {
+    if (!isTouch) return;
+    const delay = 500;
+    const timer = setTimeout(() => {
+      setIsRaidListDraggable(true);
+      raidListsRef.current[raidListIdx].classList.add("touch-start");
+      raidListDragIdx.current = raidListIdx;
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isTouch]);
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    const img = new Image();
+    img.src = "";
+    e.dataTransfer.setDragImage(img, 0, 0);
     e.currentTarget.classList.add("drag-start");
     raidListDragIdx.current = raidListIdx;
   };
@@ -47,7 +57,7 @@ const RaidList = ({
   const handleDragEnd = (
     e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    e.currentTarget.classList.remove("drag-start");
+    e.currentTarget.classList.remove("drag-start", "touch-start");
     setIsRaidListDraggable(false);
   };
 
@@ -70,6 +80,9 @@ const RaidList = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isTouch) {
+      setIsTouch(false);
+    }
     if (!isRaidListDraggable) return;
     for (let idx = 0; idx < raidListsRef.current.length; idx++) {
       const { top, height } = raidListsRef.current[idx].getBoundingClientRect();
@@ -104,7 +117,6 @@ const RaidList = ({
         onDragStart={(e) => handleDragStart(e)}
         onDragEnd={(e) => handleDragEnd(e)}
         onDragOver={(e) => handleDragOver(e)}
-        onTouchStart={(e) => handleDragStart(e)}
         onTouchMove={(e) => handleTouchMove(e)}
         onTouchEnd={(e) => handleDragEnd(e)}
       >
@@ -114,8 +126,8 @@ const RaidList = ({
               className="raid-list-drag-icon"
               onMouseDown={() => setIsRaidListDraggable(true)}
               onMouseUp={() => setIsRaidListDraggable(false)}
-              onTouchStart={() => setIsRaidListDraggable(true)}
-              onTouchEnd={() => setIsRaidListDraggable(false)}
+              onTouchStart={() => setIsTouch(true)}
+              onTouchEnd={() => setIsTouch(false)}
             >
               :::
             </div>
@@ -160,10 +172,10 @@ const RaidListContainer = styled.li`
     border-bottom: 1px solid #8c8c8c;
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin: 5px;
     justify-content: space-between;
     > * {
-      margin: 0 10px 5px 0;
+      margin: 5px 10px 5px 0;
       display: flex;
       align-items: center;
     }
@@ -181,6 +193,10 @@ const RaidListContainer = styled.li`
       word-break: break-all;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+    .touch-start {
+      box-shadow: 1px 1px 15px 3px #4fa1ca;
+      border-radius: 5px;
     }
   }
 `;
