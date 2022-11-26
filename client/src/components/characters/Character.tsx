@@ -157,7 +157,7 @@ const Character = ({
             />
           </div>
 
-          <ul>
+          <ul onDragEnter={(e) => e.preventDefault()}>
             {contents.map((content, raidListIdx) => (
               <RaidList
                 key={makeRaidFullName(content)}
@@ -228,7 +228,7 @@ const CharacterContainer = styled.li`
   .character-gold-box {
     display: flex;
     flex-direction: column;
-     align-items: flex-end;
+    align-items: flex-end;
     > * {
       margin: 10px;
     }
